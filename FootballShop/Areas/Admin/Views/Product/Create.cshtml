@@ -1,0 +1,97 @@
+﻿@model FootballShopModel.Models.Product
+
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+
+@using (Html.BeginForm("Create", "Product", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form px-4">
+        <button class="btn btn-primary mb-4">
+            <a href="@Url.Action("Index")" class="text-white text-decoration-none">Quay lại danh sách sản phẩm</a>
+        </button>
+        <h2>TẠO MỘT SẢN PHẨM MỚI</h2>
+        <div class="row">
+            <div class="col-6">
+                @Html.ValidationSummary(true, "", new { @class = "alert alert-danger py-2 pl-075" })
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group col-6">
+                <label for="name">Tên sản phẩm</label>
+                @Html.EditorFor(model => model.name, new { htmlAttributes = new { @class = "form-control form-control-user", @type = "text", @placeholder = "Nhập tên sản phẩm ..." } })
+                @Html.ValidationMessageFor(model => model.name, "", new { @class = "text-danger" })
+            </div>
+            <div class="form-group col-6">
+                <label for="categoryId">Danh mục</label>
+                @Html.DropDownListFor(model => model.categoryId, (IEnumerable<SelectListItem>)ViewBag.MenuCategories, new { @name = "categoryId", @class = "form-control form-control-user" })
+                @Html.ValidationMessageFor(model => model.categoryId, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group col-6">
+                <label for="brand">Thương hiệu</label>
+                @Html.EditorFor(model => model.brand, new { htmlAttributes = new { @class = "form-control form-control-user", @type = "text", @placeholder = "Nhập tên thương hiệu" } })
+                @Html.ValidationMessageFor(model => model.brand, "", new { @class = "text-danger" })
+            </div>
+            <div class="form-group col-6">
+                <label for="price">Đơn giá</label>
+                @Html.EditorFor(model => model.price, new { htmlAttributes = new { @class = "form-control form-control-user", @type = "number", @placeholder = "Nhập đơn giá" } })
+                @Html.ValidationMessageFor(model => model.price, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group col-6">
+                <label for="discount">Khuyến mãi</label>
+                @Html.EditorFor(model => model.discount, new { htmlAttributes = new { @class = "form-control form-control-user", @type = "number", @value = "0", @placeholder = "Nhập khuyến mãi" } })
+                @Html.ValidationMessageFor(model => model.discount, "", new { @class = "text-danger" })
+            </div>
+            <div class="form-group col-6">
+                <label for="video">Video</label>
+                @Html.EditorFor(model => model.video, new { htmlAttributes = new { @class = "form-control form-control-user", @type = "text", @placeholder = "Nhập url video" } })
+                @Html.ValidationMessageFor(model => model.video, "", new { @class = "text-danger" })
+            </div>
+
+        </div>
+        <div class="row">
+            <div class="form-group col-6">
+                <label for="size">Kích thước</label>
+                @Html.EditorFor(model => model.size, new { htmlAttributes = new { @class = "form-control form-control-user", @type = "text", @placeholder = "Nhập kích thước" } })
+                @Html.ValidationMessageFor(model => model.size, "", new { @class = "text-danger" })
+            </div>
+            <div class="form-group col-6">
+                <label for="quantity">Số lượng</label>
+                @Html.EditorFor(model => model.quantity, new { htmlAttributes = new { @class = "form-control form-control-user", @type = "number", @placeholder = "Nhập số lượng" } })
+                @Html.ValidationMessageFor(model => model.quantity, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group col-6">
+                <label for="infor">Thông tin</label>
+                @Html.TextAreaFor(model => model.infor, new { @class = "form-control form-control-user", @type = "text", @rows = 4, @placeholder = "Nhập thông tin sản phẩm" })
+                @Html.ValidationMessageFor(model => model.infor, "", new { @class = "text-danger" })
+            </div>
+            <div class="form-group custom-file col-6">
+                <label for="imageUpload">Chọn hình ảnh</label>
+                <input class="form-control form-control-user" type="file" name="imageUpload" id="imageUpload" accept="image/*" />
+            </div>
+        </div>
+
+        <div id="add-modal-alert"></div>
+        <button type="submit" class="btn btn-primary">
+            Tạo mới
+        </button>
+    </div>
+}
+
+<script>
+    // Add the following code if you want the name of the file appear on select
+    $(".custom-file-input").on("change", function () {
+        var fileName = $(this).val().split("\\").pop();
+        $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
+    });
+</script>

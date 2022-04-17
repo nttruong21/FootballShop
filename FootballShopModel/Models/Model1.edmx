@@ -1,0 +1,456 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="FootballShopModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Accounts">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="nvarchar" MaxLength="255" />
+          <Property Name="email" Type="nvarchar" MaxLength="255" />
+          <Property Name="password" Type="nvarchar" MaxLength="50" />
+          <Property Name="role" Type="int" />
+          <Property Name="phone" Type="nvarchar" MaxLength="15" />
+          <Property Name="address" Type="nvarchar" MaxLength="255" />
+        </EntityType>
+        <EntityType Name="BillDetails">
+          <Key>
+            <PropertyRef Name="billId" />
+          </Key>
+          <Property Name="billId" Type="int" Nullable="false" />
+          <Property Name="productId" Type="int" />
+          <Property Name="quantity" Type="int" />
+          <Property Name="unitPrice" Type="float" />
+        </EntityType>
+        <EntityType Name="Bills">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="accountId" Type="int" />
+          <Property Name="date" Type="datetime" />
+          <Property Name="totalPrice" Type="float" />
+          <Property Name="status" Type="int" />
+        </EntityType>
+        <EntityType Name="Carts">
+          <Key>
+            <PropertyRef Name="accountId" />
+          </Key>
+          <Property Name="accountId" Type="int" Nullable="false" />
+          <Property Name="productId" Type="int" />
+          <Property Name="quantity" Type="int" />
+        </EntityType>
+        <EntityType Name="Categories">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="nvarchar" MaxLength="255" />
+        </EntityType>
+        <EntityType Name="Products">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="nvarchar" MaxLength="255" />
+          <Property Name="categoryId" Type="int" />
+          <Property Name="brand" Type="nvarchar" MaxLength="255" />
+          <Property Name="price" Type="float" />
+          <Property Name="discount" Type="int" />
+          <Property Name="image" Type="nvarchar" MaxLength="255" />
+          <Property Name="size" Type="nvarchar" MaxLength="5" />
+          <Property Name="quantity" Type="int" />
+          <Property Name="infor" Type="nvarchar" MaxLength="1000" />
+          <Property Name="video" Type="nvarchar" MaxLength="255" />
+          <Property Name="rate" Type="float" />
+        </EntityType>
+        <Association Name="FK_BillDetails_Bills">
+          <End Role="Bills" Type="Self.Bills" Multiplicity="1" />
+          <End Role="BillDetails" Type="Self.BillDetails" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Bills">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="BillDetails">
+              <PropertyRef Name="billId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_BillDetails_Products">
+          <End Role="Products" Type="Self.Products" Multiplicity="0..1" />
+          <End Role="BillDetails" Type="Self.BillDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Products">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="BillDetails">
+              <PropertyRef Name="productId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Carts_Accounts">
+          <End Role="Accounts" Type="Self.Accounts" Multiplicity="1" />
+          <End Role="Carts" Type="Self.Carts" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Accounts">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Carts">
+              <PropertyRef Name="accountId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Carts_Products">
+          <End Role="Products" Type="Self.Products" Multiplicity="0..1" />
+          <End Role="Carts" Type="Self.Carts" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Products">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Carts">
+              <PropertyRef Name="productId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Orders_Accounts">
+          <End Role="Accounts" Type="Self.Accounts" Multiplicity="0..1" />
+          <End Role="Bills" Type="Self.Bills" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Accounts">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Bills">
+              <PropertyRef Name="accountId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Products_Categories">
+          <End Role="Categories" Type="Self.Categories" Multiplicity="0..1" />
+          <End Role="Products" Type="Self.Products" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Categories">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Products">
+              <PropertyRef Name="categoryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="FootballShopModelStoreContainer">
+          <EntitySet Name="Accounts" EntityType="Self.Accounts" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="BillDetails" EntityType="Self.BillDetails" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Bills" EntityType="Self.Bills" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Carts" EntityType="Self.Carts" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Categories" EntityType="Self.Categories" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Products" EntityType="Self.Products" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_BillDetails_Bills" Association="Self.FK_BillDetails_Bills">
+            <End Role="Bills" EntitySet="Bills" />
+            <End Role="BillDetails" EntitySet="BillDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_BillDetails_Products" Association="Self.FK_BillDetails_Products">
+            <End Role="Products" EntitySet="Products" />
+            <End Role="BillDetails" EntitySet="BillDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Carts_Accounts" Association="Self.FK_Carts_Accounts">
+            <End Role="Accounts" EntitySet="Accounts" />
+            <End Role="Carts" EntitySet="Carts" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Carts_Products" Association="Self.FK_Carts_Products">
+            <End Role="Products" EntitySet="Products" />
+            <End Role="Carts" EntitySet="Carts" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Orders_Accounts" Association="Self.FK_Orders_Accounts">
+            <End Role="Accounts" EntitySet="Accounts" />
+            <End Role="Bills" EntitySet="Bills" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Products_Categories" Association="Self.FK_Products_Categories">
+            <End Role="Categories" EntitySet="Categories" />
+            <End Role="Products" EntitySet="Products" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="FootballShopModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Account">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="email" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="password" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="role" Type="Int32" />
+          <Property Name="phone" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
+          <Property Name="address" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Cart" Relationship="Self.FK_Carts_Accounts" FromRole="Accounts" ToRole="Carts" />
+          <NavigationProperty Name="Bills" Relationship="Self.FK_Orders_Accounts" FromRole="Accounts" ToRole="Bills" />
+        </EntityType>
+        <EntityType Name="BillDetail">
+          <Key>
+            <PropertyRef Name="billId" />
+          </Key>
+          <Property Name="billId" Type="Int32" Nullable="false" />
+          <Property Name="productId" Type="Int32" />
+          <Property Name="quantity" Type="Int32" />
+          <Property Name="unitPrice" Type="Double" />
+          <NavigationProperty Name="Bill" Relationship="Self.FK_BillDetails_Bills" FromRole="BillDetails" ToRole="Bills" />
+          <NavigationProperty Name="Product" Relationship="Self.FK_BillDetails_Products" FromRole="BillDetails" ToRole="Products" />
+        </EntityType>
+        <EntityType Name="Bill">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="accountId" Type="Int32" />
+          <Property Name="date" Type="DateTime" Precision="3" />
+          <Property Name="totalPrice" Type="Double" />
+          <Property Name="status" Type="Int32" />
+          <NavigationProperty Name="Account" Relationship="Self.FK_Orders_Accounts" FromRole="Bills" ToRole="Accounts" />
+          <NavigationProperty Name="BillDetail" Relationship="Self.FK_BillDetails_Bills" FromRole="Bills" ToRole="BillDetails" />
+        </EntityType>
+        <EntityType Name="Cart">
+          <Key>
+            <PropertyRef Name="accountId" />
+          </Key>
+          <Property Name="accountId" Type="Int32" Nullable="false" />
+          <Property Name="productId" Type="Int32" />
+          <Property Name="quantity" Type="Int32" />
+          <NavigationProperty Name="Account" Relationship="Self.FK_Carts_Accounts" FromRole="Carts" ToRole="Accounts" />
+          <NavigationProperty Name="Product" Relationship="Self.FK_Carts_Products" FromRole="Carts" ToRole="Products" />
+        </EntityType>
+        <EntityType Name="Category">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Products" Relationship="Self.FK_Products_Categories" FromRole="Categories" ToRole="Products" />
+        </EntityType>
+        <EntityType Name="Product">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="categoryId" Type="Int32" />
+          <Property Name="brand" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="price" Type="Double" />
+          <Property Name="discount" Type="Int32" />
+          <Property Name="image" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="size" Type="String" MaxLength="5" FixedLength="false" Unicode="true" />
+          <Property Name="quantity" Type="Int32" />
+          <Property Name="infor" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="video" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="rate" Type="Double" />
+          <NavigationProperty Name="BillDetails" Relationship="Self.FK_BillDetails_Products" FromRole="Products" ToRole="BillDetails" />
+          <NavigationProperty Name="Carts" Relationship="Self.FK_Carts_Products" FromRole="Products" ToRole="Carts" />
+          <NavigationProperty Name="Category" Relationship="Self.FK_Products_Categories" FromRole="Products" ToRole="Categories" />
+        </EntityType>
+        <Association Name="FK_Carts_Accounts">
+          <End Role="Accounts" Type="Self.Account" Multiplicity="1" />
+          <End Role="Carts" Type="Self.Cart" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Accounts">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Carts">
+              <PropertyRef Name="accountId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Orders_Accounts">
+          <End Role="Accounts" Type="Self.Account" Multiplicity="0..1" />
+          <End Role="Bills" Type="Self.Bill" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Accounts">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Bills">
+              <PropertyRef Name="accountId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_BillDetails_Bills">
+          <End Role="Bills" Type="Self.Bill" Multiplicity="1" />
+          <End Role="BillDetails" Type="Self.BillDetail" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Bills">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="BillDetails">
+              <PropertyRef Name="billId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_BillDetails_Products">
+          <End Role="Products" Type="Self.Product" Multiplicity="0..1" />
+          <End Role="BillDetails" Type="Self.BillDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Products">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="BillDetails">
+              <PropertyRef Name="productId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Carts_Products">
+          <End Role="Products" Type="Self.Product" Multiplicity="0..1" />
+          <End Role="Carts" Type="Self.Cart" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Products">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Carts">
+              <PropertyRef Name="productId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Products_Categories">
+          <End Role="Categories" Type="Self.Category" Multiplicity="0..1" />
+          <End Role="Products" Type="Self.Product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Categories">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Products">
+              <PropertyRef Name="categoryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="FootballShopEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Accounts" EntityType="Self.Account" />
+          <EntitySet Name="BillDetails" EntityType="Self.BillDetail" />
+          <EntitySet Name="Bills" EntityType="Self.Bill" />
+          <EntitySet Name="Carts" EntityType="Self.Cart" />
+          <EntitySet Name="Categories" EntityType="Self.Category" />
+          <EntitySet Name="Products" EntityType="Self.Product" />
+          <AssociationSet Name="FK_Carts_Accounts" Association="Self.FK_Carts_Accounts">
+            <End Role="Accounts" EntitySet="Accounts" />
+            <End Role="Carts" EntitySet="Carts" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Orders_Accounts" Association="Self.FK_Orders_Accounts">
+            <End Role="Accounts" EntitySet="Accounts" />
+            <End Role="Bills" EntitySet="Bills" />
+          </AssociationSet>
+          <AssociationSet Name="FK_BillDetails_Bills" Association="Self.FK_BillDetails_Bills">
+            <End Role="Bills" EntitySet="Bills" />
+            <End Role="BillDetails" EntitySet="BillDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_BillDetails_Products" Association="Self.FK_BillDetails_Products">
+            <End Role="Products" EntitySet="Products" />
+            <End Role="BillDetails" EntitySet="BillDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Carts_Products" Association="Self.FK_Carts_Products">
+            <End Role="Products" EntitySet="Products" />
+            <End Role="Carts" EntitySet="Carts" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Products_Categories" Association="Self.FK_Products_Categories">
+            <End Role="Categories" EntitySet="Categories" />
+            <End Role="Products" EntitySet="Products" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="FootballShopModelStoreContainer" CdmEntityContainer="FootballShopEntities">
+          <EntitySetMapping Name="Accounts">
+            <EntityTypeMapping TypeName="FootballShopModel.Account">
+              <MappingFragment StoreEntitySet="Accounts">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="password" ColumnName="password" />
+                <ScalarProperty Name="role" ColumnName="role" />
+                <ScalarProperty Name="phone" ColumnName="phone" />
+                <ScalarProperty Name="address" ColumnName="address" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="BillDetails">
+            <EntityTypeMapping TypeName="FootballShopModel.BillDetail">
+              <MappingFragment StoreEntitySet="BillDetails">
+                <ScalarProperty Name="billId" ColumnName="billId" />
+                <ScalarProperty Name="productId" ColumnName="productId" />
+                <ScalarProperty Name="quantity" ColumnName="quantity" />
+                <ScalarProperty Name="unitPrice" ColumnName="unitPrice" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Bills">
+            <EntityTypeMapping TypeName="FootballShopModel.Bill">
+              <MappingFragment StoreEntitySet="Bills">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="accountId" ColumnName="accountId" />
+                <ScalarProperty Name="date" ColumnName="date" />
+                <ScalarProperty Name="totalPrice" ColumnName="totalPrice" />
+                <ScalarProperty Name="status" ColumnName="status" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Carts">
+            <EntityTypeMapping TypeName="FootballShopModel.Cart">
+              <MappingFragment StoreEntitySet="Carts">
+                <ScalarProperty Name="accountId" ColumnName="accountId" />
+                <ScalarProperty Name="productId" ColumnName="productId" />
+                <ScalarProperty Name="quantity" ColumnName="quantity" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Categories">
+            <EntityTypeMapping TypeName="FootballShopModel.Category">
+              <MappingFragment StoreEntitySet="Categories">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Products">
+            <EntityTypeMapping TypeName="FootballShopModel.Product">
+              <MappingFragment StoreEntitySet="Products">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="categoryId" ColumnName="categoryId" />
+                <ScalarProperty Name="brand" ColumnName="brand" />
+                <ScalarProperty Name="price" ColumnName="price" />
+                <ScalarProperty Name="discount" ColumnName="discount" />
+                <ScalarProperty Name="image" ColumnName="image" />
+                <ScalarProperty Name="size" ColumnName="size" />
+                <ScalarProperty Name="quantity" ColumnName="quantity" />
+                <ScalarProperty Name="infor" ColumnName="infor" />
+                <ScalarProperty Name="video" ColumnName="video" />
+                <ScalarProperty Name="rate" ColumnName="rate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

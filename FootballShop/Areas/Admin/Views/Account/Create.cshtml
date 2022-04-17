@@ -1,0 +1,68 @@
+﻿@model FootballShopModel.Models.Account
+
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+<div class="form px-4">
+    <button class="btn btn-primary mb-4">
+        <a href="@Url.Action("Index")" class="text-white text-decoration-none">Quay lại danh sách tài khoản</a>
+    </button>
+    <h2>TẠO MỘT TÀI KHOẢN MỚI</h2>
+    <div class="row">
+        <div class="form-group col-6">
+            <label for="name">Họ tên</label>
+            @Html.TextBoxFor(model => model.name, new { @name = "name", @class = "form-control form-control-user", @type = "text", @placeholder = "Nhập họ tên" })
+            @*<input id="add-modal-name" name="name" type="text" class="form-control"
+                placeholder="Nhập họ tên">*@
+        </div>
+        <div class="form-group col-6">
+            <label for="email">Email</label>
+            @Html.TextBoxFor(model => model.email, new { @name = "email", @class = "form-control form-control-user", @type = "email", @placeholder = "Nhập email" })
+            @*<input id="add-modal-email" name="email" type="email" class="form-control"
+                placeholder="Nhập email">*@
+        </div>
+    </div>
+    <div class="row">
+        <div class="form-group col-6">
+            <label for="password">Mật khẩu</label>
+            @Html.TextBoxFor(model => model.password, new { @name = "password", @class = "form-control form-control-user", @type = "password", @placeholder = "Nhập mật khẩu" })
+            @*<input type="password" name="password" id="add-modal-password" class="form-control"
+                placeholder="Enter password">*@
+        </div>
+        <div class="form-group col-6">
+            <label for="role">Phân quyền</label>
+            @*<select name="role" id="add-modal-role" class="form-control">
+                    <option value="0" selected>Quản trị</option>
+                    <option value="1">Người dùng</option>
+                </select>*@
+            @Html.DropDownListFor(model => model.role, (IEnumerable<SelectListItem>)ViewBag.Roles, new { @name = "role", @class = "form-control form-control-user" })
+        </div>
+    </div>
+    <div class="row">
+        <div class="form-group col-6">
+            <label for="phone">Số điện thoại</label>
+            @Html.TextBoxFor(model => model.phone, new { @name = "phone", @class = "form-control form-control-user", @type = "number", @placeholder = "Nhập số điện thoại" })
+            @*<input type="number" name="phone" id="add-modal-phone" class="form-control"
+                placeholder="Nhập số điện thoại">*@
+        </div>
+        <div class="form-group col-6">
+            <label for="address">Địa chỉ</label>
+            @Html.TextBoxFor(model => model.address, new { @name = "address", @class = "form-control form-control-user", @type = "text", @placeholder = "Nhập địa chỉ" })
+            @*<input type="text" name="address" id="add-modal-address" class="form-control"
+                placeholder="Nhập địa chỉ">*@
+        </div>
+    </div>
+
+    <div id="add-modal-alert"></div>
+    <button type="submit" class="btn btn-primary">
+        Tạo mới
+    </button>
+</div>
+}
+

@@ -1,0 +1,117 @@
+﻿@model IEnumerable<FootballShopModel.Models.Product>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container-fluid">
+    <!-- Page Heading -->
+    <h2 class="h3 mb-2 text-gray-800">DANH SÁCH SẢN PHẨM</h2>
+
+    <button class="btn btn-primary mb-3" data-toggle="modal" data-target="#add-modal">
+        <a href="@Url.Action("Create", "Product")" class="text-white text-decoration-none">Tạo sản phẩm mới</a>
+    </button>
+
+    <!-- DataTales Example -->
+    <div class="card shadow mb-4">
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered table-hover table-striped" id="dataTable" width="100%" cellspacing="0">
+                    <thead>
+                        <tr>
+                            <th>
+                                @Html.DisplayNameFor(model => model.name)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.price)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.discount)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.size)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.rate)
+                            </th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.name)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.price)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.discount)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.size)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.rate)
+                                </td>
+                                <td>
+                                    <button class="btn btn-info">
+                                        <a href="@Url.Action("Detail", new { id = item.id })" class="text-white text-decoration-none">Chi tiết</a>
+                                    </button> |
+                                    <button class="btn btn-secondary">
+                                        <a href="@Url.Action("Update", new { id = item.id })" class="text-white text-decoration-none">Cập nhật</a>
+                                    </button> |
+                                    <button class="btn btn-danger" data-toggle="modal" data-target="#confirm-delete" data-product-id=@item.id data-product-name="@item.name">
+                                        Xóa
+                                    </button>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+@* Modals *@
+<div id="confirm-delete" class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Xóa sản phẩm</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>Hành động này không thể khôi phục. Bạn chắc chắn muốn xóa <strong id="modal-body-name"></strong> không?</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
+                <button id="confirm-delete-btn" data-id="" onclick="deleteProduct()" type="button" class="btn btn-danger">Xóa</button>
+            </div>
+        </div>
+    </div>
+</div>
+<form id="hidden-delete-form" action="" method="POST"></form>
+<script>
+    $('#confirm-delete').on('show.bs.modal', function (event) {
+        var button = $(event.relatedTarget)
+        var id = button.data("product-id");
+        var name = button.data("product-name");
+        document.getElementById("confirm-delete-btn").dataset.id = id;
+        document.getElementById("modal-body-name").innerHTML = name;
+
+    })
+
+    function deleteProduct() {
+        var id = document.getElementById("confirm-delete-btn").dataset.id;
+        var hiddenDeleteForm = document.getElementById("hidden-delete-form");
+        hiddenDeleteForm.action = "/Admin/Product/Delete/" + id;
+        hiddenDeleteForm.submit();
+    }
+</script>

@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31911.196
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FootballShop", "FootballShop\FootballShop.csproj", "{B2220523-FFAF-4C83-B026-682E2BF9BA61}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FootballShopModel", "FootballShopModel\FootballShopModel.csproj", "{5AFADBF1-F53B-409F-B11E-0DBCE9603F40}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{B2220523-FFAF-4C83-B026-682E2BF9BA61}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B2220523-FFAF-4C83-B026-682E2BF9BA61}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B2220523-FFAF-4C83-B026-682E2BF9BA61}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B2220523-FFAF-4C83-B026-682E2BF9BA61}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5AFADBF1-F53B-409F-B11E-0DBCE9603F40}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5AFADBF1-F53B-409F-B11E-0DBCE9603F40}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5AFADBF1-F53B-409F-B11E-0DBCE9603F40}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5AFADBF1-F53B-409F-B11E-0DBCE9603F40}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {5CB306BB-E0A8-4722-87E2-A599FD7FC253}
+	EndGlobalSection
+EndGlobal
