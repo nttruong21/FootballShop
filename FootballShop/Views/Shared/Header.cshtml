@@ -1,17 +1,15 @@
-﻿<header>
+﻿@model List<FootballShopModel.Models.Category>
+@*@{
+    var allCategories = (List<FootballShopModel.Models.Category>)ViewBag.allCategories;
+}*@
+<header class="header-v4">
     <!-- Header desktop -->
     <div class="container-menu-desktop">
         <!-- Topbar -->
         <div class="top-bar">
             <div class="content-topbar flex-sb-m h-full container">
                 <div class="left-top-bar">
-                    Free ship trên 500.000đ
-                </div>
-
-                <div class="right-top-bar flex-w h-full">
-                    <a href="#" class="flex-c-m trans-04 p-lr-25">
-                        Hỗ trợ và hỏi đáp
-                    </a>
+                    Free ship những hóa đơn trên 500.000đ
                 </div>
             </div>
         </div>
@@ -20,29 +18,29 @@
             <nav class="limiter-menu-desktop container">
 
                 <!-- Logo desktop -->
-                <a href="#" class="logo">
+                <a href="@Url.Action("Index", "Home")" class="logo">
                     <img src="~/Assets/Client/images/icons/logo-01.png" alt="IMG-LOGO">
                 </a>
 
                 <!-- Menu desktop -->
                 <div class="menu-desktop">
                     <ul class="main-menu">
-                        <li class="active-menu">
-                            <a class="font-weight-bold" href="index.html">TRANG CHỦ</a>
-                            <!-- <ul class="sub-menu">
-                                <li><a href="index.html">Homepage 1</a></li>
-                                <li><a href="home-02.html">Homepage 2</a></li>
-                                <li><a href="home-03.html">Homepage 3</a></li>
-                            </ul> -->
+                        <li>
+                            <a class="font-weight-bold" href="@Url.Action("Index", "Home")">TRANG CHỦ</a>
                         </li>
-
-
 
                         <li>
-                            <a class="font-weight-bold" href="product.html">SẢN PHẨM</a>
+                            <a class="font-weight-bold" href="#">SẢN PHẨM</a>
+                            <ul class="sub-menu">
+                                @foreach (var cat in Model)
+                                {
+                                    var url = "/san-pham/" + cat.slug;
+                                    <li>
+                                        <a class="cltext font-weight-bold" href="@url">@cat.uppercaseName</a>
+                                    </li>
+                                }
+                            </ul>
                         </li>
-
-
 
                         <li>
                             <a class="font-weight-bold" href="shoping-cart.html">GIỎ HÀNG</a>

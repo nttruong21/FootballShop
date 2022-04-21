@@ -1,0 +1,193 @@
+.icon-second {
+	width: 1.2rem !important;
+	height: 2rem !important;
+}
+
+.mobile-icon {
+	background: url(icons/phone.svg) no-repeat;
+	background-position: center;
+	background-size: contain;
+}
+
+.icon {
+	width: 1.2rem;
+	height: 1.2rem;
+}
+
+.laptop-icon {
+	background: url(icons/laptop.svg) no-repeat;
+	background-position: center;
+	background-size: contain;
+}
+
+.sound-icon {
+	background: url(icons/speaker.svg) no-repeat;
+	background-position: center;
+	background-size: contain;
+}
+
+.tablet-icon {
+	background: url(icons/tablet.svg) no-repeat;
+	background-position: center;
+	background-size: contain;
+}
+
+.watch-icon {
+	background: url(icons/watch.svg) no-repeat;
+	background-position: center;
+	background-size: contain;
+}
+
+.monitor-icon {
+	background: url(icons/monitor.svg) no-repeat;
+	background-position: center;
+	background-size: contain;
+}
+
+.search-icon {
+	background: url(icons/search.svg) no-repeat;
+	background-position: center;
+	background-size: contain;
+}
+
+.pc-icon {
+	background: url(icons/pc.svg) no-repeat;
+	background-position: center;
+	background-size: contain;
+}
+
+.accessory-icon {
+	background: url(icons/accessory.svg) no-repeat;
+	background-position: center;
+	background-size: contain;
+}
+
+.camera-icon {
+	background: url(icons/camera.svg) no-repeat;
+	background-position: center;
+	background-size: contain;
+}
+
+.card-icon {
+	background: url(icons/card.svg) no-repeat;
+	background-position: center;
+	background-size: contain;
+}
+
+.keyboard-icon {
+	background: url(icons/keyboard.svg) no-repeat;
+	background-position: center;
+	background-size: contain;
+}
+
+.saleoff-icon {
+	background: url(icons/saleoff.svg) no-repeat;
+	background-position: center;
+	background-size: contain;
+}
+
+.right-icon {
+	position: absolute;
+	top: 0;
+	right: 0;
+	background: url(icons/right.svg) no-repeat;
+	background-position: center;
+	background-size: contain;
+	width: 1.2rem;
+	height: 1.2rem;
+}
+
+.next-icon {
+	background: url(../icons/next.svg) no-repeat;
+	background-position: center;
+	background-size: contain;
+	margin-left: 0.3rem;
+}
+
+.prev-icon {
+	background: url(../icons/prev.svg) no-repeat;
+	background-position: center;
+	background-size: contain;
+}
+
+.slider-icon {
+	display: block;
+	position: absolute;
+	top: 50%;
+	transform: translateY(-50%);
+	left: 0;
+	width: 1.6rem;
+	height: inherit;
+}
+
+.sale-icon {
+	display: block;
+	position: absolute;
+	width: 1.6rem;
+	height: inherit;
+	filter: invert(60%);
+}
+
+.right-sale {
+	left: -0.6rem;
+}
+
+.left-sale {
+	left: 0.6rem;
+}
+
+.star-full-icon {
+	background: url(../icons/star_full.svg) no-repeat;
+	background-position: center;
+	background-size: contain;
+	width: 1.2rem;
+	height: 1.2rem;
+}
+
+.star-icon {
+	display: inline-block;
+	width: 1.2rem;
+	height: 1.2rem;
+	filter: invert(30%);
+}
+
+.star-haft-icon {
+	background: url(../icons/star_half.svg) no-repeat;
+	background-position: center;
+	background-size: contain;
+}
+
+.star-border-icon {
+	background: url(../icons/star_border.svg) no-repeat;
+	background-position: center;
+	background-size: contain;
+}
+
+.nav-icon {
+	width: 2.2rem;
+	height: 2.2rem;
+}
+
+.support-icon {
+	background: url(../icons/support.svg) no-repeat;
+	background-position: center;
+	background-size: contain;
+}
+
+.ship-icon {
+	background: url(../icons/ship.svg) no-repeat;
+	background-position: center;
+	background-size: contain;
+}
+
+.cart-icon {
+	background: url(../icons/cart.svg) no-repeat;
+	background-position: center;
+	background-size: contain;
+}
+
+.user-icon {
+	background: url(../icons/user.svg) no-repeat;
+	background-position: center;
+	background-size: contain;
+}

@@ -9,18 +9,28 @@ namespace FootballShop.Controllers
 {
     public class HomeController : Controller
     {
-        private AccountDAO accountDao;
-
         // GET: Home
         public ActionResult Index()
         {
             if (ModelState.IsValid)
             {
-                accountDao = new AccountDAO();
-                var listAllAccounts = accountDao.getAllAccount();
-                return View(listAllAccounts);
+                ViewBag.allProducts = new ProductDAO().getAllProducts();
+                ViewBag.discountProducts = new ProductDAO().getAllDiscountProducts();
+                ViewBag.tenMostSoldProducts = new ProductDAO().getTenMostSoldProducts();
+                ViewBag.allCategories = new CategoryDAO().getAllCategories();
             }
             return View();
+        }
+
+        [ChildActionOnly]
+        public PartialViewResult Header()
+        {
+            if (ModelState.IsValid)
+            {
+                var allCategories = new CategoryDAO().getAllCategories();
+                return PartialView(allCategories);
+            }
+            return PartialView();
         }
     }
 }

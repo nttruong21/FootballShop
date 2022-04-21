@@ -33,6 +33,8 @@ namespace FootballShopModel.Models
         public string infor { get; set; }
         public string video { get; set; }
         public Nullable<double> rate { get; set; }
+        public Nullable<int> soldQuantity { get; set; }
+        public string slug { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<BillDetail> BillDetails { get; set; }

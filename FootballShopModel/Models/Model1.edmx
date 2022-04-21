@@ -50,6 +50,8 @@
           </Key>
           <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="name" Type="nvarchar" MaxLength="255" />
+          <Property Name="slug" Type="nvarchar" MaxLength="255" />
+          <Property Name="uppercaseName" Type="nvarchar" MaxLength="255" />
         </EntityType>
         <EntityType Name="Products">
           <Key>
@@ -64,9 +66,11 @@
           <Property Name="image" Type="nvarchar" MaxLength="255" />
           <Property Name="size" Type="nvarchar" MaxLength="5" />
           <Property Name="quantity" Type="int" />
-          <Property Name="infor" Type="nvarchar" MaxLength="1000" />
+          <Property Name="infor" Type="nvarchar" MaxLength="255" />
           <Property Name="video" Type="nvarchar" MaxLength="255" />
           <Property Name="rate" Type="float" />
+          <Property Name="soldQuantity" Type="int" />
+          <Property Name="slug" Type="nvarchar" MaxLength="255" />
         </EntityType>
         <Association Name="FK_BillDetails_Bills">
           <End Role="Bills" Type="Self.Bills" Multiplicity="1" />
@@ -230,6 +234,8 @@
           <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="name" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Products" Relationship="Self.FK_Products_Categories" FromRole="Categories" ToRole="Products" />
+          <Property Name="slug" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="uppercaseName" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="Product">
           <Key>
@@ -244,12 +250,14 @@
           <Property Name="image" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
           <Property Name="size" Type="String" MaxLength="5" FixedLength="false" Unicode="true" />
           <Property Name="quantity" Type="Int32" />
-          <Property Name="infor" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="infor" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
           <Property Name="video" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
           <Property Name="rate" Type="Double" />
           <NavigationProperty Name="BillDetails" Relationship="Self.FK_BillDetails_Products" FromRole="Products" ToRole="BillDetails" />
           <NavigationProperty Name="Carts" Relationship="Self.FK_Carts_Products" FromRole="Products" ToRole="Carts" />
           <NavigationProperty Name="Category" Relationship="Self.FK_Products_Categories" FromRole="Products" ToRole="Categories" />
+          <Property Name="soldQuantity" Type="Int32" />
+          <Property Name="slug" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
         </EntityType>
         <Association Name="FK_Carts_Accounts">
           <End Role="Accounts" Type="Self.Account" Multiplicity="1" />
@@ -407,6 +415,8 @@
           <EntitySetMapping Name="Categories">
             <EntityTypeMapping TypeName="FootballShopModel.Category">
               <MappingFragment StoreEntitySet="Categories">
+                <ScalarProperty Name="uppercaseName" ColumnName="uppercaseName" />
+                <ScalarProperty Name="slug" ColumnName="slug" />
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="name" ColumnName="name" />
               </MappingFragment>
@@ -415,6 +425,8 @@
           <EntitySetMapping Name="Products">
             <EntityTypeMapping TypeName="FootballShopModel.Product">
               <MappingFragment StoreEntitySet="Products">
+                <ScalarProperty Name="slug" ColumnName="slug" />
+                <ScalarProperty Name="soldQuantity" ColumnName="soldQuantity" />
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="name" ColumnName="name" />
                 <ScalarProperty Name="categoryId" ColumnName="categoryId" />

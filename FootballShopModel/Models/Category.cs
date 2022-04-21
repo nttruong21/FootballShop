@@ -22,6 +22,8 @@ namespace FootballShopModel.Models
     
         public int id { get; set; }
         public string name { get; set; }
+        public string slug { get; set; }
+        public string uppercaseName { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Product> Products { get; set; }

@@ -136,6 +136,7 @@
     <Compile Include="Areas\Admin\Controllers\LoginController.cs" />
     <Compile Include="Areas\Admin\Controllers\ProductController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\ProductController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -2222,6 +2223,9 @@
     <Content Include="Assets\Admin\vendor\jquery\jquery.slim.js" />
     <Content Include="Assets\Admin\vendor\jquery\jquery.slim.min.js" />
     <Content Include="Assets\Client\css\main.css" />
+    <Content Include="Assets\Client\css\base.css" />
+    <Content Include="Assets\Client\css\style.css" />
+    <Content Include="Assets\Client\css\icon.css" />
     <Content Include="Assets\Client\css\util.css" />
     <Content Include="Assets\Client\fonts\font-awesome-4.7.0\css\font-awesome.css" />
     <Content Include="Assets\Client\fonts\font-awesome-4.7.0\css\font-awesome.min.css" />
@@ -2234,6 +2238,8 @@
     <Content Include="Assets\Client\fonts\linearicons-v1.0.0\WebFont\Linearicons-Free.svg" />
     <Content Include="Assets\Client\fonts\Montserrat\OFL.txt" />
     <Content Include="Assets\Client\fonts\PlayfairDisplay\OFL.txt" />
+    <Content Include="Assets\Client\icons\next.svg" />
+    <Content Include="Assets\Client\icons\prev.svg" />
     <Content Include="Assets\Client\images\ao1.jpg" />
     <Content Include="Assets\Client\images\aodabanh.jpg" />
     <Content Include="Assets\Client\images\aodabanhtest.jpg" />
@@ -2272,6 +2278,7 @@
     <Content Include="Assets\Client\images\slider\2.jpg" />
     <Content Include="Assets\Client\js\main.js" />
     <Content Include="Assets\Client\js\map-custom.js" />
+    <Content Include="Assets\Client\js\flash-sale.js" />
     <Content Include="Assets\Client\js\slick-custom.js" />
     <Content Include="Assets\Client\vendor\animate\animate.css" />
     <Content Include="Assets\Client\vendor\animsition\css\animsition.css" />
@@ -2641,6 +2648,7 @@
     <Content Include="Assets\Client\vendor\slick\slick.less" />
     <Content Include="Assets\Client\vendor\slick\slick.scss" />
     <Content Include="Assets\Client\images\slider\3.jpg" />
+    <Content Include="Assets\Client\images\1.jpg" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
@@ -2665,6 +2673,9 @@
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Shared\Header.cshtml" />
+    <Content Include="Views\Shared\Footer.cshtml" />
+    <Content Include="Views\Product\ProductsByCategory.cshtml" />
+    <Content Include="Views\Product\ProductDetail.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

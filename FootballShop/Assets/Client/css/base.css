@@ -1,0 +1,182 @@
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+	list-style: none;
+	text-decoration: none;
+}
+
+html {
+	font-family: 'Nunito', sans-serif;
+	font-size: 1rem;
+	scroll-behavior: smooth;
+	user-select: none;
+}
+
+.grid {
+	width: 100%;
+	display: block;
+	padding: 0;
+}
+
+.wide {
+	width: 1200px;
+	margin: 0 auto;
+}
+
+.row {
+	display: flex;
+	flex-wrap: wrap;
+	margin: 0;
+}
+
+.gutter {
+	padding: 0 4px;
+}
+
+.c-2 {
+	width: 16.667%;
+}
+
+.c-3 {
+	width: 25%;
+}
+
+.c-4 {
+	width: 38.8%;
+}
+
+.c-6 {
+	width: 50%;
+}
+
+.c-7 {
+	width: 58.333%;
+}
+
+.c-12 {
+	width: 100%;
+}
+
+.disable {
+	display: none;
+}
+
+.coming__soon {
+	margin-bottom: 10px;
+	border: 1px solid #d70018;
+	display: inline-block;
+	padding: 3px 5px;
+	border-radius: 5px;
+	background-color: #e8dddd;
+}
+
+	.coming__soon p {
+		font-size: 0.8rem;
+		color: #d70018;
+	}
+
+.flash__sale__discount {
+	background-color: #cd0f1d;
+	position: absolute;
+	height: 25px;
+	width: 80px;
+	border-top-right-radius: 20px;
+	border-bottom-right-radius: 20px;
+	z-index: 1;
+	top: 16px;
+	left: -4px;
+}
+
+	.flash__sale__discount::after {
+		content: '';
+		width: 5px;
+		height: 5px;
+		border-radius: 50%;
+		background-color: #cd0f1d;
+		position: absolute;
+		top: 22px;
+	}
+
+	.flash__sale__discount p {
+		font-size: 0.8rem;
+		color: white;
+		position: relative;
+		top: 50%;
+		left: 10%;
+		transform: translateY(-50%);
+	}
+
+.hot__sale {
+	width: 60px;
+	height: 60px;
+	position: absolute;
+	right: -10px;
+	top: -8px;
+}
+
+	.hot__sale img {
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+	}
+
+
+/* Product Title */
+
+.featured__phone__title {
+	height: 34px;
+	display: flex;
+	align-items: center;
+}
+
+.featured__phone__gutter {
+	justify-content: space-between;
+	margin-bottom: 10px;
+}
+
+.featured__phone__title__text {
+	font-size: 1.6rem;
+	color: #444;
+	font-weight: 700;
+}
+
+.featured__phone__title:hover .featured__phone__title__text {
+	text-decoration: underline;
+}
+
+.toggle {
+	display: none;
+}
+
+.active {
+	display: block;
+}
+
+.turn-on {
+	width: 100%;
+}
+
+.width {
+	width: 20px;
+	background-color: #d70018;
+}
+
+.slider__top__wrapper__tablet__dot__item.dot-list-style {
+	background-color: #cd0f1d;
+	width: 20px;
+}
+
+.tablet__slider__dot__item.dot-list-style {
+	background-color: #cd0f1d;
+	width: 20px;
+}
+
+.smartphone__slider__dot__item.dot-list-style {
+	background-color: #cd0f1d;
+	width: 20px;
+}
+
+.featured__phone__product__item.view__all {
+	display: none;
+}

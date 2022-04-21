@@ -27,6 +27,12 @@ namespace FootballShopModel.DAO
             return db.Categories.FirstOrDefault(cat => cat.id == id);
         }
 
+        // Get one category by slug
+        public Category getCategoryBySlug(string slug)
+        {
+            return db.Categories.FirstOrDefault(cat => cat.slug.Equals(slug));
+        }
+
         // Create 
         public bool CreateCategory(Category cat)
         {

@@ -33,14 +33,19 @@
     <!--===============================================================================================-->
     <link rel="stylesheet" type="text/css" href="~/Assets/Client/css/util.css">
     <link rel="stylesheet" type="text/css" href="~/Assets/Client/css/main.css">
+    <link rel="stylesheet" type="text/css" href="~/Assets/Client/css/base.css">
+    <link rel="stylesheet" type="text/css" href="~/Assets/Client/css/style.css">
+    <link rel="stylesheet" type="text/css" href="~/Assets/Client/css/icon.css">
     <!--===============================================================================================-->
 </head>
 <body class="animsition">
 
     <!-- Header -->
-    @RenderPage("Header.cshtml")
+    @{ Html.RenderAction("Header", "Home");}
 
     @RenderBody()
+
+    @RenderPage("Footer.cshtml")
 
     <!--===============================================================================================-->
     <script src="~/Assets/Client/vendor/jquery/jquery-3.2.1.min.js"></script>

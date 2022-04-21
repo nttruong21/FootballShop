@@ -13,6 +13,22 @@ namespace FootballShop
         {
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
+            // /san-pham/:slug
+            routes.MapRoute(
+                name: "Product Category",
+                url: "san-pham/{slug}",
+                defaults: new { controller = "Product", action = "ProductsByCategory", id = UrlParameter.Optional },
+                namespaces: new[] { "FootballShop.Controllers" }
+            );
+
+            // /chi-tiet/:slug
+            routes.MapRoute(
+                name: "Product Detail",
+                url: "chi-tiet/{slug}",
+                defaults: new { controller = "Product", action = "ProductDetail", id = UrlParameter.Optional },
+                namespaces: new[] { "FootballShop.Controllers" }
+            );
+
             routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",
