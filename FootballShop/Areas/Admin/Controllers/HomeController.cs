@@ -9,7 +9,7 @@ namespace FootballShop.Areas.Admin.Controllers
 {
     public class HomeController : Controller
     {
-        // GET: /Admin/Home/Index
+        // [GET] /Admin/Home/Index
         public ActionResult Index()
         {
             // KIỂM TRA SESION (ĐÃ ĐĂNG NHẬP HAY CHƯA)
@@ -20,7 +20,7 @@ namespace FootballShop.Areas.Admin.Controllers
             return View();
         }
 
-        // GET: Admin/Home/Account
+        // [GET] Admin/Home/Account
         public ActionResult Account()
         {
             return View();

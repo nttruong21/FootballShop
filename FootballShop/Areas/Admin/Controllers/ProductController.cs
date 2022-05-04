@@ -12,7 +12,7 @@ namespace FootballShop.Areas.Admin.Controllers
     public class ProductController : BaseController
     {
         private ProductDAO productDao;
-        // GET: /Admin/Product
+        // [GET] /Admin/Product
         public ActionResult Index()
         {
             if(ModelState.IsValid)
@@ -24,7 +24,7 @@ namespace FootballShop.Areas.Admin.Controllers
             return View();
         }
 
-        // GET: /Admin/Product/Create
+        // [GET] /Admin/Product/Create
         public ActionResult Create()
         {
             CategoryDAO categoryDao = new CategoryDAO();
@@ -33,7 +33,7 @@ namespace FootballShop.Areas.Admin.Controllers
             return View();
         }
 
-        // GET: /Admin/Product/Update
+        // [GET] /Admin/Product/Update
         public ActionResult Update(int id)
         {
             if(id == null)
@@ -56,7 +56,7 @@ namespace FootballShop.Areas.Admin.Controllers
             return View(product);
         }
 
-        // GET: /Admin/Product/Detail
+        // [GET] /Admin/Product/Detail
         public ActionResult Detail(int id)
         {
             if (id == null)
@@ -79,7 +79,7 @@ namespace FootballShop.Areas.Admin.Controllers
             return View(product);
         }
 
-        // POST: /Admin/Product/Create
+        // [POST] /Admin/Product/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create(Product obj, HttpPostedFileBase imageUpload)
@@ -106,22 +106,27 @@ namespace FootballShop.Areas.Admin.Controllers
                 productDao = new ProductDAO();
 
                 // Save file
-                //var listAllProduct = productDao.getAllProducts();
-                //int id = listAllProduct.Count > 0 ? listAllProduct.Last().id : 1;
-                //string imageName = id.ToString() + "." + Path.GetFileName(imageUpload.FileName).Split('.')[1];
-                //string path = Path.Combine(Server.MapPath("~/Upload"), imageName);
-                //imageUpload.SaveAs(path);
                 saveFile(productDao, obj, imageUpload);
 
                 // Create product to database
+                obj.slug = GenerateSlug(convertToUnSign3(obj.name)) + "-" + (productDao.getMaxId() + 1);
                 obj.rate = 0;
-                productDao.CreateProduct(obj);
-                setAlert("Tạo mới sản phẩm thành công", "success");
+                obj.soldQuantity = 0;
+                
+                // Create product to database
+                if (productDao.CreateProduct(obj))
+                {
+                    setAlert("Tạo sản phẩm mới thành công", "success");
+                }
+                else
+                {
+                    setAlert("Tạo sản phẩm mới thất bại", "danger");
+                }
             }
             return RedirectToAction("Create");
         }
 
-        // POST: /Admin/Product/Update/
+        // [POST] /Admin/Product/Update/:id
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Update(Product obj, HttpPostedFileBase imageUpload)
@@ -146,12 +151,6 @@ namespace FootballShop.Areas.Admin.Controllers
                     if (imageUpload != null && imageUpload.ContentLength > 0)
                     {
                         // Save file
-                        //var listAllProduct = productDao.getAllProducts();
-                        //int id = listAllProduct.Count > 0 ? listAllProduct.Last().id : 1;
-                        //string imageName = id.ToString() + "." + Path.GetFileName(imageUpload.FileName).Split('.')[1];
-                        //string path = Path.Combine(Server.MapPath("~/Upload"), imageName);
-                        //imageUpload.SaveAs(path);
-                        //product.image = imageName;
                         saveFile(productDao, product, imageUpload);
                     }
                     product.name = obj.name;
@@ -163,6 +162,7 @@ namespace FootballShop.Areas.Admin.Controllers
                     product.size = obj.size;
                     product.quantity = obj.quantity;
                     product.infor = obj.infor;
+                    product.slug = GenerateSlug(convertToUnSign3(product.name)) + "-" + product.id;
 
                     // Update product to database
                     if (productDao.UpdateProduct(product))
@@ -171,14 +171,14 @@ namespace FootballShop.Areas.Admin.Controllers
                     }
                     else
                     {
-                        setAlert("Có lỗi xảy ra khi cập nhật thông tin sản phẩm", "danger");
+                        setAlert("Cập nhật sản phẩm thất bại", "danger");
                     }
                 }
             }
             return RedirectToAction("Update");
         }
 
-        // POST: /Admin/Product/Delete/:id
+        // [POST] /Admin/Product/Delete/:id
         [HttpPost]
         public ActionResult Delete(int id)
         {
@@ -191,12 +191,16 @@ namespace FootballShop.Areas.Admin.Controllers
                     setAlert("Không tìm thấy sản phẩm", "danger");
                     return RedirectToAction("Index");
                 }
-                if(!productDao.DeleteProduct(product))
+
+                // Remove product to database
+                if (productDao.DeleteProduct(product))
                 {
-                    setAlert("Có lỗi khi xóa sản phẩm", "danger");
-                    return RedirectToAction("Index");
+                    setAlert("Xóa sản phẩm thành công", "success");
                 }
-                setAlert("Xóa sản phẩm thành công", "success");
+                else
+                {
+                    setAlert("Xóa sản phẩm thất bại", "danger");
+                }
                 return RedirectToAction("Index");
             }
             return RedirectToAction("Index");
@@ -207,8 +211,8 @@ namespace FootballShop.Areas.Admin.Controllers
         {
             var listAllProduct = productDao.getAllProducts();
             int id = listAllProduct.Count > 0 ? listAllProduct.Last().id : 1;
-            string imageName = id.ToString() + "." + Path.GetFileName(imageUpload.FileName).Split('.')[1];
-            string path = Path.Combine(Server.MapPath("~/Upload"), imageName);
+            string imageName = "sp-" + id.ToString() + "." + Path.GetFileName(imageUpload.FileName).Split('.')[1];
+            string path = Path.Combine(Server.MapPath("~/Assets/Admin/img/product"), imageName);
             imageUpload.SaveAs(path);
             obj.image = imageName;
         }

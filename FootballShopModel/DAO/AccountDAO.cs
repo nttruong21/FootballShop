@@ -9,15 +9,16 @@ namespace FootballShopModel.DAO
 {
     public class AccountDAO
     {
-        private FootballShopEntities db;
+        private FootballEntities db;
         public AccountDAO()
         {
-            db = new FootballShopEntities();
+            db = new FootballEntities();
         }
 
         public bool login(string email, string password)
         {
-            var account = db.Accounts.FirstOrDefault(x => x.email.Equals(email) && x.password.Equals(password));
+            string passwordToHash = Common.MD5Hash(password);
+            var account = db.Accounts.FirstOrDefault(x => x.email.Equals(email) && x.password.Equals(passwordToHash));
             if(account == null)
             {
                 return false;

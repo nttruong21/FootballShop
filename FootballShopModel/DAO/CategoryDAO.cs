@@ -9,10 +9,10 @@ namespace FootballShopModel.DAO
 {
     public class CategoryDAO
     {
-        private FootballShopEntities db;
+        private FootballEntities db;
         public CategoryDAO()
         {
-            db = new FootballShopEntities();
+            db = new FootballEntities();
         }
 
         // Get all categories
@@ -31,6 +31,26 @@ namespace FootballShopModel.DAO
         public Category getCategoryBySlug(string slug)
         {
             return db.Categories.FirstOrDefault(cat => cat.slug.Equals(slug));
+        }
+
+        // Get one category by name
+        public Category getCategoryByName(string name)
+        {
+            return db.Categories.FirstOrDefault(cat => cat.name.Equals(name));
+        }
+
+        // Get max id
+        public int getMaxId()
+        {
+            var obj = db.Categories.ToList();
+            if(obj.Count > 0)
+            {
+                return obj.Last().id;
+            } else
+            {
+                return 0;
+            }
+
         }
 
         // Create 
@@ -62,8 +82,8 @@ namespace FootballShopModel.DAO
             }
         }
 
-        // Delete
-        public bool DeleteCategory(Category cat)
+        // Remove
+        public bool RemoveCategory(Category cat)
         {
             try
             {

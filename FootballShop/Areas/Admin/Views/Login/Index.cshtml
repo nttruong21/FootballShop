@@ -48,23 +48,13 @@
                                     </div>
                                     @using (Html.BeginForm())
                                     {
-                                        @Html.AntiForgeryToken()
-                                        @Html.ValidationSummary(true, null, new { @class = "alert alert-danger p-3" })
+                                        @Html.ValidationSummary(true, null, new { @class = "card bg-danger text-white shadow p-3 mb-2" })
                                         <div class="form">
                                             <div class="form-group">
                                                 @Html.TextBoxFor(model => model.email, new { @name = "email", @class = "form-control form-control-user", @type = "email", @placeholder = "Enter Email Address..." })
                                             </div>
                                             <div class="form-group">
                                                 @Html.TextBoxFor(model => model.password, new { @name = "password", @class = "form-control form-control-user", @type = "password", @placeholder = "Enter Password..." })
-                                            </div>
-                                            <div class="form-group">
-                                                <div class="custom-control custom-checkbox small">
-                                                    <input type="checkbox" class="custom-control-input" id="customCheck">
-                                                    <label class="custom-control-label" for="customCheck">
-                                                        Remember
-                                                        Me
-                                                    </label>
-                                                </div>
                                             </div>
                                             <button type="submit" class="btn btn-primary btn-user btn-block">
                                                 Login

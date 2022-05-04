@@ -9,5 +9,6 @@ namespace FootballShopModel
     public class Constants
     {
         public const string EMAIL_SESSION = "EMAIL_SESSION";
+        public const string NAME_SESSION = "USER_SESSION";
     }
 }

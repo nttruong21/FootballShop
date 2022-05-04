@@ -9,10 +9,10 @@ namespace FootballShopModel.DAO
 {
     public class ProductDAO
     {
-        private FootballShopEntities db;
+        private FootballEntities db;
         public ProductDAO()
         {
-            db = new FootballShopEntities();
+            db = new FootballEntities();
         }
 
         // Get all products
@@ -56,6 +56,21 @@ namespace FootballShopModel.DAO
         public Product getProductBySlug(string slug)
         {
             return db.Products.Single(x => x.slug.Equals(slug));
+        }
+
+        // Get max id
+        public int getMaxId()
+        {
+            var obj = db.Products.ToList();
+            if (obj.Count > 0)
+            {
+                return obj.Last().id;
+            }
+            else
+            {
+                return 0;
+            }
+
         }
 
         // Create 

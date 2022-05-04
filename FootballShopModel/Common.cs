@@ -25,7 +25,7 @@ namespace FootballShopModel
             return hashString.PadLeft(32, '0');
         }
 
-        public SelectList ToSelectList(DataTable table, string key, string value)
+        public static SelectList ToSelectList(DataTable table, string key, string value)
         {
             List<SelectListItem> list = new List<SelectListItem>();
             foreach(DataRow row in table.Rows)

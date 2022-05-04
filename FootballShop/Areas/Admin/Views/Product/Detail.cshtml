@@ -7,12 +7,12 @@
 
 <div class="form px-4">
     <button class="btn btn-primary mb-4">
-        <a href="@Url.Action("Index")" class="text-white text-decoration-none">Quay lại danh sách sản phẩm</a>
+        <a href="@Url.Action("Index")" class="text-white text-decoration-none">Quay lại</a>
     </button>
     <h2>CHI TIẾT SẢN PHẨM</h2>
     <div class="row">
         <div class="form-group col-6">
-            <img src="~/Upload/@Model.image" alt="" width="100%" height="100%"/>
+            <img src="~/Assets/Admin/img/product/@Model.image" alt="" width="100%" height="100%" />
         </div>
     </div>
     <div class="row">
@@ -39,12 +39,12 @@
         <div class="form-group col-6">
             <label for="discount">Khuyến mãi</label>
             @Html.EditorFor(model => model.discount, new { htmlAttributes = new { @class = "form-control form-control-user", @type = "number", @value = "0", @disabled = "disabled" } })
-          
+
         </div>
         <div class="form-group col-6">
             <label for="video">Video</label>
             @Html.EditorFor(model => model.video, new { htmlAttributes = new { @class = "form-control form-control-user", @type = "text", @disabled = "disabled" } })
-    
+
         </div>
 
     </div>
@@ -52,19 +52,30 @@
         <div class="form-group col-6">
             <label for="size">Kích thước</label>
             @Html.EditorFor(model => model.size, new { htmlAttributes = new { @class = "form-control form-control-user", @type = "text", @disabled = "disabled" } })
-            
+
         </div>
         <div class="form-group col-6">
             <label for="quantity">Số lượng</label>
             @Html.EditorFor(model => model.quantity, new { htmlAttributes = new { @class = "form-control form-control-user", @type = "number", @disabled = "disabled" } })
-           
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="form-group col-6">
+            <label for="rate">Đánh giá</label>
+            @Html.EditorFor(model => model.rate, new { htmlAttributes = new { @class = "form-control form-control-user", @type = "text", @disabled = "disabled" } })
+
+        </div>
+        <div class="form-group col-6">
+            <label for="sold-quantity">Số lượng đã bán</label>
+            @Html.EditorFor(model => model.soldQuantity, new { htmlAttributes = new { @class = "form-control form-control-user", @type = "number", @disabled = "disabled" } })
+
         </div>
     </div>
     <div class="row">
         <div class="form-group col-6">
             <label for="infor">Thông tin</label>
             @Html.TextAreaFor(model => model.infor, new { @class = "form-control form-control-user", @type = "text", @rows = 4, @disabled = "disabled" })
-         
         </div>
 
     </div>

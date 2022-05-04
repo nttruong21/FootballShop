@@ -10,7 +10,7 @@
     <h2 class="h3 mb-2 text-gray-800">DANH SÁCH TÀI KHOẢN</h2>
 
     <button class="btn btn-primary mb-3" data-toggle="modal" data-target="#add-modal">
-        <a href="@Url.Action("Create", "Account")" class="text-white text-decoration-none">Tạo tài khoản mới</a>
+        <a href="@Url.Action("Create", "Account")" class="text-white text-decoration-none">Tạo mới</a>
     </button>
 
     <!-- DataTales Example -->
@@ -40,7 +40,7 @@
                                         <a href="@Url.Action("Detail", new { id = item.id })" class = "text-white text-decoration-none">Chi tiết</a>
                                         @*@Html.ActionLink("Chi tiết", "Detail", "Account", new { id = item.id, @class = "text-white text-decoration-none" })*@
                                     </button> |
-                                    <button class="btn btn-secondary">
+                                    <button class="btn btn-warning">
                                         @*@Html.ActionLink("Chỉnh sửa", "Update", "Account", @item.id, new { id = item.id, @class = "text-white text-decoration-none" })*@
                                         @*<a class="text-white text-decoration-none" href="~/Admin/Account/Update/@item.id">Chỉnh sửa</a>*@
                                         <a href="@Url.Action("Update", new { id = item.id })" class="text-white text-decoration-none">Cập nhật</a>

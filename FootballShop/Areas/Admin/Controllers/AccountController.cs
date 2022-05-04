@@ -12,7 +12,7 @@ namespace FootballShop.Areas.Admin.Controllers
     {
         private AccountDAO accountDao;
 
-        // GET: /Admin/Account
+        // [GET] /Admin/Account
         [HttpGet]
         public ActionResult Index()
         {
@@ -25,7 +25,7 @@ namespace FootballShop.Areas.Admin.Controllers
             return View();
         }
 
-        // GET: /Admin/Account/Create
+        // [GET] /Admin/Account/Create
         [HttpGet]
         public ActionResult Create()
         {
@@ -40,7 +40,7 @@ namespace FootballShop.Areas.Admin.Controllers
             return View();
         }
 
-        // GET
+        // [GET] /Admin/Account/Create
         [HttpGet]
         public ActionResult Update(int id)
         {
@@ -65,7 +65,7 @@ namespace FootballShop.Areas.Admin.Controllers
             return View();
         }
 
-        // GET
+        // [GET] /Admin/Account/Detail
         [HttpGet]
         public ActionResult Detail(int id)
         {
@@ -90,7 +90,7 @@ namespace FootballShop.Areas.Admin.Controllers
             return View();
         }
 
-        // POST: /Admin/Account/Create
+        // [POST] /Admin/Account/Create
         [HttpPost]
         public ActionResult Create(Account account)
         {
@@ -163,7 +163,7 @@ namespace FootballShop.Areas.Admin.Controllers
             return RedirectToAction("Create", "Account");
         }
 
-        // POST
+        // [POST] /Admin/Account/Update
         [HttpPost]
         public ActionResult Update(Account account)
         {
@@ -238,7 +238,7 @@ namespace FootballShop.Areas.Admin.Controllers
             return RedirectToAction("Update");
         }
 
-        // Delete
+        // [DELETE] /Admin/Account/Delete
         [HttpPost]
         public ActionResult Delete(int id)
         {

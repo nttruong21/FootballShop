@@ -10,7 +10,7 @@
     <h2 class="h3 mb-2 text-gray-800">DANH SÁCH DANH MỤC SẢN PHẨM</h2>
 
     <button class="btn btn-primary mb-3" data-toggle="modal" data-target="#add-modal">
-        <a href="@Url.Action("Create", "Category")" class="text-white text-decoration-none">Tạo danh mục mới</a>
+        <a href="@Url.Action("Create", "Category")" class="text-white text-decoration-none">Tạo mới</a>
     </button>
 
     <!-- DataTales Example -->
@@ -35,7 +35,7 @@
                                     <button class="btn btn-info">
                                         <a href="@Url.Action("Detail", new { id = item.id })" class="text-white text-decoration-none">Chi tiết</a>
                                     </button> |
-                                    <button class="btn btn-secondary">
+                                    <button class="btn btn-warning">
                                         <a href="@Url.Action("Update", new { id = item.id })" class="text-white text-decoration-none">Cập nhật</a>
                                     </button> |
                                     <button class="btn btn-danger" data-toggle="modal" data-target="#confirm-delete" data-category-id=@item.id data-category-name="@item.name">

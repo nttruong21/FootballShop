@@ -5,25 +5,33 @@
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
 }
 
-@using (Html.BeginForm("Update", "Category", FormMethod.Post))
+@using (Html.BeginForm("Update", "Category", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
     @Html.AntiForgeryToken()
-        
+
 <div class="form px-4">
     <button class="btn btn-primary mb-4">
-        <a href="@Url.Action("Index")" class="text-white text-decoration-none">Quay lại danh sách danh mục</a>
+        <a href="@Url.Action("Index")" class="text-white text-decoration-none">Quay lại</a>
     </button>
     <h2>CẬP NHẬT THÔNG TIN  DANH MỤC</h2>
     <div class="row">
-        <div class="form-group col-6">
-            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-            @Html.LabelFor(model => model.name, htmlAttributes: new { @class = "control-label col-md-2" })
-            @Html.EditorFor(model => model.name, new { htmlAttributes = new { @class = "form-control", @value = Model.name } })
-            @Html.ValidationMessageFor(model => model.name, "", new { @class = "text-danger" })
+        <div class="col-6">
+            @Html.ValidationSummary(true, "", new { @class = "card bg-danger text-white shadow p-3 mb-4" })
         </div>
     </div>
-
-    <div id="add-modal-alert"></div>
+    <div class="row">
+        <div class="form-group col-6">
+            <img src="~/Assets/Admin/img/category/@Model.image" alt="" width="100%" height="100%" />
+        </div>
+        <div class="form-group col-6">
+            <label class="control-label col-md-6">Name</label>
+            @Html.EditorFor(model => model.name, new { htmlAttributes = new { @class = "form-control", @value = Model.name } })
+            <div class="custom-file mt-4">
+                <label class="pl-075" for="imageUpload">Chọn hình ảnh</label>
+                <input class="form-control form-control-user" type="file" name="imageUpload" id="imageUpload" accept="image/*" />
+            </div>
+        </div>
+    </div>
     <button type="submit" class="btn btn-primary">
         Lưu thông tin
     </button>

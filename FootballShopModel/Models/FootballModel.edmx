@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="FootballShopModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="FootballModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Accounts">
           <Key>
             <PropertyRef Name="id" />
@@ -32,7 +32,7 @@
           </Key>
           <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="accountId" Type="int" />
-          <Property Name="date" Type="datetime" />
+          <Property Name="createdAt" Type="datetime" />
           <Property Name="totalPrice" Type="float" />
           <Property Name="status" Type="int" />
         </EntityType>
@@ -52,6 +52,7 @@
           <Property Name="name" Type="nvarchar" MaxLength="255" />
           <Property Name="slug" Type="nvarchar" MaxLength="255" />
           <Property Name="uppercaseName" Type="nvarchar" MaxLength="255" />
+          <Property Name="image" Type="nvarchar" MaxLength="255" />
         </EntityType>
         <EntityType Name="Products">
           <Key>
@@ -66,14 +67,16 @@
           <Property Name="image" Type="nvarchar" MaxLength="255" />
           <Property Name="size" Type="nvarchar" MaxLength="5" />
           <Property Name="quantity" Type="int" />
-          <Property Name="infor" Type="nvarchar" MaxLength="255" />
+          <Property Name="infor" Type="nvarchar" MaxLength="1000" />
           <Property Name="video" Type="nvarchar" MaxLength="255" />
           <Property Name="rate" Type="float" />
           <Property Name="soldQuantity" Type="int" />
           <Property Name="slug" Type="nvarchar" MaxLength="255" />
         </EntityType>
         <Association Name="FK_BillDetails_Bills">
-          <End Role="Bills" Type="Self.Bills" Multiplicity="1" />
+          <End Role="Bills" Type="Self.Bills" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="BillDetails" Type="Self.BillDetails" Multiplicity="0..1" />
           <ReferentialConstraint>
             <Principal Role="Bills">
@@ -85,7 +88,9 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_BillDetails_Products">
-          <End Role="Products" Type="Self.Products" Multiplicity="0..1" />
+          <End Role="Products" Type="Self.Products" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="BillDetails" Type="Self.BillDetails" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Products">
@@ -97,7 +102,9 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Carts_Accounts">
-          <End Role="Accounts" Type="Self.Accounts" Multiplicity="1" />
+          <End Role="Accounts" Type="Self.Accounts" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="Carts" Type="Self.Carts" Multiplicity="0..1" />
           <ReferentialConstraint>
             <Principal Role="Accounts">
@@ -109,7 +116,9 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Carts_Products">
-          <End Role="Products" Type="Self.Products" Multiplicity="0..1" />
+          <End Role="Products" Type="Self.Products" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="Carts" Type="Self.Carts" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Products">
@@ -121,7 +130,9 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Orders_Accounts">
-          <End Role="Accounts" Type="Self.Accounts" Multiplicity="0..1" />
+          <End Role="Accounts" Type="Self.Accounts" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="Bills" Type="Self.Bills" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Accounts">
@@ -133,7 +144,9 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Products_Categories">
-          <End Role="Categories" Type="Self.Categories" Multiplicity="0..1" />
+          <End Role="Categories" Type="Self.Categories" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="Products" Type="Self.Products" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Categories">
@@ -144,7 +157,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="FootballShopModelStoreContainer">
+        <EntityContainer Name="FootballModelStoreContainer">
           <EntitySet Name="Accounts" EntityType="Self.Accounts" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="BillDetails" EntityType="Self.BillDetails" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Bills" EntityType="Self.Bills" Schema="dbo" store:Type="Tables" />
@@ -176,10 +189,11 @@
             <End Role="Products" EntitySet="Products" />
           </AssociationSet>
         </EntityContainer>
-      </Schema></edmx:StorageModels>
+      </Schema>
+    </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
-      <Schema Namespace="FootballShopModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+      <Schema Namespace="FootballModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityType Name="Account">
           <Key>
             <PropertyRef Name="id" />
@@ -211,7 +225,7 @@
           </Key>
           <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="accountId" Type="Int32" />
-          <Property Name="date" Type="DateTime" Precision="3" />
+          <Property Name="createdAt" Type="DateTime" Precision="3" />
           <Property Name="totalPrice" Type="Double" />
           <Property Name="status" Type="Int32" />
           <NavigationProperty Name="Account" Relationship="Self.FK_Orders_Accounts" FromRole="Bills" ToRole="Accounts" />
@@ -233,9 +247,10 @@
           </Key>
           <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="name" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Products" Relationship="Self.FK_Products_Categories" FromRole="Categories" ToRole="Products" />
           <Property Name="slug" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
           <Property Name="uppercaseName" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="image" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Products" Relationship="Self.FK_Products_Categories" FromRole="Categories" ToRole="Products" />
         </EntityType>
         <EntityType Name="Product">
           <Key>
@@ -250,17 +265,19 @@
           <Property Name="image" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
           <Property Name="size" Type="String" MaxLength="5" FixedLength="false" Unicode="true" />
           <Property Name="quantity" Type="Int32" />
-          <Property Name="infor" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="infor" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
           <Property Name="video" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
           <Property Name="rate" Type="Double" />
+          <Property Name="soldQuantity" Type="Int32" />
+          <Property Name="slug" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="BillDetails" Relationship="Self.FK_BillDetails_Products" FromRole="Products" ToRole="BillDetails" />
           <NavigationProperty Name="Carts" Relationship="Self.FK_Carts_Products" FromRole="Products" ToRole="Carts" />
           <NavigationProperty Name="Category" Relationship="Self.FK_Products_Categories" FromRole="Products" ToRole="Categories" />
-          <Property Name="soldQuantity" Type="Int32" />
-          <Property Name="slug" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
         </EntityType>
         <Association Name="FK_Carts_Accounts">
-          <End Role="Accounts" Type="Self.Account" Multiplicity="1" />
+          <End Role="Accounts" Type="Self.Account" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="Carts" Type="Self.Cart" Multiplicity="0..1" />
           <ReferentialConstraint>
             <Principal Role="Accounts">
@@ -272,7 +289,9 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Orders_Accounts">
-          <End Role="Accounts" Type="Self.Account" Multiplicity="0..1" />
+          <End Role="Accounts" Type="Self.Account" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="Bills" Type="Self.Bill" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Accounts">
@@ -284,7 +303,9 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_BillDetails_Bills">
-          <End Role="Bills" Type="Self.Bill" Multiplicity="1" />
+          <End Role="Bills" Type="Self.Bill" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="BillDetails" Type="Self.BillDetail" Multiplicity="0..1" />
           <ReferentialConstraint>
             <Principal Role="Bills">
@@ -296,7 +317,9 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_BillDetails_Products">
-          <End Role="Products" Type="Self.Product" Multiplicity="0..1" />
+          <End Role="Products" Type="Self.Product" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="BillDetails" Type="Self.BillDetail" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Products">
@@ -308,7 +331,9 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Carts_Products">
-          <End Role="Products" Type="Self.Product" Multiplicity="0..1" />
+          <End Role="Products" Type="Self.Product" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="Carts" Type="Self.Cart" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Products">
@@ -320,7 +345,9 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Products_Categories">
-          <End Role="Categories" Type="Self.Category" Multiplicity="0..1" />
+          <End Role="Categories" Type="Self.Category" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="Products" Type="Self.Product" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Categories">
@@ -331,7 +358,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="FootballShopEntities" annotation:LazyLoadingEnabled="true">
+        <EntityContainer Name="FootballEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Accounts" EntityType="Self.Account" />
           <EntitySet Name="BillDetails" EntityType="Self.BillDetail" />
           <EntitySet Name="Bills" EntityType="Self.Bill" />
@@ -368,9 +395,9 @@
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="FootballShopModelStoreContainer" CdmEntityContainer="FootballShopEntities">
+        <EntityContainerMapping StorageEntityContainer="FootballModelStoreContainer" CdmEntityContainer="FootballEntities">
           <EntitySetMapping Name="Accounts">
-            <EntityTypeMapping TypeName="FootballShopModel.Account">
+            <EntityTypeMapping TypeName="FootballModel.Account">
               <MappingFragment StoreEntitySet="Accounts">
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="name" ColumnName="name" />
@@ -383,7 +410,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="BillDetails">
-            <EntityTypeMapping TypeName="FootballShopModel.BillDetail">
+            <EntityTypeMapping TypeName="FootballModel.BillDetail">
               <MappingFragment StoreEntitySet="BillDetails">
                 <ScalarProperty Name="billId" ColumnName="billId" />
                 <ScalarProperty Name="productId" ColumnName="productId" />
@@ -393,18 +420,18 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Bills">
-            <EntityTypeMapping TypeName="FootballShopModel.Bill">
+            <EntityTypeMapping TypeName="FootballModel.Bill">
               <MappingFragment StoreEntitySet="Bills">
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="accountId" ColumnName="accountId" />
-                <ScalarProperty Name="date" ColumnName="date" />
+                <ScalarProperty Name="createdAt" ColumnName="createdAt" />
                 <ScalarProperty Name="totalPrice" ColumnName="totalPrice" />
                 <ScalarProperty Name="status" ColumnName="status" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Carts">
-            <EntityTypeMapping TypeName="FootballShopModel.Cart">
+            <EntityTypeMapping TypeName="FootballModel.Cart">
               <MappingFragment StoreEntitySet="Carts">
                 <ScalarProperty Name="accountId" ColumnName="accountId" />
                 <ScalarProperty Name="productId" ColumnName="productId" />
@@ -413,20 +440,19 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Categories">
-            <EntityTypeMapping TypeName="FootballShopModel.Category">
+            <EntityTypeMapping TypeName="FootballModel.Category">
               <MappingFragment StoreEntitySet="Categories">
-                <ScalarProperty Name="uppercaseName" ColumnName="uppercaseName" />
-                <ScalarProperty Name="slug" ColumnName="slug" />
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="slug" ColumnName="slug" />
+                <ScalarProperty Name="uppercaseName" ColumnName="uppercaseName" />
+                <ScalarProperty Name="image" ColumnName="image" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Products">
-            <EntityTypeMapping TypeName="FootballShopModel.Product">
+            <EntityTypeMapping TypeName="FootballModel.Product">
               <MappingFragment StoreEntitySet="Products">
-                <ScalarProperty Name="slug" ColumnName="slug" />
-                <ScalarProperty Name="soldQuantity" ColumnName="soldQuantity" />
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="name" ColumnName="name" />
                 <ScalarProperty Name="categoryId" ColumnName="categoryId" />
@@ -439,6 +465,8 @@
                 <ScalarProperty Name="infor" ColumnName="infor" />
                 <ScalarProperty Name="video" ColumnName="video" />
                 <ScalarProperty Name="rate" ColumnName="rate" />
+                <ScalarProperty Name="soldQuantity" ColumnName="soldQuantity" />
+                <ScalarProperty Name="slug" ColumnName="slug" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

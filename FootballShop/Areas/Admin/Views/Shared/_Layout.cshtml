@@ -55,8 +55,8 @@
             right: 0;
             top: 20px;
             transform: translateX(100%);
-            transition: all ease-out 0.3s;
-            width: 300px;
+            transition: all ease-out 0.25s;
+            width: 360px;
             border-radius: 4px;
             padding: 12px;
             display: flex;
@@ -117,15 +117,15 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">Đăng xuất</h5>
                     <button class="close" type="button" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">×</span>
                     </button>
                 </div>
-                <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+                <div class="modal-body">Bạn chắc chắn muốn đăng xuất khỏi hệ thống?</div>
                 <div class="modal-footer">
-                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                    <a class="btn btn-primary" href="@Url.Action("Logout", "Home")">Logout</a>
+                    <button class="btn btn-primary" type="button" data-dismiss="modal">Hủy bỏ</button>
+                    <a class="btn btn-danger" href="@Url.Action("Logout", "Home")">Đồng ý</a>
                 </div>
             </div>
         </div>
@@ -135,10 +135,10 @@
         const flash = document.getElementById("flash");
 
         function showFlash() {
-            flash.style.transform = "translateX(0)";
+            flash.style.transform = "translateX(-10%)";
             setTimeout(() => {
                 flash.style.transform = "translateX(100%)";
-            }, 2000);
+            }, 2500);
         }
 
         if (flash) {

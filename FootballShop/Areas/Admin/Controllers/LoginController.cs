@@ -11,30 +11,43 @@ namespace FootballShop.Areas.Admin.Controllers
 {
     public class LoginController : BaseController
     {
-        // GET: Admin/Login
+        // [GET] Admin/Login
         public ActionResult Index()
         {
             return View();
         }
 
+        // [POST] /Admin/Login
         [HttpPost]
-        [ValidateAntiForgeryToken]
         public ActionResult Index(Account account)
         {
-            if(ModelState.IsValid)
+            if (account.email == null || account.email == "")
+            {
+                ModelState.AddModelError("", "Vui lòng nhập email");
+                return View();
+            }
+            if (account.password == null || account.password == "")
+            {
+                ModelState.AddModelError("", "Vui lòng nhập mật khẩu");
+                return View();
+            }
+            if (ModelState.IsValid)
             {
                 var accountDao = new AccountDAO();
-                var result = accountDao.login(account.email, Common.MD5Hash(account.password));
+                var result = accountDao.login(account.email, account.password);
                 if(result == true)
                 {
-                    //ModelState.AddModelError("", "Đăng nhập thành công");
-                    Session.Add(Constants.EMAIL_SESSION, account.email);
+                    var accTmp = accountDao.getAccountByEmail(account.email);
+
+                    Session.Add(Constants.EMAIL_SESSION, accTmp.email);
+                    Session.Add(Constants.NAME_SESSION, accTmp.name);
+
                     return RedirectToAction("Index", "Home");
                 }
                 else
                 {
                     // setAlert("Tài khoản hoặc mật khẩu không hợp lệ", "danger");
-                    ModelState.AddModelError("", "Tài khoản hoặc mật khẩu không hợp lệ");
+                    ModelState.AddModelError("", "Email hoặc mật khẩu không hợp lệ");
                 }
             }
             return View();

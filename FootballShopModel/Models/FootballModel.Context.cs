@@ -13,10 +13,10 @@ namespace FootballShopModel.Models
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class FootballShopEntities : DbContext
+    public partial class FootballEntities : DbContext
     {
-        public FootballShopEntities()
-            : base("name=FootballShopEntities")
+        public FootballEntities()
+            : base("name=FootballEntities")
         {
         }
     

@@ -16,7 +16,7 @@ namespace FootballShopModel.Models
     {
         public int id { get; set; }
         public Nullable<int> accountId { get; set; }
-        public Nullable<System.DateTime> date { get; set; }
+        public Nullable<System.DateTime> createdAt { get; set; }
         public Nullable<double> totalPrice { get; set; }
         public Nullable<int> status { get; set; }
     
