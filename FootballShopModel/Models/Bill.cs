@@ -14,13 +14,23 @@ namespace FootballShopModel.Models
     
     public partial class Bill
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Bill()
+        {
+            this.BillDetails = new HashSet<BillDetail>();
+        }
+    
         public int id { get; set; }
         public Nullable<int> accountId { get; set; }
+        public string recipientName { get; set; }
+        public string recipientAddress { get; set; }
+        public string recipientPhone { get; set; }
         public Nullable<System.DateTime> createdAt { get; set; }
-        public Nullable<double> totalPrice { get; set; }
+        public Nullable<long> totalPrice { get; set; }
         public Nullable<int> status { get; set; }
     
         public virtual Account Account { get; set; }
-        public virtual BillDetail BillDetail { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<BillDetail> BillDetails { get; set; }
     }
 }

@@ -81,48 +81,48 @@
     <Compile Include="DAO\CategoryDAO.cs" />
     <Compile Include="DAO\AccountDAO.cs" />
     <Compile Include="Models\Account.cs">
-      <DependentUpon>FootballModel.tt</DependentUpon>
+      <DependentUpon>FootballShopModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Bill.cs">
-      <DependentUpon>FootballModel.tt</DependentUpon>
+      <DependentUpon>FootballShopModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\BillDetail.cs">
-      <DependentUpon>FootballModel.tt</DependentUpon>
+      <DependentUpon>FootballShopModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\Cart.cs">
-      <DependentUpon>FootballModel.tt</DependentUpon>
+    <Compile Include="Models\CartDetail.cs">
+      <DependentUpon>FootballShopModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Category.cs">
-      <DependentUpon>FootballModel.tt</DependentUpon>
+      <DependentUpon>FootballShopModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\FootballModel.Context.cs">
+    <Compile Include="Models\FootballShopModel.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>FootballModel.Context.tt</DependentUpon>
+      <DependentUpon>FootballShopModel.Context.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\FootballModel.cs">
+    <Compile Include="Models\FootballShopModel.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>FootballModel.tt</DependentUpon>
+      <DependentUpon>FootballShopModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\FootballModel.Designer.cs">
+    <Compile Include="Models\FootballShopModel.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>FootballModel.edmx</DependentUpon>
+      <DependentUpon>FootballShopModel.edmx</DependentUpon>
     </Compile>
     <Compile Include="Models\Product.cs">
-      <DependentUpon>FootballModel.tt</DependentUpon>
+      <DependentUpon>FootballShopModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-    <EntityDeploy Include="Models\FootballModel.edmx">
+    <EntityDeploy Include="Models\FootballShopModel.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>FootballModel.Designer.cs</LastGenOutput>
+      <LastGenOutput>FootballShopModel.Designer.cs</LastGenOutput>
     </EntityDeploy>
-    <None Include="Models\FootballModel.edmx.diagram">
-      <DependentUpon>FootballModel.edmx</DependentUpon>
+    <None Include="Models\FootballShopModel.edmx.diagram">
+      <DependentUpon>FootballShopModel.edmx</DependentUpon>
     </None>
     <None Include="packages.config" />
   </ItemGroup>
@@ -130,15 +130,15 @@
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Models\FootballModel.Context.tt">
+    <Content Include="Models\FootballShopModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>FootballModel.edmx</DependentUpon>
-      <LastGenOutput>FootballModel.Context.cs</LastGenOutput>
+      <DependentUpon>FootballShopModel.edmx</DependentUpon>
+      <LastGenOutput>FootballShopModel.Context.cs</LastGenOutput>
     </Content>
-    <Content Include="Models\FootballModel.tt">
+    <Content Include="Models\FootballShopModel.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>FootballModel.edmx</DependentUpon>
-      <LastGenOutput>FootballModel.cs</LastGenOutput>
+      <DependentUpon>FootballShopModel.edmx</DependentUpon>
+      <LastGenOutput>FootballShopModel.cs</LastGenOutput>
     </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -12,11 +12,13 @@ namespace FootballShopModel.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class Cart
+    public partial class CartDetail
     {
-        public int accountId { get; set; }
+        public int id { get; set; }
+        public Nullable<int> accountId { get; set; }
         public Nullable<int> productId { get; set; }
         public Nullable<int> quantity { get; set; }
+        public Nullable<long> price { get; set; }
     
         public virtual Account Account { get; set; }
         public virtual Product Product { get; set; }

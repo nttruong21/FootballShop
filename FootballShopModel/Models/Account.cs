@@ -18,6 +18,7 @@ namespace FootballShopModel.Models
         public Account()
         {
             this.Bills = new HashSet<Bill>();
+            this.CartDetails = new HashSet<CartDetail>();
         }
     
         public int id { get; set; }
@@ -28,8 +29,9 @@ namespace FootballShopModel.Models
         public string phone { get; set; }
         public string address { get; set; }
     
-        public virtual Cart Cart { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Bill> Bills { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<CartDetail> CartDetails { get; set; }
     }
 }

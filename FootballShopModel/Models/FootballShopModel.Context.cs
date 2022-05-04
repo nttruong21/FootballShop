@@ -28,7 +28,7 @@ namespace FootballShopModel.Models
         public virtual DbSet<Account> Accounts { get; set; }
         public virtual DbSet<BillDetail> BillDetails { get; set; }
         public virtual DbSet<Bill> Bills { get; set; }
-        public virtual DbSet<Cart> Carts { get; set; }
+        public virtual DbSet<CartDetail> CartDetails { get; set; }
         public virtual DbSet<Category> Categories { get; set; }
         public virtual DbSet<Product> Products { get; set; }
     }

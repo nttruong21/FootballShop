@@ -14,10 +14,11 @@ namespace FootballShopModel.Models
     
     public partial class BillDetail
     {
-        public int billId { get; set; }
+        public int id { get; set; }
+        public Nullable<int> billId { get; set; }
         public Nullable<int> productId { get; set; }
         public Nullable<int> quantity { get; set; }
-        public Nullable<double> unitPrice { get; set; }
+        public Nullable<long> price { get; set; }
     
         public virtual Bill Bill { get; set; }
         public virtual Product Product { get; set; }

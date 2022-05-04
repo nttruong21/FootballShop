@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="FootballModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="FootballShopModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Accounts">
           <Key>
             <PropertyRef Name="id" />
@@ -19,12 +19,13 @@
         </EntityType>
         <EntityType Name="BillDetails">
           <Key>
-            <PropertyRef Name="billId" />
+            <PropertyRef Name="id" />
           </Key>
-          <Property Name="billId" Type="int" Nullable="false" />
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="billId" Type="int" />
           <Property Name="productId" Type="int" />
           <Property Name="quantity" Type="int" />
-          <Property Name="unitPrice" Type="float" />
+          <Property Name="price" Type="bigint" />
         </EntityType>
         <EntityType Name="Bills">
           <Key>
@@ -32,17 +33,22 @@
           </Key>
           <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="accountId" Type="int" />
-          <Property Name="createdAt" Type="datetime" />
-          <Property Name="totalPrice" Type="float" />
+          <Property Name="recipientName" Type="nvarchar" MaxLength="255" />
+          <Property Name="recipientAddress" Type="nvarchar" MaxLength="255" />
+          <Property Name="recipientPhone" Type="nvarchar" MaxLength="15" />
+          <Property Name="createdAt" Type="date" />
+          <Property Name="totalPrice" Type="bigint" />
           <Property Name="status" Type="int" />
         </EntityType>
-        <EntityType Name="Carts">
+        <EntityType Name="CartDetails">
           <Key>
-            <PropertyRef Name="accountId" />
+            <PropertyRef Name="id" />
           </Key>
-          <Property Name="accountId" Type="int" Nullable="false" />
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="accountId" Type="int" />
           <Property Name="productId" Type="int" />
           <Property Name="quantity" Type="int" />
+          <Property Name="price" Type="bigint" />
         </EntityType>
         <EntityType Name="Categories">
           <Key>
@@ -51,8 +57,8 @@
           <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="name" Type="nvarchar" MaxLength="255" />
           <Property Name="slug" Type="nvarchar" MaxLength="255" />
-          <Property Name="uppercaseName" Type="nvarchar" MaxLength="255" />
           <Property Name="image" Type="nvarchar" MaxLength="255" />
+          <Property Name="uppercaseName" Type="nvarchar" MaxLength="255" />
         </EntityType>
         <EntityType Name="Products">
           <Key>
@@ -62,7 +68,7 @@
           <Property Name="name" Type="nvarchar" MaxLength="255" />
           <Property Name="categoryId" Type="int" />
           <Property Name="brand" Type="nvarchar" MaxLength="255" />
-          <Property Name="price" Type="float" />
+          <Property Name="price" Type="bigint" />
           <Property Name="discount" Type="int" />
           <Property Name="image" Type="nvarchar" MaxLength="255" />
           <Property Name="size" Type="nvarchar" MaxLength="5" />
@@ -73,11 +79,11 @@
           <Property Name="soldQuantity" Type="int" />
           <Property Name="slug" Type="nvarchar" MaxLength="255" />
         </EntityType>
-        <Association Name="FK_BillDetails_Bills">
-          <End Role="Bills" Type="Self.Bills" Multiplicity="1">
+        <Association Name="FK__BillDetai__billI__48CFD27E">
+          <End Role="Bills" Type="Self.Bills" Multiplicity="0..1">
             <OnDelete Action="Cascade" />
           </End>
-          <End Role="BillDetails" Type="Self.BillDetails" Multiplicity="0..1" />
+          <End Role="BillDetails" Type="Self.BillDetails" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Bills">
               <PropertyRef Name="id" />
@@ -87,7 +93,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_BillDetails_Products">
+        <Association Name="FK__BillDetai__produ__49C3F6B7">
           <End Role="Products" Type="Self.Products" Multiplicity="0..1">
             <OnDelete Action="Cascade" />
           </End>
@@ -101,35 +107,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Carts_Accounts">
-          <End Role="Accounts" Type="Self.Accounts" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Role="Carts" Type="Self.Carts" Multiplicity="0..1" />
-          <ReferentialConstraint>
-            <Principal Role="Accounts">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="Carts">
-              <PropertyRef Name="accountId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Carts_Products">
-          <End Role="Products" Type="Self.Products" Multiplicity="0..1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Role="Carts" Type="Self.Carts" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Products">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="Carts">
-              <PropertyRef Name="productId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Orders_Accounts">
+        <Association Name="FK__Bills__accountId__47DBAE45">
           <End Role="Accounts" Type="Self.Accounts" Multiplicity="0..1">
             <OnDelete Action="Cascade" />
           </End>
@@ -143,7 +121,35 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Products_Categories">
+        <Association Name="FK__CartDetai__accou__4AB81AF0">
+          <End Role="Accounts" Type="Self.Accounts" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="CartDetails" Type="Self.CartDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Accounts">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="CartDetails">
+              <PropertyRef Name="accountId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__CartDetai__produ__4BAC3F29">
+          <End Role="Products" Type="Self.Products" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="CartDetails" Type="Self.CartDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Products">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="CartDetails">
+              <PropertyRef Name="productId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Products__catego__46E78A0C">
           <End Role="Categories" Type="Self.Categories" Multiplicity="0..1">
             <OnDelete Action="Cascade" />
           </End>
@@ -157,34 +163,34 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="FootballModelStoreContainer">
+        <EntityContainer Name="FootballShopModelStoreContainer">
           <EntitySet Name="Accounts" EntityType="Self.Accounts" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="BillDetails" EntityType="Self.BillDetails" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Bills" EntityType="Self.Bills" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Carts" EntityType="Self.Carts" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CartDetails" EntityType="Self.CartDetails" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Categories" EntityType="Self.Categories" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Products" EntityType="Self.Products" Schema="dbo" store:Type="Tables" />
-          <AssociationSet Name="FK_BillDetails_Bills" Association="Self.FK_BillDetails_Bills">
+          <AssociationSet Name="FK__BillDetai__billI__48CFD27E" Association="Self.FK__BillDetai__billI__48CFD27E">
             <End Role="Bills" EntitySet="Bills" />
             <End Role="BillDetails" EntitySet="BillDetails" />
           </AssociationSet>
-          <AssociationSet Name="FK_BillDetails_Products" Association="Self.FK_BillDetails_Products">
+          <AssociationSet Name="FK__BillDetai__produ__49C3F6B7" Association="Self.FK__BillDetai__produ__49C3F6B7">
             <End Role="Products" EntitySet="Products" />
             <End Role="BillDetails" EntitySet="BillDetails" />
           </AssociationSet>
-          <AssociationSet Name="FK_Carts_Accounts" Association="Self.FK_Carts_Accounts">
-            <End Role="Accounts" EntitySet="Accounts" />
-            <End Role="Carts" EntitySet="Carts" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Carts_Products" Association="Self.FK_Carts_Products">
-            <End Role="Products" EntitySet="Products" />
-            <End Role="Carts" EntitySet="Carts" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Orders_Accounts" Association="Self.FK_Orders_Accounts">
+          <AssociationSet Name="FK__Bills__accountId__47DBAE45" Association="Self.FK__Bills__accountId__47DBAE45">
             <End Role="Accounts" EntitySet="Accounts" />
             <End Role="Bills" EntitySet="Bills" />
           </AssociationSet>
-          <AssociationSet Name="FK_Products_Categories" Association="Self.FK_Products_Categories">
+          <AssociationSet Name="FK__CartDetai__accou__4AB81AF0" Association="Self.FK__CartDetai__accou__4AB81AF0">
+            <End Role="Accounts" EntitySet="Accounts" />
+            <End Role="CartDetails" EntitySet="CartDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK__CartDetai__produ__4BAC3F29" Association="Self.FK__CartDetai__produ__4BAC3F29">
+            <End Role="Products" EntitySet="Products" />
+            <End Role="CartDetails" EntitySet="CartDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Products__catego__46E78A0C" Association="Self.FK__Products__catego__46E78A0C">
             <End Role="Categories" EntitySet="Categories" />
             <End Role="Products" EntitySet="Products" />
           </AssociationSet>
@@ -193,7 +199,7 @@
     </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
-      <Schema Namespace="FootballModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+      <Schema Namespace="FootballShopModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityType Name="Account">
           <Key>
             <PropertyRef Name="id" />
@@ -205,19 +211,20 @@
           <Property Name="role" Type="Int32" />
           <Property Name="phone" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
           <Property Name="address" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Cart" Relationship="Self.FK_Carts_Accounts" FromRole="Accounts" ToRole="Carts" />
-          <NavigationProperty Name="Bills" Relationship="Self.FK_Orders_Accounts" FromRole="Accounts" ToRole="Bills" />
+          <NavigationProperty Name="Bills" Relationship="Self.FK__Bills__accountId__47DBAE45" FromRole="Accounts" ToRole="Bills" />
+          <NavigationProperty Name="CartDetails" Relationship="Self.FK__CartDetai__accou__4AB81AF0" FromRole="Accounts" ToRole="CartDetails" />
         </EntityType>
         <EntityType Name="BillDetail">
           <Key>
-            <PropertyRef Name="billId" />
+            <PropertyRef Name="id" />
           </Key>
-          <Property Name="billId" Type="Int32" Nullable="false" />
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="billId" Type="Int32" />
           <Property Name="productId" Type="Int32" />
           <Property Name="quantity" Type="Int32" />
-          <Property Name="unitPrice" Type="Double" />
-          <NavigationProperty Name="Bill" Relationship="Self.FK_BillDetails_Bills" FromRole="BillDetails" ToRole="Bills" />
-          <NavigationProperty Name="Product" Relationship="Self.FK_BillDetails_Products" FromRole="BillDetails" ToRole="Products" />
+          <Property Name="price" Type="Int64" />
+          <NavigationProperty Name="Bill" Relationship="Self.FK__BillDetai__billI__48CFD27E" FromRole="BillDetails" ToRole="Bills" />
+          <NavigationProperty Name="Product" Relationship="Self.FK__BillDetai__produ__49C3F6B7" FromRole="BillDetails" ToRole="Products" />
         </EntityType>
         <EntityType Name="Bill">
           <Key>
@@ -225,21 +232,26 @@
           </Key>
           <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="accountId" Type="Int32" />
-          <Property Name="createdAt" Type="DateTime" Precision="3" />
-          <Property Name="totalPrice" Type="Double" />
+          <Property Name="recipientName" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="recipientAddress" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="recipientPhone" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
+          <Property Name="createdAt" Type="DateTime" Precision="0" />
+          <Property Name="totalPrice" Type="Int64" />
           <Property Name="status" Type="Int32" />
-          <NavigationProperty Name="Account" Relationship="Self.FK_Orders_Accounts" FromRole="Bills" ToRole="Accounts" />
-          <NavigationProperty Name="BillDetail" Relationship="Self.FK_BillDetails_Bills" FromRole="Bills" ToRole="BillDetails" />
+          <NavigationProperty Name="Account" Relationship="Self.FK__Bills__accountId__47DBAE45" FromRole="Bills" ToRole="Accounts" />
+          <NavigationProperty Name="BillDetails" Relationship="Self.FK__BillDetai__billI__48CFD27E" FromRole="Bills" ToRole="BillDetails" />
         </EntityType>
-        <EntityType Name="Cart">
+        <EntityType Name="CartDetail">
           <Key>
-            <PropertyRef Name="accountId" />
+            <PropertyRef Name="id" />
           </Key>
-          <Property Name="accountId" Type="Int32" Nullable="false" />
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="accountId" Type="Int32" />
           <Property Name="productId" Type="Int32" />
           <Property Name="quantity" Type="Int32" />
-          <NavigationProperty Name="Account" Relationship="Self.FK_Carts_Accounts" FromRole="Carts" ToRole="Accounts" />
-          <NavigationProperty Name="Product" Relationship="Self.FK_Carts_Products" FromRole="Carts" ToRole="Products" />
+          <Property Name="price" Type="Int64" />
+          <NavigationProperty Name="Account" Relationship="Self.FK__CartDetai__accou__4AB81AF0" FromRole="CartDetails" ToRole="Accounts" />
+          <NavigationProperty Name="Product" Relationship="Self.FK__CartDetai__produ__4BAC3F29" FromRole="CartDetails" ToRole="Products" />
         </EntityType>
         <EntityType Name="Category">
           <Key>
@@ -248,9 +260,9 @@
           <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="name" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
           <Property Name="slug" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
-          <Property Name="uppercaseName" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
           <Property Name="image" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Products" Relationship="Self.FK_Products_Categories" FromRole="Categories" ToRole="Products" />
+          <Property Name="uppercaseName" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Products" Relationship="Self.FK__Products__catego__46E78A0C" FromRole="Categories" ToRole="Products" />
         </EntityType>
         <EntityType Name="Product">
           <Key>
@@ -260,7 +272,7 @@
           <Property Name="name" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
           <Property Name="categoryId" Type="Int32" />
           <Property Name="brand" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
-          <Property Name="price" Type="Double" />
+          <Property Name="price" Type="Int64" />
           <Property Name="discount" Type="Int32" />
           <Property Name="image" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
           <Property Name="size" Type="String" MaxLength="5" FixedLength="false" Unicode="true" />
@@ -270,25 +282,11 @@
           <Property Name="rate" Type="Double" />
           <Property Name="soldQuantity" Type="Int32" />
           <Property Name="slug" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="BillDetails" Relationship="Self.FK_BillDetails_Products" FromRole="Products" ToRole="BillDetails" />
-          <NavigationProperty Name="Carts" Relationship="Self.FK_Carts_Products" FromRole="Products" ToRole="Carts" />
-          <NavigationProperty Name="Category" Relationship="Self.FK_Products_Categories" FromRole="Products" ToRole="Categories" />
+          <NavigationProperty Name="BillDetails" Relationship="Self.FK__BillDetai__produ__49C3F6B7" FromRole="Products" ToRole="BillDetails" />
+          <NavigationProperty Name="CartDetails" Relationship="Self.FK__CartDetai__produ__4BAC3F29" FromRole="Products" ToRole="CartDetails" />
+          <NavigationProperty Name="Category" Relationship="Self.FK__Products__catego__46E78A0C" FromRole="Products" ToRole="Categories" />
         </EntityType>
-        <Association Name="FK_Carts_Accounts">
-          <End Role="Accounts" Type="Self.Account" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Role="Carts" Type="Self.Cart" Multiplicity="0..1" />
-          <ReferentialConstraint>
-            <Principal Role="Accounts">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="Carts">
-              <PropertyRef Name="accountId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Orders_Accounts">
+        <Association Name="FK__Bills__accountId__47DBAE45">
           <End Role="Accounts" Type="Self.Account" Multiplicity="0..1">
             <OnDelete Action="Cascade" />
           </End>
@@ -302,11 +300,25 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_BillDetails_Bills">
-          <End Role="Bills" Type="Self.Bill" Multiplicity="1">
+        <Association Name="FK__CartDetai__accou__4AB81AF0">
+          <End Role="Accounts" Type="Self.Account" Multiplicity="0..1">
             <OnDelete Action="Cascade" />
           </End>
-          <End Role="BillDetails" Type="Self.BillDetail" Multiplicity="0..1" />
+          <End Role="CartDetails" Type="Self.CartDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Accounts">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="CartDetails">
+              <PropertyRef Name="accountId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__BillDetai__billI__48CFD27E">
+          <End Role="Bills" Type="Self.Bill" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="BillDetails" Type="Self.BillDetail" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Bills">
               <PropertyRef Name="id" />
@@ -316,7 +328,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_BillDetails_Products">
+        <Association Name="FK__BillDetai__produ__49C3F6B7">
           <End Role="Products" Type="Self.Product" Multiplicity="0..1">
             <OnDelete Action="Cascade" />
           </End>
@@ -330,21 +342,21 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Carts_Products">
+        <Association Name="FK__CartDetai__produ__4BAC3F29">
           <End Role="Products" Type="Self.Product" Multiplicity="0..1">
             <OnDelete Action="Cascade" />
           </End>
-          <End Role="Carts" Type="Self.Cart" Multiplicity="*" />
+          <End Role="CartDetails" Type="Self.CartDetail" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Products">
               <PropertyRef Name="id" />
             </Principal>
-            <Dependent Role="Carts">
+            <Dependent Role="CartDetails">
               <PropertyRef Name="productId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Products_Categories">
+        <Association Name="FK__Products__catego__46E78A0C">
           <End Role="Categories" Type="Self.Category" Multiplicity="0..1">
             <OnDelete Action="Cascade" />
           </End>
@@ -362,30 +374,30 @@
           <EntitySet Name="Accounts" EntityType="Self.Account" />
           <EntitySet Name="BillDetails" EntityType="Self.BillDetail" />
           <EntitySet Name="Bills" EntityType="Self.Bill" />
-          <EntitySet Name="Carts" EntityType="Self.Cart" />
+          <EntitySet Name="CartDetails" EntityType="Self.CartDetail" />
           <EntitySet Name="Categories" EntityType="Self.Category" />
           <EntitySet Name="Products" EntityType="Self.Product" />
-          <AssociationSet Name="FK_Carts_Accounts" Association="Self.FK_Carts_Accounts">
-            <End Role="Accounts" EntitySet="Accounts" />
-            <End Role="Carts" EntitySet="Carts" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Orders_Accounts" Association="Self.FK_Orders_Accounts">
+          <AssociationSet Name="FK__Bills__accountId__47DBAE45" Association="Self.FK__Bills__accountId__47DBAE45">
             <End Role="Accounts" EntitySet="Accounts" />
             <End Role="Bills" EntitySet="Bills" />
           </AssociationSet>
-          <AssociationSet Name="FK_BillDetails_Bills" Association="Self.FK_BillDetails_Bills">
+          <AssociationSet Name="FK__CartDetai__accou__4AB81AF0" Association="Self.FK__CartDetai__accou__4AB81AF0">
+            <End Role="Accounts" EntitySet="Accounts" />
+            <End Role="CartDetails" EntitySet="CartDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK__BillDetai__billI__48CFD27E" Association="Self.FK__BillDetai__billI__48CFD27E">
             <End Role="Bills" EntitySet="Bills" />
             <End Role="BillDetails" EntitySet="BillDetails" />
           </AssociationSet>
-          <AssociationSet Name="FK_BillDetails_Products" Association="Self.FK_BillDetails_Products">
+          <AssociationSet Name="FK__BillDetai__produ__49C3F6B7" Association="Self.FK__BillDetai__produ__49C3F6B7">
             <End Role="Products" EntitySet="Products" />
             <End Role="BillDetails" EntitySet="BillDetails" />
           </AssociationSet>
-          <AssociationSet Name="FK_Carts_Products" Association="Self.FK_Carts_Products">
+          <AssociationSet Name="FK__CartDetai__produ__4BAC3F29" Association="Self.FK__CartDetai__produ__4BAC3F29">
             <End Role="Products" EntitySet="Products" />
-            <End Role="Carts" EntitySet="Carts" />
+            <End Role="CartDetails" EntitySet="CartDetails" />
           </AssociationSet>
-          <AssociationSet Name="FK_Products_Categories" Association="Self.FK_Products_Categories">
+          <AssociationSet Name="FK__Products__catego__46E78A0C" Association="Self.FK__Products__catego__46E78A0C">
             <End Role="Categories" EntitySet="Categories" />
             <End Role="Products" EntitySet="Products" />
           </AssociationSet>
@@ -395,9 +407,9 @@
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="FootballModelStoreContainer" CdmEntityContainer="FootballEntities">
+        <EntityContainerMapping StorageEntityContainer="FootballShopModelStoreContainer" CdmEntityContainer="FootballEntities">
           <EntitySetMapping Name="Accounts">
-            <EntityTypeMapping TypeName="FootballModel.Account">
+            <EntityTypeMapping TypeName="FootballShopModel.Account">
               <MappingFragment StoreEntitySet="Accounts">
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="name" ColumnName="name" />
@@ -410,48 +422,54 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="BillDetails">
-            <EntityTypeMapping TypeName="FootballModel.BillDetail">
+            <EntityTypeMapping TypeName="FootballShopModel.BillDetail">
               <MappingFragment StoreEntitySet="BillDetails">
+                <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="billId" ColumnName="billId" />
                 <ScalarProperty Name="productId" ColumnName="productId" />
                 <ScalarProperty Name="quantity" ColumnName="quantity" />
-                <ScalarProperty Name="unitPrice" ColumnName="unitPrice" />
+                <ScalarProperty Name="price" ColumnName="price" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Bills">
-            <EntityTypeMapping TypeName="FootballModel.Bill">
+            <EntityTypeMapping TypeName="FootballShopModel.Bill">
               <MappingFragment StoreEntitySet="Bills">
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="accountId" ColumnName="accountId" />
+                <ScalarProperty Name="recipientName" ColumnName="recipientName" />
+                <ScalarProperty Name="recipientAddress" ColumnName="recipientAddress" />
+                <ScalarProperty Name="recipientPhone" ColumnName="recipientPhone" />
                 <ScalarProperty Name="createdAt" ColumnName="createdAt" />
                 <ScalarProperty Name="totalPrice" ColumnName="totalPrice" />
                 <ScalarProperty Name="status" ColumnName="status" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Carts">
-            <EntityTypeMapping TypeName="FootballModel.Cart">
-              <MappingFragment StoreEntitySet="Carts">
+          <EntitySetMapping Name="CartDetails">
+            <EntityTypeMapping TypeName="FootballShopModel.CartDetail">
+              <MappingFragment StoreEntitySet="CartDetails">
+                <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="accountId" ColumnName="accountId" />
                 <ScalarProperty Name="productId" ColumnName="productId" />
                 <ScalarProperty Name="quantity" ColumnName="quantity" />
+                <ScalarProperty Name="price" ColumnName="price" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Categories">
-            <EntityTypeMapping TypeName="FootballModel.Category">
+            <EntityTypeMapping TypeName="FootballShopModel.Category">
               <MappingFragment StoreEntitySet="Categories">
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="name" ColumnName="name" />
                 <ScalarProperty Name="slug" ColumnName="slug" />
-                <ScalarProperty Name="uppercaseName" ColumnName="uppercaseName" />
                 <ScalarProperty Name="image" ColumnName="image" />
+                <ScalarProperty Name="uppercaseName" ColumnName="uppercaseName" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Products">
-            <EntityTypeMapping TypeName="FootballModel.Product">
+            <EntityTypeMapping TypeName="FootballShopModel.Product">
               <MappingFragment StoreEntitySet="Products">
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="name" ColumnName="name" />
