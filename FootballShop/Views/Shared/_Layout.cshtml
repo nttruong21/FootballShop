@@ -121,12 +121,113 @@
 
         /*---------------------------------------------*/
 
+        
+
         $('.js-addcart-detail').each(function () {
             var nameProduct = $(this).parent().parent().parent().parent().find('.js-name-detail').html();
-            $(this).on('click', function () {
+            $(this).on('click', async function (e) {
+                const idProduct = Number($(this).data("id"));
+                const idUser = $(this).data("iduser");
+                const quantity = Number($(".num-product").val());
+                const price = Number($(this).data("price"));
+
+                let url = 'https://localhost:44323/Cart/AddtoCart';
+                const res = await fetch(url, {
+                    method: "POST",
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        accountId: idUser,
+                        productId: idProduct,
+                        quantity,
+                        price
+                    })
+                })
+
+                const data = await res.json();
+               
+                
+                if (data.status === "success") {
+                    let i = ($(".js-show-cart").attr("data-notify")) * 1;
+                    $(".js-show-cart").attr("data-notify", i + 1);
+                    const listProductsInCartSidebar = document.getElementById(
+                        "detail-list-all-products-in-cart"
+                    );
+                    let totalPrice = 0;
+                    const res1 = await fetch("https://localhost:44323/Cart/GetAllCart", {
+                        method: "GET"
+                    })
+                    const data1 = await res1.json();
+                    if (data1.data.length == 0) {
+                        listProductsInCartSidebar.innerHTML = "Giỏ hàng trống";
+                        document.getElementById(
+                            "detail-cart-total-price-sidebar"
+                        ).innerHTML = parseInt(0).toLocaleString("vi-VN", {
+                            style: "currency",
+                            currency: "VND",
+                        });
+                    } else {
+                        const html = data1.data.map((item) => {
+                            totalPrice += parseInt(item.price);
+                            const price = parseInt(item.price).toLocaleString(
+                                "vi-VN",
+                                {
+                                    style: "currency",
+                                    currency: "VND",
+                                }
+                            );
+                            console.log(item.Product);
+                            return `
+                            <li class="header-cart-item flex-w flex-t m-b-12 align-items-center">
+                                <div class="header-cart-item-img">
+                                    <img src="/Assets/Admin/img/product/"
+                                        alt="IMG" />
+                                </div>
+                                <div class="header-cart-item-txt p-t-8">
+                                    <a href="/"
+                                        class="header-cart-item-name m-b-8 hov-cl1 trans-04">
+                                       
+                                    </a>
+                                    <span class="header-cart-item-info" style="color: #D70018;">
+                                        ${price}
+                                    </span>
+                                </div>
+                            </li>
+                        `;
+                        });
+                        listProductsInCartSidebar.innerHTML = html.join("");
+                        document.getElementById(
+                            "detail-cart-total-price-sidebar"
+                        ).innerHTML = parseInt(totalPrice).toLocaleString("vi-VN", {
+                            style: "currency",
+                            currency: "VND",
+                        });
+                    }
+                }
                 swal(nameProduct, "is added to cart !", "success");
+                
             });
         });
+
+        $(".js-alert-login").on("click", function () {
+            swal({
+                title: "đăng nhập",
+                text: "bạn cần đăng nhập để thêm sản phẩm vào giỏ hàng !",
+                icon: "warning",
+                buttons: 'ok',
+                dangermode: true,
+            }).then(function (isconfirm) {
+                if (isconfirm) {
+                   
+                    window.location.href = '/auth/login'
+                   
+                } 
+            })
+         
+            
+        })
+
 
     </script>
     <!--===============================================================================================-->

@@ -11,15 +11,21 @@ namespace FootballShop.Controllers
     {
         // GET: Home
         public ActionResult Index()
-        {
-            if (ModelState.IsValid)
+        {             
+            
+            if (ModelState.IsValid )
             {
                 ViewBag.allProducts = new ProductDAO().getAllProducts();
                 ViewBag.discountProducts = new ProductDAO().getAllDiscountProducts();
                 ViewBag.tenMostSoldProducts = new ProductDAO().getTenMostSoldProducts();
                 ViewBag.allCategories = new CategoryDAO().getAllCategories();
+
             }
             return View();
+            //else
+            //{
+               // return Redirect("Auth/login");
+            //}
         }
 
         [ChildActionOnly]

@@ -10,5 +10,6 @@ namespace FootballShopModel
     {
         public const string EMAIL_SESSION = "EMAIL_SESSION";
         public const string NAME_SESSION = "USER_SESSION";
+        public const string ID_SESSION = "ID_SESSION";
     }
 }

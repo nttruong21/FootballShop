@@ -1,3 +1,21 @@
+.size-border {
+	padding: 6px;
+	border: 2px solid #ccc;
+	cursor: pointer;
+}
+
+.detete-product-in-cart-btn {
+	cursor: pointer;
+}
+
+.detete-product-in-cart-btn:hover {
+	color: #6c7ae0;
+	transition: all linear 0.2s;
+}
+
+.size-border-active {
+	border: 2px solid rgb(255, 0, 255);
+}
 .header {
 	position: fixed;
 	right: 0;

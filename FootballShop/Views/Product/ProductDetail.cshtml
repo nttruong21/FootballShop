@@ -5,6 +5,62 @@
     var format = System.Globalization.CultureInfo.GetCultureInfo("vi-VN");
 }
 
+
+<!-- Cart -->
+<div class="wrap-header-cart js-panel-cart">
+    <div class="s-full js-hide-cart"></div>
+
+    <div class="header-cart flex-col-l p-l-65 p-r-25">
+        <div class="header-cart-title flex-w flex-sb-m p-b-8">
+            <span class="mtext-103 cl2">
+                Your Cart
+            </span>
+
+            <div class="fs-35 lh-10 cl2 p-lr-5 pointer hov-cl1 trans-04 js-hide-cart">
+                <i class="zmdi zmdi-close"></i>
+            </div>
+        </div>
+
+        <div class="header-cart-content flex-w js-pscroll">
+            <ul id="detail-list-all-products-in-cart" class="header-cart-wrapitem w-full">
+                @*<li  class="header-cart-item flex-w flex-t m-b-12">
+                    <div class="header-cart-item-img">
+                        <img src="~/Assets/Client/images/item-cart-01.jpg" alt="IMG">
+                    </div>
+
+                    <div class="header-cart-item-txt p-t-8">
+                        <a href="#" class="header-cart-item-name m-b-18 hov-cl1 trans-04">
+                            White Shirt Pleat
+                        </a>
+
+                        <span class="header-cart-item-info">
+                            1 x 500.000đ
+                        </span>
+                    </div>
+                </li>*@
+            </ul>
+            
+
+            <div class="w-full">
+                <div  class="header-cart-total w-full p-tb-40">
+                    Tổng : <span id="detail-cart-total-price-sidebar">1.500.000</span> đ
+                </div>
+
+                <div class="header-cart-buttons flex-w w-full">
+                    <a href="shoping-cart.html" class="flex-c-m stext-101 cl0 size-107 bg3 bor2 hov-btn3 p-lr-15 trans-04 m-r-8 m-b-10">
+                        View Cart
+                    </a>
+
+                    <a href="shoping-cart.html" class="flex-c-m stext-101 cl0 size-107 bg3 bor2 hov-btn3 p-lr-15 trans-04 m-b-10">
+                        Check Out
+                    </a>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
 <section class="sec-product-detail bg0 p-t-65 p-b-60">
     <div class="container">
         <div class="row">
@@ -15,9 +71,9 @@
                         <div class="wrap-slick3-arrows flex-sb-m flex-w"></div>
 
                         <div class="slick3 gallery-lb">
-                            <div class="item-slick3" data-thumb="~/Upload/@Model.image">
+                            <div class="item-slick3" data-thumb="/Assets/Admin/img/product/@Model.image">
                                 <div class="wrap-pic-w pos-relative">
-                                    <img src="~/Upload/@Model.image" alt="IMG-PRODUCT">
+                                    <img src="/Assets/Admin/img/product/@Model.image" alt="IMG-PRODUCT" >
 
                                     <a class="flex-c-m size-108 how-pos1 bor0 fs-16 cl10 bg0 hov-btn3 trans-04" href="images/product/ao6.webp">
                                         <i class="fa fa-expand"></i>
@@ -25,9 +81,9 @@
                                 </div>
                             </div>
 
-                            <div class="item-slick3" data-thumb="~/Upload/@Model.image">
+                            <div class="item-slick3" data-thumb="/Assets/Admin/img/product/@Model.image">
                                 <div class="wrap-pic-w pos-relative">
-                                    <img src="~/Upload/@Model.image" alt="IMG-PRODUCT">
+                                    <img src="/Assets/Admin/img/product/@Model.image" alt="IMG-PRODUCT">
 
                                     <a class="flex-c-m size-108 how-pos1 bor0 fs-16 cl10 bg0 hov-btn3 trans-04" href="images/product/ao6.webp">
                                         <i class="fa fa-expand"></i>
@@ -35,9 +91,9 @@
                                 </div>
                             </div>
 
-                            <div class="item-slick3" data-thumb="~/Upload/@Model.image">
+                            <div class="item-slick3" data-thumb="/Assets/Admin/img/product/@Model.image">
                                 <div class="wrap-pic-w pos-relative">
-                                    <img src="~/Upload/@Model.image" alt="IMG-PRODUCT">
+                                    <img src="/Assets/Admin/img/product/@Model.image" alt="IMG-PRODUCT">
 
                                     <a class="flex-c-m size-108 how-pos1 bor0 fs-16 cl10 bg0 hov-btn3 trans-04" href="images/product/ao6.webp">
                                         <i class="fa fa-expand"></i>
@@ -92,27 +148,33 @@
 
                     <!--  -->
                     <div class="p-t-33">
-                        <div class="flex-w flex-r-m p-b-10">
-                            <div class="size-203 flex-c-m respon6">
+                        <div class="flex-w  m-b-32">
+                            <div class="size-203  respon6">
                                 Size
                             </div>
 
-                            <div class="size-204 respon6-next">
-                                <div class="rs1-select2 bor8 bg0">
-                                    <select class="js-select2" name="time">
-                                        <option>Choose an option</option>
-                                        <option>Size S</option>
-                                        <option>Size M</option>
-                                        <option>Size L</option>
-                                        <option>Size XL</option>
-                                    </select>
-                                    <div class="dropDownSelect2"></div>
-                                </div>
-                            </div>
+                            @{
+                                for (var i = 35; i < 41; i++)
+                                {
+                                    if (Int64.Parse(Model.size) == i)
+                                    {
+                                        <div class="respon6-next mr-2"><span class="size-border size-border-active">@i</span></div>
+                                    }
+                                    <div class="respon6-next mr-2"><span class="size-border">@i</span></div>
+                                }
+
+
+
+
+
+                            }
+
+
+
                         </div>
 
-                        <div class="flex-w flex-r-m p-b-10">
-                            <div class="size-203 flex-c-m respon6">
+                        <div class="flex-w m-b-32">
+                            <div class="size-203 respon6">
                                 Color
                             </div>
 
@@ -144,9 +206,33 @@
                                     </div>
                                 </div>
 
-                                <button class="flex-c-m stext-101 cl0 size-101 bg1 bor1 hov-btn1 p-lr-15 trans-04 js-addcart-detail">
-                                    Add to cart
-                                </button>
+                                
+                                    @{
+                                        var newPrice = Convert.ToInt64(Model.price * (100 - Model.discount) / 100);
+                                        var myHtmlString = new HtmlString($"<button " +
+                                            $"class=\"flex-c-m stext-101 cl0 size-101 bg1 bor1 hov-btn1 p-lr-15 trans-04 js-addcart-detail\" " +
+                                            $"data-id=\"{ @Model.id }\"" +
+                                            $"data-idUser=\"{ Session["id_user"] }\"" +
+                                            $"data-price=\"{ newPrice }\">" +
+                                            $"Thêm vào giỏ hàng</button>");
+                                        var myHtmlStringLogin = new HtmlString("<button " +
+
+                                            "class=\"flex-c-m stext-101 cl0 size-101 bg1 bor1 hov-btn1 p-lr-15 trans-04 js-alert-login\">" +
+                                            "Thêm vào giỏ hàng </button>");
+                                        //var text = "Add to cart";
+                                        if (Session["id_user"] != null)
+                                        {
+                                            @myHtmlString
+                                           
+                                        }
+                                        else
+                                        {
+                                            @myHtmlStringLogin
+
+                                        }
+                                    }
+
+                                
                             </div>
                         </div>
                     </div>
