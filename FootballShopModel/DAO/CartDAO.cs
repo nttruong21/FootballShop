@@ -14,10 +14,14 @@ namespace FootballShopModel.DAO
         {     
             db = new FootballEntities();
             db.Configuration.ProxyCreationEnabled = false;
+
+            db.Configuration.LazyLoadingEnabled = true;
+
         }
 
         public List<CartDetail> getAll()
         {
+
             return db.CartDetails.ToList();
         }
 

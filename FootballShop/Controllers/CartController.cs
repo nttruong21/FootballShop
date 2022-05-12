@@ -8,10 +8,11 @@ using System.Web.Mvc;
 
 namespace FootballShop.Controllers
 {
-
     public class CartController : Controller
     {
-        CartDAO cartDao = new CartDAO();
+        private CartDAO cartDao = new CartDAO();
+        private FootballEntities db = new FootballEntities();
+
         // GET: Cart
         public ActionResult Index()
         {
@@ -19,38 +20,46 @@ namespace FootballShop.Controllers
         }
 
         [HttpPost]
-     
+
         public ActionResult AddtoCart(CartDetail cart)
         {
-            
-            if(cartDao.CreateProduct(cart))
-            {
-                return Json(new
+
+            return cartDao.CreateProduct(cart)
+                ? Json(new
                 {
                     status = "success",
-                }, JsonRequestBehavior.AllowGet);
-            }
-            else
-            {
-                return Json(new
+                }, JsonRequestBehavior.AllowGet)
+                : Json(new
                 {
                     status = "fail",
                 }, JsonRequestBehavior.AllowGet);
-            }  
-            
+
         }
 
         [HttpGet]
-        public ActionResult GetAllCart()
+        public JsonResult GetAllCart(int id_user)
         {
-            List<CartDetail> data =  cartDao.getAll();
-           
+            db.Configuration.ProxyCreationEnabled = false;
+            var data = from CartDetails in db.CartDetails
+                       join Products in db.Products on CartDetails.productId equals Products.id
+                       join Account in db.Accounts on CartDetails.accountId equals Account.id
+                       where CartDetails.accountId == id_user
+                       select new
+                       {
+                           accountId= CartDetails.accountId,
+                            productId= CartDetails.productId,
+                            quantity= CartDetails.quantity,
+                            price= CartDetails.price,
+                           Products
+                       };
+            
+
             return Json(new
             {
                 status = "success",
-                data
+                data ,
             }, JsonRequestBehavior.AllowGet);
-            
+
 
         }
     }

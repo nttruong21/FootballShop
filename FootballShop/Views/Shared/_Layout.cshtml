@@ -94,6 +94,12 @@
     <!--===============================================================================================-->
     <script src="~/Assets/Client/vendor/sweetalert/sweetalert.min.js"></script>
     <script>
+
+
+
+
+
+
         $('.js-addwish-b2').on('click', function (e) {
             e.preventDefault();
         });
@@ -155,10 +161,11 @@
                         "detail-list-all-products-in-cart"
                     );
                     let totalPrice = 0;
-                    const res1 = await fetch("https://localhost:44323/Cart/GetAllCart", {
+                    const res1 = await fetch(`https://localhost:44323/Cart/GetAllCart?id_user=${idUser}`, {
                         method: "GET"
                     })
                     const data1 = await res1.json();
+                    console.log(data1);
                     if (data1.data.length == 0) {
                         listProductsInCartSidebar.innerHTML = "Giỏ hàng trống";
                         document.getElementById(
@@ -177,20 +184,20 @@
                                     currency: "VND",
                                 }
                             );
-                            console.log(item.Product);
+                           
                             return `
                             <li class="header-cart-item flex-w flex-t m-b-12 align-items-center">
                                 <div class="header-cart-item-img">
-                                    <img src="/Assets/Admin/img/product/"
+                                    <img src="/Assets/Admin/img/product/${item.Products.image}"
                                         alt="IMG" />
                                 </div>
                                 <div class="header-cart-item-txt p-t-8">
-                                    <a href="/"
+                                    <a href="/${item.Products.slug}"
                                         class="header-cart-item-name m-b-8 hov-cl1 trans-04">
-                                       
+                                       ${item.Products.name}
                                     </a>
-                                    <span class="header-cart-item-info" style="color: #D70018;">
-                                        ${price}
+                                    <span class="header-cart-item-info" id="price-product" style="color: #D70018;">
+                                        ${item.Products.price}
                                     </span>
                                 </div>
                             </li>
@@ -203,6 +210,7 @@
                             style: "currency",
                             currency: "VND",
                         });
+                        
                     }
                 }
                 swal(nameProduct, "is added to cart !", "success");
