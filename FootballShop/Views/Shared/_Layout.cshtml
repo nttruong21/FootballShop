@@ -93,9 +93,152 @@
     <script src="~/Assets/Client/vendor/isotope/isotope.pkgd.min.js"></script>
     <!--===============================================================================================-->
     <script src="~/Assets/Client/vendor/sweetalert/sweetalert.min.js"></script>
+
     <script>
 
 
+        $(function () {
+            console.log("ready!");
+            const listProductsInCartSidebar = document.getElementById(
+                "getId-user"
+            );
+            const id = $(listProductsInCartSidebar).attr("data-id")
+
+            loadCart(id);
+
+
+            /*loadShopingCart(id);*/
+            
+
+        });
+        
+        //const loadShopingCart = async (idUser) => {
+        //    const listProductsInShopingCart = document.getElementById(
+        //        "list-shopingcart-detail-items"
+        //    );
+        //    let totalPrice = 0;
+        //    const res1 = await fetch(`https://localhost:44323/Cart/GetAllCart?id_user=${idUser}`, {
+        //        method: "GET"
+        //    })
+        //    const data1 = await res1.json();
+        //    if (data1.data.length == 0) {
+        //        listProductsInShopingCart.innerHTML = "Giỏ hàng trống";
+
+        //    } else {
+        //        const html = data1.data.map((item) => {
+        //            totalPrice += parseInt(item.price);
+        //            const price = parseInt(item.price).toLocaleString(
+        //                "vi-VN",
+        //                {
+        //                    style: "currency",
+        //                    currency: "VND",
+        //                }
+        //            );
+
+        //            return `
+        //                        <tr    
+        //                            class="table_row">
+        //                                <td class="column-1">
+        //                                    <div class="how-itemcart1">
+        //                                        <img src="/Assets/Admin/img/product/${item.Products.image}"
+        //                                             alt="IMG">
+        //                                    </div>
+        //                                </td>
+        //                                <td class=" pr-2">${item.Products.name}</td>
+        //                                <td class="column-3" id=""
+        //                                    style="color: #D70018;">
+        //                                        ${item.price}
+        //                                </td>
+        //                                <td class="column-4">
+        //                                    <div class="wrap-num-product flex-w m-r-20 m-tb-10">
+        //                                        <div class="btn-num-product-down cl8 hov-btn3 trans-04 flex-c-m">
+        //                                            <i class="fs-16 zmdi zmdi-minus"></i>
+        //                                        </div>
+
+        //                                        <input class="mtext-104 cl3 txt-center num-product" type="number" name="num-product" value="1">
+
+        //                                        <div class="btn-num-product-up cl8 hov-btn3 trans-04 flex-c-m">
+        //                                            <i class="fs-16 zmdi zmdi-plus"></i>
+        //                                        </div>
+        //                                    </div>
+        //                                </td>
+                                            
+        //                                <td class="column-5">
+        //                                    <button 
+        //                                            data-toggle="modal" data-target="#confirm-delete-modal"
+        //                                            type="button"
+        //                                            type="button" style="color: #D70018;"
+        //                                            class="detete-product-in-cart-btn">
+        //                                        Xóa
+        //                                    </button>
+        //                                </td>
+        //                            </tr>
+        //                    `;
+        //        });
+        //        listProductsInShopingCart.innerHTML = html.join('');
+        //        return listProductsInShopingCart
+        //    }
+
+        //}
+
+        const loadCart = async (idUser) => {
+            const listProductsInCartSidebar = document.getElementById(
+                "detail-list-all-products-in-cart"
+            );
+
+            let totalPrice = 0;
+            const res1 = await fetch(`https://localhost:44323/Cart/GetAllCart?id_user=${idUser}`, {
+                method: "GET"
+            })
+            const data1 = await res1.json();
+            if (data1.data.length == 0) {
+                listProductsInCartSidebar.innerHTML = "Giỏ hàng trống";
+                document.getElementById(
+                    "detail-cart-total-price-sidebar"
+                ).innerHTML = parseInt(0).toLocaleString("vi-VN", {
+                    style: "currency",
+                    currency: "VND",
+                });
+            } else {
+                $(".js-show-cart").attr("data-notify", data1.data.length);
+                const html = data1.data.map((item) => {
+                    totalPrice += parseInt(item.price);
+                    const price = parseInt(item.price).toLocaleString(
+                        "vi-VN",
+                        {
+                            style: "currency",
+                            currency: "VND",
+                        }
+                    );
+
+                    return `
+                                <li class="header-cart-item flex-w flex-t m-b-12 align-items-center">
+                                    <div class="header-cart-item-img">
+                                        <img src="/Assets/Admin/img/product/${item.Products.image}"
+                                            alt="IMG" />
+                                    </div>
+                                    <div class="header-cart-item-txt p-t-8">
+                                        <a href="/chi-tiet/${item.Products.slug}"
+                                            class="header-cart-item-name m-b-8 hov-cl1 trans-04">
+                                            ${item.Products.name}
+                                        </a>
+                                        <span class="header-cart-item-info" id="price-product" style="color: #D70018;">
+                                            ${price}
+                                        </span>
+                                    </div>
+                                </li>
+                            `;
+                });
+                listProductsInCartSidebar.innerHTML = html.join("");
+                document.getElementById(
+                    "detail-cart-total-price-sidebar"
+                ).innerHTML = parseInt(totalPrice).toLocaleString("vi-VN", {
+                    style: "currency",
+                    currency: "VND",
+                });
+
+            }
+        }
 
 
 
@@ -127,14 +270,14 @@
 
         /*---------------------------------------------*/
 
-        
+
 
         $('.js-addcart-detail').each(function () {
             var nameProduct = $(this).parent().parent().parent().parent().find('.js-name-detail').html();
             $(this).on('click', async function (e) {
                 const idProduct = Number($(this).data("id"));
                 const idUser = $(this).data("iduser");
-                const quantity = Number($(".num-product").val());
+                const quantity = 1;
                 const price = Number($(this).data("price"));
 
                 let url = 'https://localhost:44323/Cart/AddtoCart';
@@ -152,69 +295,18 @@
                 })
 
                 const data = await res.json();
-               
-                
+
+
                 if (data.status === "success") {
                     let i = ($(".js-show-cart").attr("data-notify")) * 1;
                     $(".js-show-cart").attr("data-notify", i + 1);
-                    const listProductsInCartSidebar = document.getElementById(
-                        "detail-list-all-products-in-cart"
-                    );
-                    let totalPrice = 0;
-                    const res1 = await fetch(`https://localhost:44323/Cart/GetAllCart?id_user=${idUser}`, {
-                        method: "GET"
-                    })
-                    const data1 = await res1.json();
-                    console.log(data1);
-                    if (data1.data.length == 0) {
-                        listProductsInCartSidebar.innerHTML = "Giỏ hàng trống";
-                        document.getElementById(
-                            "detail-cart-total-price-sidebar"
-                        ).innerHTML = parseInt(0).toLocaleString("vi-VN", {
-                            style: "currency",
-                            currency: "VND",
-                        });
-                    } else {
-                        const html = data1.data.map((item) => {
-                            totalPrice += parseInt(item.price);
-                            const price = parseInt(item.price).toLocaleString(
-                                "vi-VN",
-                                {
-                                    style: "currency",
-                                    currency: "VND",
-                                }
-                            );
-                           
-                            return `
-                            <li class="header-cart-item flex-w flex-t m-b-12 align-items-center">
-                                <div class="header-cart-item-img">
-                                    <img src="/Assets/Admin/img/product/${item.Products.image}"
-                                        alt="IMG" />
-                                </div>
-                                <div class="header-cart-item-txt p-t-8">
-                                    <a href="/${item.Products.slug}"
-                                        class="header-cart-item-name m-b-8 hov-cl1 trans-04">
-                                       ${item.Products.name}
-                                    </a>
-                                    <span class="header-cart-item-info" id="price-product" style="color: #D70018;">
-                                        ${item.Products.price}
-                                    </span>
-                                </div>
-                            </li>
-                        `;
-                        });
-                        listProductsInCartSidebar.innerHTML = html.join("");
-                        document.getElementById(
-                            "detail-cart-total-price-sidebar"
-                        ).innerHTML = parseInt(totalPrice).toLocaleString("vi-VN", {
-                            style: "currency",
-                            currency: "VND",
-                        });
-                        
-                    }
+
+                    loadCart(idUser);
+
+
                 }
                 swal(nameProduct, "is added to cart !", "success");
-                
+
             });
         });
 
@@ -227,13 +319,13 @@
                 dangermode: true,
             }).then(function (isconfirm) {
                 if (isconfirm) {
-                   
+
                     window.location.href = '/auth/login'
-                   
-                } 
+
+                }
             })
-         
-            
+
+
         })
 
 

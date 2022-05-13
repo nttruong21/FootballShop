@@ -28,6 +28,7 @@ namespace FootballShop.Controllers
                 ? Json(new
                 {
                     status = "success",
+
                 }, JsonRequestBehavior.AllowGet)
                 : Json(new
                 {
@@ -46,6 +47,7 @@ namespace FootballShop.Controllers
                        where CartDetails.accountId == id_user
                        select new
                        {
+                           CartDetails.id,
                            accountId= CartDetails.accountId,
                             productId= CartDetails.productId,
                             quantity= CartDetails.quantity,

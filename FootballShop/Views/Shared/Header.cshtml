@@ -2,7 +2,8 @@
 @*@{
     var allCategories = (List<FootballShopModel.Models.Category>)ViewBag.allCategories;
 }*@
-<header class="header-v4">
+
+<header class="header-v4" id="getId-user" data-id="@Session["id_user"]">
     <!-- Header desktop -->
     <div class="container-menu-desktop">
         <!-- Topbar -->
@@ -43,7 +44,10 @@
                         </li>
 
                         <li>
-                            <a class="font-weight-bold" href="shoping-cart.html">GIỎ HÀNG</a>
+                            <a class="font-weight-bold" href="/ShopingCart">GIỎ HÀNG</a>
+                        </li>
+                        <li>
+                            <a class="font-weight-bold" href="/Bills">ĐƠN HÀNG</a>
                         </li>
                     </ul>
                 </div>

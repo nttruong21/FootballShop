@@ -21,7 +21,7 @@ namespace FootballShopModel.DAO
 
         public List<CartDetail> getAll()
         {
-
+            
             return db.CartDetails.ToList();
         }
 
@@ -35,8 +35,17 @@ namespace FootballShopModel.DAO
         {
             try
             {
-                db.CartDetails.Add(cart);
-                db.SaveChanges();
+                int i = Convert.ToInt32(cart.productId);
+                if (checkProductId(i))
+                {
+                    UpdateQuantityCart(i);
+                }
+                else
+                {
+                    db.CartDetails.Add(cart);
+                    db.SaveChanges();
+                }
+                
                 return true;
             }
             catch
@@ -57,10 +66,11 @@ namespace FootballShopModel.DAO
         }
 
         // REMOVE
-        public bool removeItem(CartDetail item)
+        public bool removeItem(int id)
         {
             try
             {
+                CartDetail item = getById(id);
                 db.CartDetails.Remove(item);
                 db.SaveChanges();
                 return true;
@@ -69,6 +79,44 @@ namespace FootballShopModel.DAO
             {
                 return false;
             }
+        }
+        public bool checkProductId(int id)
+        {
+            var a = db.CartDetails.Where(p => p.productId == id).Count();
+            return a >= 1 ? true : false ;
+        }
+        public bool UpdateQuantityCart(int id)
+        {
+            try
+            {
+                CartDetail c = db.CartDetails.Single(ca => ca.productId == id);
+                c.quantity = c.quantity + 1;
+                db.SaveChanges();
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+        public bool UpdateQuantityCartDown(int id)
+        {
+            try
+            {
+                CartDetail c = db.CartDetails.Single(ca => ca.productId == id);
+                c.quantity = c.quantity - 1;
+                db.SaveChanges();
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+        public CartDetail getbyProductId(int productId)
+        {
+            CartDetail c = db.CartDetails.Single(ca => ca.productId == productId);
+            return c;
         }
     }
 }
