@@ -47,11 +47,13 @@ namespace FootballShop.Controllers
 
         public JsonResult DeleteShopingCart(int idCart)
         {
+            CartDetail c = cartDao.getById(idCart);
             cartDao.removeItem(idCart);
 
             return Json(new
             {
                 status = "success",
+                data = c
             }, JsonRequestBehavior.AllowGet);
 
         }

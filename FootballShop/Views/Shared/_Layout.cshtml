@@ -103,8 +103,10 @@
                 "getId-user"
             );
             const id = $(listProductsInCartSidebar).attr("data-id")
-
-            loadCart(id);
+            if (id) {
+                loadCart(id);
+            }
+            
 
 
             /*loadShopingCart(id);*/
@@ -192,7 +194,7 @@
             })
             const data1 = await res1.json();
             if (data1.data.length == 0) {
-                listProductsInCartSidebar.innerHTML = "Giỏ hàng trống";
+                listProductsInCartSidebar.innerHTML = "<h4>Giỏ hàng trống<h4>";
                 document.getElementById(
                     "detail-cart-total-price-sidebar"
                 ).innerHTML = parseInt(0).toLocaleString("vi-VN", {
@@ -202,8 +204,8 @@
             } else {
                 $(".js-show-cart").attr("data-notify", data1.data.length);
                 const html = data1.data.map((item) => {
-                    totalPrice += parseInt(item.price);
-                    const price = parseInt(item.price).toLocaleString(
+                    totalPrice += parseInt(item.price * item.quantity);
+                    const price = parseInt(item.price * item.quantity).toLocaleString(
                         "vi-VN",
                         {
                             style: "currency",

@@ -77,6 +77,8 @@
   <ItemGroup>
     <Compile Include="Common.cs" />
     <Compile Include="Constants.cs" />
+    <Compile Include="DAO\BillDAO.cs" />
+    <Compile Include="DAO\BillDetailDAO.cs" />
     <Compile Include="DAO\CartDAO.cs" />
     <Compile Include="DAO\ProductDAO.cs" />
     <Compile Include="DAO\CategoryDAO.cs" />

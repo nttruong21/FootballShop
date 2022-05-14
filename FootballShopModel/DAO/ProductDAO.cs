@@ -13,6 +13,7 @@ namespace FootballShopModel.DAO
         public ProductDAO()
         {
             db = new FootballEntities();
+            db.Configuration.ProxyCreationEnabled = false;
         }
 
         // Get all products

@@ -219,6 +219,8 @@
     <Compile Include="Areas\Admin\Controllers\LoginController.cs" />
     <Compile Include="Areas\Admin\Controllers\ProductController.cs" />
     <Compile Include="Controllers\AuthController.cs" />
+    <Compile Include="Controllers\BillController.cs" />
+    <Compile Include="Controllers\BillDetailController.cs" />
     <Compile Include="Controllers\CartController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ProductController.cs" />
@@ -2765,6 +2767,7 @@
     <Content Include="Views\Product\ProductDetail.cshtml" />
     <Content Include="Views\Auth\login.cshtml" />
     <Content Include="Views\ShopingCart\Index.cshtml" />
+    <Content Include="Views\Bill\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -2773,6 +2776,7 @@
     <Folder Include="Assets\Admin\img\category\" />
     <Folder Include="Assets\Admin\img\product\" />
     <Folder Include="Models\" />
+    <Folder Include="Views\BillDetail\" />
     <Folder Include="Views\Cart\" />
   </ItemGroup>
   <ItemGroup>

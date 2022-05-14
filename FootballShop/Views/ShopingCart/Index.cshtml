@@ -45,16 +45,16 @@
 
             <div class="w-full">
                 <div class="header-cart-total w-full p-tb-40">
-                    Tổng : <span id="detail-cart-total-price-sidebar">1.500.000</span> đ
+                    Tổng : <span id="detail-cart-total-price-sidebar">0</span> 
                 </div>
 
                 <div class="header-cart-buttons flex-w w-full">
-                    <a href="shoping-cart.html" class="flex-c-m stext-101 cl0 size-107 bg3 bor2 hov-btn3 p-lr-15 trans-04 m-r-8 m-b-10">
-                        View Cart
+                    <a href="/ShopingCart" class="flex-c-m stext-101 cl0 size-107 bg3 bor2 hov-btn3 p-lr-15 trans-04 m-r-8 m-b-10">
+                        Xem giỏ hàng
                     </a>
 
-                    <a href="shoping-cart.html" class="flex-c-m stext-101 cl0 size-107 bg3 bor2 hov-btn3 p-lr-15 trans-04 m-b-10">
-                        Check Out
+                    <a href="/ShopingCart" class="flex-c-m stext-101 cl0 size-107 bg3 bor2 hov-btn3 p-lr-15 trans-04 m-b-10">
+                        Thanh toán
                     </a>
                 </div>
             </div>
@@ -68,7 +68,7 @@
         <div class="row">
             <div class="col-lg-12 col-xl-10 m-lr-auto m-b-50">
                 <div class="m-l-25 m-r--38 m-lr-0-xl">
-                    <div class="wrap-table-shopping-cart">
+                    <div class="wrap-table-shopping-cart" id="cart_empty">
                         <table id="list-shopingcart-detail-items" class="table-shopping-cart">
 
                             @{
@@ -141,14 +141,15 @@
                         <div class="size-209 p-t-1">
                             <span id="bill-total-price" class="mtext-110 cl8"
                                   style="color: #D70018;">
-
+                                    123123
                             </span>
                         </div>
                     </div>
 
                     <button type="button"
                             class="flex-c-m stext-101 cl0 size-117 mx-auto bg3 bor14 hov-btn3 p-lr-15 trans-04 pointer"
-                            onclick="createBill()">
+                            id="order_btn"
+                            >
                         Đặt hàng
                     </button>
                 </div>
@@ -192,35 +193,35 @@
     let id = listProductsInCartSidebar.getAttribute('data-id');
     if (!id) {
         document.getElementById("bill-information").style.display = "none";
-    }
- 
-    
-    const loadShopingCart = async (idUser) => {
-        const listProductsInShopingCart = document.getElementById(
-            "list-shopingcart-detail-items"
-        );
-        let totalPrice = 0;
-        const res1 = await fetch(`https://localhost:44323/Cart/GetAllCart?id_user=${idUser}`, {
-            method: "GET"
-        })
-        const data1 = await res1.json();
-        if (data1.data.length == 0) {
-            listProductsInShopingCart.innerHTML = "Giỏ hàng trống";
-            
+    } else {
+        const loadShopingCart = async (idUser) => {
+            const listProductsInShopingCart = document.getElementById(
+                "list-shopingcart-detail-items"
+            );
+            let totalPrice = 0;
+            const res1 = await fetch(`https://localhost:44323/Cart/GetAllCart?id_user=${idUser}`, {
+                method: "GET"
+            })
+            const data1 = await res1.json();
+            document.getElementById("detail-shopingcart-total-price").innerHTML = data1.data.length;
+            if (data1.data.length == 0) {
+                listProductsInShopingCart.innerHTML = "<h4>Giỏ hàng trống</h4>";
+                document.getElementById("bill-information").style.display = "none";
 
-        } else {
-            const html = data1.data.map((item) => {
-                totalPrice += parseInt(item.price);
+            } else {
+                const html = data1.data.map((item) => {
 
-                const price = parseInt(item.price * item.quantity).toLocaleString(
-                    "vi-VN",
-                    {
-                        style: "currency",
-                        currency: "VND",
-                    }
-                );
+                    totalPrice += parseInt(item.price * item.quantity);
 
-                return `
+                    const price = parseInt(item.price * item.quantity).toLocaleString(
+                        "vi-VN",
+                        {
+                            style: "currency",
+                            currency: "VND",
+                        }
+                    );
+
+                    return `
                                 <tr
                                     class="table_row" id="tr_cart-${item.id}">
                                         <td class="column-1">
@@ -263,22 +264,66 @@
                                         </td>
                                     </tr>
                             `;
-            });
-            listProductsInShopingCart.innerHTML = html.join('');
-            console.log(totalPrice);
-            return listProductsInShopingCart
+                });
+                listProductsInShopingCart.innerHTML = html.join('');
+                document.getElementById("bill-total-price").innerHTML = totalPrice.toLocaleString(
+                    "vi-VN",
+                    {
+                        style: "currency",
+                        currency: "VND",
+                    }
+                );
+                return listProductsInShopingCart
+            }
+
         }
 
-    }
-    loadShopingCart(id);
-    setTimeout(() => {
-        $('.btn-num-product-down').on('click',async function () {
-            var numproduct = Number($(this).next().val());
-            if (numproduct > 1) {
-                $(this).next().val(numproduct - 1);
+        loadShopingCart(id);
+
+
+        setTimeout(() => {
+            $('.btn-num-product-down').on('click', async function () {
+                var numproduct = Number($(this).next().val());
+                if (numproduct > 1) {
+                    $(this).next().val(numproduct - 1);
+                    const productId = $(this).attr('data-idproduct');
+
+                    const data = await fetch(`https://localhost:44323/ShopingCart/UpdateQuantityDown?productId=${productId}`)
+                    const res = await data.json();
+                    if (res.data != null) {
+                        $(this).prev().val(numproduct + 1);
+                        const price = parseInt(res.data.price * res.data.quantity).toLocaleString(
+                            "vi-VN",
+                            {
+                                style: "currency",
+                                currency: "VND",
+                            }
+                        );
+
+                        document.getElementById(`render-price-${productId}`).innerHTML = price;
+                        let a = document.getElementById("bill-total-price").innerHTML
+                        console.log(a);
+                        let num = a.replace(/\D/g, '');
+                        console.log(num)
+                        document.getElementById("bill-total-price").innerHTML = (num * 1 - res.data.price * 1).toLocaleString(
+                            "vi-VN",
+                            {
+                                style: "currency",
+                                currency: "VND",
+                            }
+                        );
+                    }
+                }
+
+            });
+
+            $('.btn-num-product-up').on('click', async function () {
+                var numproduct = Number($(this).prev().val());
+
+
                 const productId = $(this).attr('data-idproduct');
-               
-                const data = await fetch(`https://localhost:44323/ShopingCart/UpdateQuantityDown?productId=${productId}`)
+
+                const data = await fetch(`https://localhost:44323/ShopingCart/UpdateQuantityUp?productId=${productId}`)
                 const res = await data.json();
                 if (res.data != null) {
                     $(this).prev().val(numproduct + 1);
@@ -291,52 +336,109 @@
                     );
 
                     document.getElementById(`render-price-${productId}`).innerHTML = price;
+                    let a = document.getElementById("bill-total-price").innerHTML
+                    let num = a.replace(/\D/g, '');
+                    document.getElementById("bill-total-price").innerHTML = (num * 1 + res.data.price * 1).toLocaleString(
+                        "vi-VN",
+                        {
+                            style: "currency",
+                            currency: "VND",
+                        }
+                    );
                 }
-            }
+            });
 
-        });
 
-        $('.btn-num-product-up').on('click', async function () {
-            var numproduct = Number($(this).prev().val());
+
+            $('.detete-product-in-cart-btn').on('click', function () {
+                const idCart = $(this).data('id');
+                $('#confirm-delete-modal-agree-btn').attr('data-cart-detail-id', idCart);
+            })
+
+
+
+            $('#confirm-delete-modal-agree-btn').on('click', async function () {
+                const idCart = $(this).attr('data-cart-detail-id') * 1;
+                $('#confirm-delete-modal').modal('hide')
+                console.log(idCart);
+                const res = await fetch(`https://localhost:44323/ShopingCart/DeleteShopingCart?idCart=${idCart}`);
+                const data = await res.json();
+                console.log(data);
+                if (data.status == "success") {
+                    $(`#tr_cart-${idCart}`).remove();
+                    let quantity = ($(".js-show-cart").attr("data-notify")) * 1;
+                    $(".js-show-cart").attr("data-notify", quantity - 1);
+                    let a = document.getElementById("bill-total-price").innerHTML
+                    let num = a.replace(/\D/g, '');
+                    document.getElementById("bill-total-price").innerHTML = (num * 1 - (data.data.price * data.data.quantity) * 1).toLocaleString(
+                        "vi-VN",
+                        {
+                            style: "currency",
+                            currency: "VND",
+                        }
+                    );
+                    let don = document.getElementById("detail-shopingcart-total-price").innerHTML * 1;
+                    document.getElementById("detail-shopingcart-total-price").innerHTML = don - 1
+                }
+            })
+
+
             
 
-            const productId = $(this).attr('data-idproduct');
-          
-            const data = await fetch(`https://localhost:44323/ShopingCart/UpdateQuantityUp?productId=${productId}`)
-            const res = await data.json();
-            if (res.data != null) {
-                $(this).prev().val(numproduct + 1);
-                const price = parseInt(res.data.price * res.data.quantity).toLocaleString(
-                    "vi-VN",
-                    {
-                        style: "currency",
-                        currency: "VND",
-                    }
-                );
-             
-                document.getElementById(`render-price-${productId}`).innerHTML = price;
-            }
-        });
 
-        $('.detete-product-in-cart-btn').on('click', function () {
-            const idCart = $(this).data('id');
-            $('#confirm-delete-modal-agree-btn').attr('data-cart-detail-id', idCart);
-        })
-        $('#confirm-delete-modal-agree-btn').on('click', async function () {
-            const idCart = $(this).attr('data-cart-detail-id') * 1;
-            $('#confirm-delete-modal').modal('hide')
-            console.log(idCart);
-            const res = await fetch(`https://localhost:44323/ShopingCart/DeleteShopingCart?idCart=${idCart}`);
-            const data = await res.json();
-            console.log(data);
-            if (data.status == "success") {
-                $(`#tr_cart-${idCart}`).remove();
-                let quantity = ($(".js-show-cart").attr("data-notify")) * 1;
-                $(".js-show-cart").attr("data-notify", quantity - 1);
-            }
-        })
+            $("#order_btn").on("click", async function (e) {
+                e.preventDefault();
+                let detailPrice = document.getElementById("bill-total-price").innerHTML;
+                let priceTotal = (detailPrice.replace(/\D/g, '')) * 1;
 
-    }, 1000);
+                const name_recipient_name = $("#bill-recipient-name").val();
+                const name_bill_recipient_phone = $("#bill-recipient-phone").val();
+                const bill_recipient_address = $("#bill-recipient-address").val();
+
+               
+
+                const res = await fetch("https://localhost:44323/Bill/CreateBill", {
+                    method: "POST",
+                    headers: {
+                       'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        accountId: id,
+                        recipientName: name_recipient_name,
+                        recipientAddress: bill_recipient_address,
+                        recipientPhone: name_bill_recipient_phone,
+                        totalPrice: priceTotal
+                    })
+                })
+                const data = await res.json();
+                if (data.status === "success") {
+                    $("#bill-recipient-name").val("");
+                    $("#bill-recipient-phone").val("");
+                    $("#bill-recipient-address").val("");
+                    document.getElementById("bill-total-price").innerHTML = 0;
+                    $("#list-shopingcart-detail-items").remove();
+                    document.getElementById("cart_empty").innerHTML = "<h4>Giỏ hàng trống</h4>";
+                    document.getElementById("bill-information").style.display = "none";
+                    $(".js-show-cart").attr("data-notify", 0);
+                    $("#detail-list-all-products-in-cart").remove();
+                    document.getElementById("detail-cart-total-price-sidebar").innerHTML = "0";
+                    swal("Đơn hàng", "Đặt hàng thành công", "success");
+                }
+            })
+        }, 1000);
+
+
+
+
+
+
+
+    }
+ 
+    
+    
    
 
+    
+    
 </script>
