@@ -49,6 +49,13 @@
                         <li>
                             <a class="font-weight-bold" href="/bill">ĐƠN HÀNG</a>
                         </li>
+                        @{
+                            var myHtmlString = new HtmlString($"<li><a class='font-weight-bold' href='/UserInfomation'>THÔNG TIN CÁ NHÂN</a></li>");
+                            if (Session["id_user"] != null)
+                            {
+                                @myHtmlString;
+                            }
+                        }
                     </ul>
                 </div>
 

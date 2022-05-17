@@ -1,0 +1,246 @@
+﻿
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "Index";
+}
+
+<!-- Cart -->
+<div class="wrap-header-cart js-panel-cart ">
+    <div class="s-full js-hide-cart"></div>
+
+    <div class="header-cart flex-col-l p-l-65 p-r-25">
+        <div class="header-cart-title flex-w flex-sb-m p-b-8">
+            <span class="mtext-103 cl2">
+                Your Cart
+            </span>
+
+            <div class="fs-35 lh-10 cl2 p-lr-5 pointer hov-cl1 trans-04 js-hide-cart">
+                <i class="zmdi zmdi-close"></i>
+            </div>
+        </div>
+
+        <div class="header-cart-content flex-w js-pscroll">
+            <ul id="detail-list-all-products-in-cart" class="header-cart-wrapitem w-full">
+                @*<li  class="header-cart-item flex-w flex-t m-b-12">
+                        <div class="header-cart-item-img">
+                            <img src="~/Assets/Client/images/item-cart-01.jpg" alt="IMG">
+                        </div>
+
+                        <div class="header-cart-item-txt p-t-8">
+                            <a href="#" class="header-cart-item-name m-b-18 hov-cl1 trans-04">
+                                White Shirt Pleat
+                            </a>
+
+                            <span class="header-cart-item-info">
+                                1 x 500.000đ
+                            </span>
+                        </div>
+                    </li>*@
+            </ul>
+
+
+            <div class="w-full">
+                <div class="header-cart-total w-full p-tb-40">
+                    Tổng : <span id="detail-cart-total-price-sidebar">1.500.000</span> đ
+                </div>
+
+                <div class="header-cart-buttons flex-w w-full">
+                    <a href="shoping-cart.html" class="flex-c-m stext-101 cl0 size-107 bg3 bor2 hov-btn3 p-lr-15 trans-04 m-r-8 m-b-10">
+                        View Cart
+                    </a>
+
+                    <a href="shoping-cart.html" class="flex-c-m stext-101 cl0 size-107 bg3 bor2 hov-btn3 p-lr-15 trans-04 m-b-10">
+                        Check Out
+                    </a>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+<div class="container py-3 mb-4 ">
+    <div class="row">
+
+        <div class="col-md-12">
+
+            <h2 class="text-center mb-3">Thông tin cá nhân</h2>
+            <hr class="mb-4">
+
+            @* Thông tin cá nhân *@
+            <div class="row justify-content-center">
+                <div class="col-md-6">
+                    <span class="anchor" id="formRegister"></span>
+                    <hr class="mb-5">
+                    <!-- form card register -->
+                    <div class="card card-outline-secondary">
+                        <div class="card-header">
+                            <h3 class="mb-0">Thông tin cá nhân</h3>
+                        </div>
+                        <div class="card-body ">
+                            <form autocomplete="off" class="form" role="form">
+                                <div class="form-group">
+                                    <label for="inputName">Họ và tên</label>
+                                    <input class="form-control" id="input-name" placeholder="Họ và tên" type="text">
+                                </div>
+                                <div class="form-group">
+                                    <label for="inputEmail3">Số điện thoại</label>
+                                    <input class="form-control" id="input-phone" placeholder="Số điện thoại" required="" type="text">
+                                </div>
+                                <div class="form-group">
+                                    <label for="inputEmail3">Địa chỉ</label>
+                                    <input class="form-control" id="input-address" placeholder="Địa chỉ" required="" type="text">
+                                </div>
+                                <div class="form-group">
+                                    <button class="btn btn-primary btn-lg float-right" id="btn-update-info" type="submit">Cập nhập</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div><!-- /form card register -->
+                </div>
+            </div>
+            @* Đổi mật khẩu *@
+            <div class="row justify-content-center">
+                <div class="col-md-6">
+                    <span class="anchor" id="formChangePassword"></span>
+                    <hr class="mb-5">
+                    <!-- form card change password -->
+                    <div class="card card-outline-secondary">
+                        <div class="card-header">
+                            <h3 class="mb-0">Đổi mật khẩu</h3>
+                        </div>
+                        <div class="card-body">
+                            <form autocomplete="off" class="form" role="form">
+                                <div class="form-group">
+                                    <label for="inputPasswordOld">Mật khẩu hiện tại</label>
+                                    <input class="form-control" id="input-current-password" required="" type="password">
+                                </div>
+                                <div class="form-group">
+                                    <label for="inputPasswordNew">Mật khẩu mới</label>
+                                    <input class="form-control" id="input-new-password" required="" type="password">
+                                </div>
+                                <div class="form-group">
+                                    <label for="inputPasswordNewVerify">Nhập lại mật khẩu mới</label>
+                                    <input class="form-control" id="input-check-password" required="" type="password">
+                                </div>
+                                <div class="form-group">
+                                    <button class="btn btn-primary btn-lg float-right" id="btn-change-password" type="submit">Xác nhận</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div><!-- /form card change password -->
+                </div>
+            </div>
+
+        </div><!--/col-->
+    </div><!--/row-->
+</div><!--/container-->
+<!-- Scroll to Top -->
+<script type="text/javascript">
+    const listProductsInCartSidebar = document.getElementById(
+        "getId-user"
+    );
+    const name = document.getElementById('input-name');
+    const phone = document.getElementById('input-phone');
+    const address = document.getElementById('input-address');
+    const oldpass = document.getElementById('input-current-password');
+    const newpass = document.getElementById('input-new-password');
+    const checkpass = document.getElementById('input-check-password');
+    let id = listProductsInCartSidebar.getAttribute('data-id');
+
+    if (id) {
+        console.log(id);
+        loadInfo(id);
+    }
+    async function  loadInfo(id) {
+        const res = await fetch(`https://localhost:44323/UserInfomation/GetInfomation?id=${id}`);
+        const data = await res.json();
+        console.log(data.user);
+        name.value = data.user.name;
+        phone.value = data.user.phone;
+        address.value = data.user.address;
+
+
+    }
+    function phonenumber(inputtxt) {
+        var phoneno = /^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/;
+        if (inputtxt.match(phoneno)) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+    document.getElementById('btn-update-info').addEventListener('click', async (e) => {
+        e.preventDefault();
+
+        if (!phonenumber(phone.value)) {
+            swal("Thất bại", "Số điện thoại không hợp lệ", "error");
+        } else {
+            const res = await fetch('https://localhost:44323/UserInfomation/Update', {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    name: name.value,
+                    phone: phone.value,
+                    address: address.value,
+                    id
+                })
+            })
+
+            const data = await res.json();
+            console.log(data);
+            swal(data.message, data.reason, data.status);
+        }
+
+    })
+
+
+    document.getElementById('btn-change-password').addEventListener('click', async (e) => {
+        e.preventDefault();
+        console.log(newpass.value.length);
+        console.log(oldpass.value.length);
+        console.log(checkpass.value.length);
+        if (newpass.value == '' || oldpass.value == '' || checkpass.value == '') {
+            swal("Thất bại", "Vui lòng nhập đầy đủ thông tin", "error");
+        }
+        else if (newpass.value === oldpass.values) {
+            swal("Thất bại", "Mật khẩu mới jkhông được giống mật khẩu cũ", "error");
+        }
+        else if (newpass.value.length < 3) {
+            swal("Thất bại", "Mật khẩu mới phải dài hơn 3 ký tự", "error");
+        }
+        else if (newpass.value !== checkpass.value) {
+            swal("Thất bại", "Mật khẩu nhập lại không khớp", "error");
+        }
+        else {
+            const res = await fetch('https://localhost:44323/UserInfomation/ChangePassword', {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    oldpass: oldpass.value,
+                    newpass: newpass.value,
+                    id
+                })
+            })
+
+            const data = await res.json();
+            console.log(data);
+            newpass.value = '';
+            oldpass.value = '';
+            checkpass.value = '';
+            swal(data.message, data.reason, data.status);
+        }
+
+    })
+
+
+
+
+
+</script>

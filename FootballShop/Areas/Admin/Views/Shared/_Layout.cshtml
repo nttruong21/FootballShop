@@ -133,17 +133,26 @@
 
     <script>
         const flash = document.getElementById("flash");
-
+        const alert = document.getElementById("alert");
         function showFlash() {
             flash.style.transform = "translateX(-10%)";
             setTimeout(() => {
                 flash.style.transform = "translateX(100%)";
+                alert.innerHTML = '';
+                
             }, 2500);
+            
         }
 
         if (flash) {
             window.addEventListener("load", e => showFlash());
         }
+        if (alert.innerHTML.length > 60 ) {
+            window.addEventListener("load", e => showFlash());
+        }
+
+        
+
 
     </script>
 </body>

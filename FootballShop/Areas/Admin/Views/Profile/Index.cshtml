@@ -1,0 +1,134 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+}
+@using FootballShopModel.Models;
+@using FootballShopModel;
+
+
+<div class="form px-4">
+
+    <h2>THÔNG TIN CÁ NHÂN</h2>
+    <div class="row">
+        <div class="form-group col-lg-4 col-md-6 col-sm-12">
+            <label for="name">Họ tên</label>
+            <input class="form-control form-control-userl" id="input-name" placeholder="Họ và tên" type="text">
+        </div>
+        <div class="form-group col-lg-4 col-md-6 col-sm-12">
+            <label for="phone">Số điện thoại</label>
+            <input class="form-control" id="input-phone" placeholder="Số điện thoại" required="" type="text">
+        </div>
+        <div class="form-group col-lg-4 col-md-12 col-sm-12">
+            <label for="address">Địa chỉ</label>
+            <input class="form-control" id="input-address" placeholder="Địa chỉ" required="" type="text">
+        </div>
+    </div>
+
+    <div id="add-modal-alert"></div>
+    <button type="submit" id="btn-update-info" class="btn btn-primary">
+        Cập nhập
+    </button>
+    <div id="alert">
+
+    </div>
+    
+
+</div>
+<script type="text/javascript">
+    const listProductsInCartSidebar = document.getElementById(
+        "getId-user"
+    );
+    const name = document.getElementById('input-name');
+    const phone = document.getElementById('input-phone');
+    const address = document.getElementById('input-address');
+    let id = listProductsInCartSidebar.getAttribute('data-id');
+    
+    const alert = document.getElementById("alert");
+    function showFlash2() {
+        const flash2 = document.getElementById("flash");
+        flash2.style.transform = "translateX(-10%)";
+        setTimeout(() => {
+            flash2.style.transform = "translateX(100%)";
+            setTimeout(() => {
+                alert.innerHTML = '';
+            }, 500);
+            
+
+        }, 2500);
+
+    }
+
+
+    if (id) {
+        console.log(id);
+        loadInfo(id);
+    }
+    async function loadInfo(id) {
+        const res = await fetch(`https://localhost:44323/Admin/Profile/GetInfomation?id=${id}`);
+        const data = await res.json();
+        console.log(data.user);
+        name.value = data.user.name;
+        phone.value = data.user.phone;
+        address.value = data.user.address;
+
+
+    }
+
+    function phonenumber(inputtxt) {
+        var phoneno = /^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/;
+        if (inputtxt.match(phoneno)) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+    document.getElementById('btn-update-info').addEventListener('click', async (e) => {
+        e.preventDefault();
+
+        if (!phonenumber(phone.value)) {
+            document.getElementById('alert').innerHTML = `
+                <div id="flash" class="alert bg-danger">
+                   <span id="flash-icon"><i class='fa-solid fa-xmark text-white mr-3'></i></i></span>
+                    <span id="flash-message" class="text-white">Số điện thoại không hợp lệ</span>
+                </div >
+             `;
+            showFlash2();
+        } else {
+            const res = await fetch('https://localhost:44323/Admin/Profile/Update', {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    name: name.value,
+                    phone: phone.value,
+                    address: address.value,
+                    id
+                })
+            })
+
+            const data = await res.json();
+            console.log(data);
+            console.log(alert.innerHTML.length);
+            document.getElementById('alert').innerHTML = `
+                <div id="flash" class="alert bg-${data.status}">
+                   <span id="flash-icon">${data.icon}</i></span>
+                    <span id="flash-message" class="text-white">${data.message}</span>
+                </div >
+             `;
+            showFlash2();
+
+            //
+        }
+
+    })
+
+
+
+
+
+
+
+
+</script>

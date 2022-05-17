@@ -217,6 +217,7 @@
     <Compile Include="Areas\Admin\Controllers\CategoryController.cs" />
     <Compile Include="Areas\Admin\Controllers\HomeController.cs" />
     <Compile Include="Areas\Admin\Controllers\ProductController.cs" />
+    <Compile Include="Areas\Admin\Controllers\ProfileController.cs" />
     <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\BillController.cs" />
@@ -226,6 +227,7 @@
     <Compile Include="Controllers\ProductController.cs" />
     <Compile Include="Controllers\RegisterController.cs" />
     <Compile Include="Controllers\ShopingCartController.cs" />
+    <Compile Include="Controllers\UserInfomationController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -2743,6 +2745,8 @@
     <Content Include="Areas\Admin\Views\Bill\ShippingBills.cshtml" />
     <Content Include="Areas\Admin\Views\Bill\DeliveredBills.cshtml" />
     <Content Include="Areas\Admin\Views\Bill\BillDetail.cshtml" />
+    <Content Include="Areas\Admin\Views\_ViewStart.cshtml" />
+    <Content Include="Areas\Admin\Views\Profile\Index.cshtml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
@@ -2776,11 +2780,13 @@
     <Content Include="Views\Register\Index.cshtml" />
     <Content Include="Views\Error\NotPermission.cshtml" />
     <Content Include="Views\Error\NotFound.cshtml" />
+    <Content Include="Views\UserInfomation\index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Areas\Admin\Data\" />
     <Folder Include="Areas\Admin\Views\Base\" />
+    <Folder Include="Areas\Admin\Views\UserInfomation\" />
     <Folder Include="Assets\Admin\img\category\" />
     <Folder Include="Assets\Admin\img\product\" />
     <Folder Include="Models\" />

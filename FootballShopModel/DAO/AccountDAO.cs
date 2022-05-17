@@ -13,6 +13,7 @@ namespace FootballShopModel.DAO
         public AccountDAO()
         {
             db = new FootballShopEntities();
+            db.Configuration.ProxyCreationEnabled = false;
         }
 
         public bool login(string email, string password)
@@ -50,7 +51,17 @@ namespace FootballShopModel.DAO
             return db.Accounts.FirstOrDefault(acc => acc.phone.Trim() == phone.Trim());
         }
 
-
+        //   check Phone Number Exists
+        public bool checkPhoneNumberExists(int id, string phone)
+        {
+            return db.Accounts.Any(x => x.phone.Equals(phone) && x.id != id); ;
+        }
+        //Check password is correct
+        public bool checkPassword(int id, string password)
+        {
+            string passwordToHash = Common.MD5Hash(password);
+            return db.Accounts.Any(x => x.password.Equals(passwordToHash) && x.id == id);
+        }
         // Create 
         public bool CreateAccount(Account account)
         {
