@@ -3,6 +3,8 @@
     ViewBag.Title = "ProductDetail";
     Layout = "~/Views/Shared/_Layout.cshtml";
     var format = System.Globalization.CultureInfo.GetCultureInfo("vi-VN");
+    var productsByCategory = (List<FootballShopModel.Models.Product>)ViewBag.productsByCategory;
+    var product = (FootballShopModel.Models.Product)ViewBag.product;
 }
 
 
@@ -50,6 +52,7 @@
     </div>
 </div>
 
+@* Product Detail *@
 <section class="sec-product-detail bg0 p-t-65 p-b-60">
     <div class="container">
         <div class="row">
@@ -60,31 +63,31 @@
                         <div class="wrap-slick3-arrows flex-sb-m flex-w"></div>
 
                         <div class="slick3 gallery-lb">
-                            <div class="item-slick3" data-thumb="/Assets/Client/images/product/@Model.image">
+                            <div class="item-slick3" data-thumb="/Assets/Client/images/product/@product.image">
                                 <div class="wrap-pic-w pos-relative">
-                                    <img src="~/Assets/Client/images/product/@Model.image" alt="IMG-PRODUCT">
+                                    <img src="~/Assets/Client/images/product/@product.image" alt="IMG-PRODUCT">
 
-                                    <a class="flex-c-m size-108 how-pos1 bor0 fs-16 cl10 bg0 hov-btn3 trans-04" href="images/product/ao6.webp">
+                                    <a class="flex-c-m size-108 how-pos1 bor0 fs-16 cl10 bg0 hov-btn3 trans-04" href="~/Assets/Client/images/product/@product.image">
                                         <i class="fa fa-expand"></i>
                                     </a>
                                 </div>
                             </div>
 
-                            <div class="item-slick3" data-thumb="/Assets/Client/images/product/@Model.image">
+                            <div class="item-slick3" data-thumb="/Assets/Client/images/product/@product.image">
                                 <div class="wrap-pic-w pos-relative">
-                                    <img src="~/Assets/Client/images/product/@Model.image" alt="IMG-PRODUCT">
+                                    <img src="~/Assets/Client/images/product/@product.image" alt="IMG-PRODUCT">
 
-                                    <a class="flex-c-m size-108 how-pos1 bor0 fs-16 cl10 bg0 hov-btn3 trans-04" href="images/product/ao6.webp">
+                                    <a class="flex-c-m size-108 how-pos1 bor0 fs-16 cl10 bg0 hov-btn3 trans-04" href="/Assets/Client/images/product/@product.image">
                                         <i class="fa fa-expand"></i>
                                     </a>
                                 </div>
                             </div>
 
-                            <div class="item-slick3" data-thumb="/Assets/Client/images/product/@Model.image">
+                            <div class="item-slick3" data-thumb="/Assets/Client/images/product/@product.image">
                                 <div class="wrap-pic-w pos-relative">
-                                    <img src="~/Assets/Client/images/product/@Model.image" alt="IMG-PRODUCT">
+                                    <img src="~/Assets/Client/images/product/@product.image" alt="IMG-PRODUCT">
 
-                                    <a class="flex-c-m size-108 how-pos1 bor0 fs-16 cl10 bg0 hov-btn3 trans-04" href="images/product/ao6.webp">
+                                    <a class="flex-c-m size-108 how-pos1 bor0 fs-16 cl10 bg0 hov-btn3 trans-04" href="/Assets/Client/images/product/@product.image">
                                         <i class="fa fa-expand"></i>
                                     </a>
                                 </div>
@@ -97,27 +100,27 @@
             <div class="col-md-6 col-lg-5 p-b-30">
                 <div class="p-r-50 p-t-5 p-lr-0-lg">
                     <h4 class="mtext-105 js-name-detail p-b-14">
-                        @Model.name
+                        @product.name
                     </h4>
                     <div class="flex-w flex-sb-m p-b-17 align-items-center">
-                        @if (Model.discount > 0)
+                        @if (product.discount > 0)
                         {
                             <div class="mtext-101 detail-product-price-new">
                                 <p>
-                                    @String.Format(format, "{0:c0}", Convert.ToInt64(Model.price * (100 - Model.discount) / 100))
+                                    @String.Format(format, "{0:c0}", Convert.ToInt64(product.price * (100 - product.discount) / 100))
                                 </p>
                             </div>
                             <div class="mtext-101 detail-product-price-old">
                                 <p>
-                                    @String.Format(format, "{0:c0}", Model.price)
+                                    @String.Format(format, "{0:c0}", product.price)
                                 </p>
                             </div>
                         }
                         else
                         {
-                            <div class="stext-105 detail-product-price-old">
+                            <div class="mtext-101 detail-product-price-new">
                                 <p>
-                                    @String.Format(format, "{0:c0}", Model.price)
+                                    @String.Format(format, "{0:c0}", product.price)
                                 </p>
                             </div>
                         }
@@ -132,7 +135,7 @@
 
 
                     <p class="stext-102 cl3 p-t-23">
-                        @Model.infor
+                        @product.infor
                     </p>
 
                     <!--  -->
@@ -145,7 +148,7 @@
                             @{
                                 for (var i = 38; i < 44; i++)
                                 {
-                                    if (Int64.Parse(Model.size) == i)
+                                    if (Int64.Parse(product.size) == i)
                                     {
                                         <div class="respon6-next mr-2"><span class="size-border size-border-active">@i</span></div>
                                     }
@@ -163,20 +166,17 @@
                                 Color
                             </div>
 
-                            <img src="~/Assets/Client/images/product/@Model.image" alt="" width="50" height="50" />
+                            <img src="~/Assets/Client/images/product/@product.image" alt="" width="50" height="50" />
                         </div>
 
                         <div class="flex-w flex-r-m p-b-10">
                             <div class="size-204 flex-w flex-m respon6-next">
 
-
-
-
                                 @{
-                                    var newPrice = Convert.ToInt64(Model.price * (100 - Model.discount) / 100);
+                                    var newPrice = Convert.ToInt64(product.price * (100 - product.discount) / 100);
                                     var productDetailHtmlString = new HtmlString($"<button " +
                                         $"class=\"flex-c-m stext-101 cl0 size-101 bg1 bor1 hov-btn1 p-lr-15 trans-04 js-addcart-detail\" " +
-                                        $"data-id=\"{ @Model.id }\"" +
+                                        $"data-id=\"{ @product.id }\"" +
                                         $"data-idUser=\"{ Session["id_user"] }\"" +
                                         $"data-price=\"{ newPrice }\">" +
                                         $"Thêm vào giỏ hàng</button>");
@@ -191,9 +191,6 @@
                                     {
                                         @productDetailHtmlString
                                         var id = Session["id_user"];
-
-
-
                                     }
                                     else
                                     {
@@ -395,7 +392,7 @@
     <div class="container">
         <div class="p-b-45">
             <h3 class="ltext-106 cl5 txt-center">
-                Related Products
+                Sản phẩm liên quan
             </h3>
         </div>
 
@@ -404,230 +401,63 @@
             <div class="wrap-slick2">
                 <div class="slick2">
                     <!-- Block2 -->
-                    <div class="item-slick2 p-l-15 p-r-15 p-t-15 p-b-15">
-                        <div class="card bg-light">
-                            <div class="block2">
+                    @foreach (var productItem in productsByCategory)
+                    {
+                        <div class="item-slick2 p-l-15 p-r-15 p-t-15 p-b-15">
+                            <div class="card bg-light">
+                                <div class="block2">
+                                    @if (productItem.discount > 0)
+                                    {
+                                        <div class="flash__sale__discount">
+                                            <p>Giảm @productItem.discount%</p>
+                                        </div>
+                                    }
                                 <div class="block2-pic hov-img0">
-                                    <img src="~/Assets/Client/images/aodabanhtest.jpg" alt="IMG-PRODUCT">
+                                    <img src="~/Assets/Client/images/product/@productItem.image" alt="IMG-PRODUCT">
 
                                     <a href="#" class="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04 js-show-modal1">
-                                        Quick View
+                                        Xem nhanh
                                     </a>
                                 </div>
 
                                 <div class="block2-txt flex-w flex-t p-t-14 p-b-14 px-3">
                                     <div class="block2-txt-child1 flex-col-l ">
-                                        <a href="" class="stext-104 cltext hov-cl1 font-weight-bold trans-04 js-name-b2 p-b-6">
-                                            Name
+                                        @{
+                                            var url = "/chi-tiet/" + productItem.slug;
+                                        }
+                                        <a href="@url" class="card-product-name stext-104 cltext hov-cl1 font-weight-bold trans-04 js-name-b2 p-b-6">
+                                            @productItem.name
                                         </a>
 
-                                        <div class="flash__sale__product__desc__price__new">
-                                            <p>
-                                                1000000
-                                            </p>
+                                        <div class="flash__sale__product__desc__price">
+                                            @if (productItem.discount > 0)
+                                            {
+                                                <div class="flash__sale__product__desc__price__new">
+                                                    <p>
+                                                        @String.Format(format, "{0:c0}", Convert.ToInt64(productItem.price * (100 - productItem.discount) / 100))
+                                                    </p>
+                                                </div>
+                                                <div class="flash__sale__product__desc__price__old">
+                                                    <p>
+                                                        @String.Format(format, "{0:c0}", productItem.price)
+                                                    </p>
+                                                </div>
+                                            }
+                                            else
+                                            {
+                                                <div class="flash__sale__product__desc__price__new">
+                                                    <p>
+                                                        @String.Format(format, "{0:c0}", productItem.price)
+                                                    </p>
+                                                </div>
+                                            }
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Block2 -->
-                    <div class="item-slick2 p-l-15 p-r-15 p-t-15 p-b-15">
-                        <div class="card bg-light">
-                            <div class="block2">
-                                <div class="block2-pic hov-img0">
-                                    <img src="~/Assets/Client/images/aodabanhtest.jpg" alt="IMG-PRODUCT">
-
-                                    <a href="#" class="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04 js-show-modal1">
-                                        Quick View
-                                    </a>
-                                </div>
-
-                                <div class="block2-txt flex-w flex-t p-t-14 p-b-14 px-3">
-                                    <div class="block2-txt-child1 flex-col-l ">
-                                        <a href="" class="stext-104 cltext hov-cl1 font-weight-bold trans-04 js-name-b2 p-b-6">
-                                            Name
-                                        </a>
-
-                                        <div class="flash__sale__product__desc__price__new">
-                                            <p>
-                                                1000000
-                                            </p>
-                                        </div>
-                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <!-- Block2 -->
-                    <div class="item-slick2 p-l-15 p-r-15 p-t-15 p-b-15">
-                        <div class="card bg-light">
-                            <div class="block2">
-                                <div class="block2-pic hov-img0">
-                                    <img src="~/Assets/Client/images/aodabanhtest.jpg" alt="IMG-PRODUCT">
-
-                                    <a href="#" class="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04 js-show-modal1">
-                                        Quick View
-                                    </a>
-                                </div>
-
-                                <div class="block2-txt flex-w flex-t p-t-14 p-b-14 px-3">
-                                    <div class="block2-txt-child1 flex-col-l ">
-                                        <a href="" class="stext-104 cltext hov-cl1 font-weight-bold trans-04 js-name-b2 p-b-6">
-                                            Name
-                                        </a>
-
-                                        <div class="flash__sale__product__desc__price__new">
-                                            <p>
-                                                1000000
-                                            </p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- Block2 -->
-                    <div class="item-slick2 p-l-15 p-r-15 p-t-15 p-b-15">
-                        <div class="card bg-light">
-                            <div class="block2">
-                                <div class="block2-pic hov-img0">
-                                    <img src="~/Assets/Client/images/aodabanhtest.jpg" alt="IMG-PRODUCT">
-
-                                    <a href="#" class="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04 js-show-modal1">
-                                        Quick View
-                                    </a>
-                                </div>
-
-                                <div class="block2-txt flex-w flex-t p-t-14 p-b-14 px-3">
-                                    <div class="block2-txt-child1 flex-col-l ">
-                                        <a href="" class="stext-104 cltext hov-cl1 font-weight-bold trans-04 js-name-b2 p-b-6">
-                                            Name
-                                        </a>
-
-                                        <div class="flash__sale__product__desc__price__new">
-                                            <p>
-                                                1000000
-                                            </p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- Block2 -->
-                    <div class="item-slick2 p-l-15 p-r-15 p-t-15 p-b-15">
-                        <div class="card bg-light">
-                            <div class="block2">
-                                <div class="block2-pic hov-img0">
-                                    <img src="~/Assets/Client/images/aodabanhtest.jpg" alt="IMG-PRODUCT">
-
-                                    <a href="#" class="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04 js-show-modal1">
-                                        Quick View
-                                    </a>
-                                </div>
-
-                                <div class="block2-txt flex-w flex-t p-t-14 p-b-14 px-3">
-                                    <div class="block2-txt-child1 flex-col-l ">
-                                        <a href="" class="stext-104 cltext hov-cl1 font-weight-bold trans-04 js-name-b2 p-b-6">
-                                            Name
-                                        </a>
-
-                                        <div class="flash__sale__product__desc__price__new">
-                                            <p>
-                                                1000000
-                                            </p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- Block2 -->
-                    <div class="item-slick2 p-l-15 p-r-15 p-t-15 p-b-15">
-                        <div class="card bg-light">
-                            <div class="block2">
-                                <div class="block2-pic hov-img0">
-                                    <img src="~/Assets/Client/images/aodabanhtest.jpg" alt="IMG-PRODUCT">
-
-                                    <a href="#" class="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04 js-show-modal1">
-                                        Quick View
-                                    </a>
-                                </div>
-
-                                <div class="block2-txt flex-w flex-t p-t-14 p-b-14 px-3">
-                                    <div class="block2-txt-child1 flex-col-l ">
-                                        <a href="" class="stext-104 cltext hov-cl1 font-weight-bold trans-04 js-name-b2 p-b-6">
-                                            Name
-                                        </a>
-
-                                        <div class="flash__sale__product__desc__price__new">
-                                            <p>
-                                                1000000
-                                            </p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- Block2 -->
-                    <div class="item-slick2 p-l-15 p-r-15 p-t-15 p-b-15">
-                        <div class="card bg-light">
-                            <div class="block2">
-                                <div class="block2-pic hov-img0">
-                                    <img src="~/Assets/Client/images/aodabanhtest.jpg" alt="IMG-PRODUCT">
-
-                                    <a href="#" class="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04 js-show-modal1">
-                                        Quick View
-                                    </a>
-                                </div>
-
-                                <div class="block2-txt flex-w flex-t p-t-14 p-b-14 px-3">
-                                    <div class="block2-txt-child1 flex-col-l ">
-                                        <a href="" class="stext-104 cltext hov-cl1 font-weight-bold trans-04 js-name-b2 p-b-6">
-                                            Name
-                                        </a>
-
-                                        <div class="flash__sale__product__desc__price__new">
-                                            <p>
-                                                1000000
-                                            </p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- Block2 -->
-                    <div class="item-slick2 p-l-15 p-r-15 p-t-15 p-b-15">
-                        <div class="card bg-light">
-                            <div class="block2">
-                                <div class="block2-pic hov-img0">
-                                    <img src="~/Assets/Client/images/aodabanhtest.jpg" alt="IMG-PRODUCT">
-
-                                    <a href="#" class="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04 js-show-modal1">
-                                        Quick View
-                                    </a>
-                                </div>
-
-                                <div class="block2-txt flex-w flex-t p-t-14 p-b-14 px-3">
-                                    <div class="block2-txt-child1 flex-col-l ">
-                                        <a href="" class="stext-104 cltext hov-cl1 font-weight-bold trans-04 js-name-b2 p-b-6">
-                                            Name
-                                        </a>
-
-                                        <div class="flash__sale__product__desc__price__new">
-                                            <p>
-                                                1000000
-                                            </p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    }
                 </div>
             </div>
         </div>

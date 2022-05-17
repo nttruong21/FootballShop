@@ -31,7 +31,10 @@ namespace FootballShop.Controllers
             if (ModelState.IsValid)
             {
                 var product = new ProductDAO().getProductBySlug(slug);
-                return View(product);
+                var categoryId = (int)product.categoryId;
+                ViewBag.product = product;
+                ViewBag.productsByCategory = new ProductDAO().getAllProductsByCategoryId(categoryId);
+                return View();
             }
             return View();
         }
