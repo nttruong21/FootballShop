@@ -31,5 +31,20 @@ namespace FootballShopModel.DAO
             
            
         }
+
+        public bool updateStatus(int id)
+        {
+            try
+            {
+                var t = db.Bills.Single(b => b.id == id);
+                t.status = 3;
+                db.SaveChanges();
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
     }
 }

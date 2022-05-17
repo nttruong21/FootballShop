@@ -70,5 +70,15 @@ namespace FootballShop.Controllers
                 bill
             }, JsonRequestBehavior.AllowGet);
         }
+
+        public JsonResult UpdateStatusById(int id)
+        {
+            billDAO.updateStatus(id);
+            return Json(new
+            {
+                status = "success",
+              
+            }, JsonRequestBehavior.AllowGet);
+        }
     }
 }

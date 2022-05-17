@@ -131,7 +131,7 @@
                         shiping = "Đang giao hàng"
                         color = "text-primary"
                     }
-                    if (item.status == 1) {
+                    if (item.status == 3) {
                         shiping = "Đã nhận hàng"
                         color = "text-success"
                     }
@@ -139,9 +139,10 @@
                             <div class="card mb-4">
                                 <div class="card-header d-flex align-items-center justify-content-between ">
                                     <span class="ml-4">Đơn hàng</span>
-                                    <div class="bill-status">
+                                    <div class="bill-status" id="shiping">
 
                                         <span type="button"
+                                              id="shiping-${item.id}"
                                               class="${color} font-weight-bold m-0 mr-4">
                                             ${shiping}
                                         </span>
@@ -169,9 +170,10 @@
                                     </p>
 
 
-                                    <button data-bill-id="${item.id}"
+                                    <button data-idbill="${item.id}"
                                             type="button"
-                                            class="btn btn-primary m-0 mr-4">
+                                           
+                                            class="btn btn-primary m-0 mr-4 btn__receive">
                                         Bạn đã nhận
                                         hàng?
                                     </button>
@@ -214,9 +216,25 @@
                     }
                 });
 
+                $(".btn__receive").on("click", async function () {
+                    const id_bill = $(this).attr("data-idbill");
+                    const res = await fetch(`https://localhost:44323/Bill/UpdateStatusById?id=${id_bill}`);
+                    const data = await res.json();
+                    if (data.status == "success") {
+                        const shiping = $(`#shiping-${id_bill}`);
+                        shiping.removeClass("text-primary");
+                        shiping.addClass("text-success");
+                        shiping.html("Đã Nhận hàng");
+                    }
+                })
+
             }
         }
         loadBill(id);
+
+       
+
+
     }
 
     
