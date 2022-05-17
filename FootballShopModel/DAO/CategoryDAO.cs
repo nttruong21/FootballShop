@@ -9,10 +9,10 @@ namespace FootballShopModel.DAO
 {
     public class CategoryDAO
     {
-        private FootballEntities db;
+        private FootballShopEntities db;
         public CategoryDAO()
         {
-            db = new FootballEntities();
+            db = new FootballShopEntities();
         }
 
         // Get all categories

@@ -195,7 +195,7 @@ namespace FootballShop.Areas.Admin.Controllers
             var listAllCategories = categoryDao.getAllCategories();
             int id = listAllCategories.Count > 0 ? listAllCategories.Last().id : 1;
             string imageName = "dm-" + id.ToString() + "." + Path.GetFileName(imageUpload.FileName).Split('.')[1];
-            string path = Path.Combine(Server.MapPath("~/Assets/Admin/img/category"), imageName);
+            string path = Path.Combine(Server.MapPath("~/Assets/Client/images/category"), imageName);
             imageUpload.SaveAs(path);
             cat.image = imageName;
         }

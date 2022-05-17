@@ -12,7 +12,7 @@ namespace FootballShop.Controllers
     {
         private BillDAO billDAO = new BillDAO();
         private CartDAO cartDao = new CartDAO();
-        private FootballEntities db = new FootballEntities();
+        private FootballShopEntities db = new FootballShopEntities();
         // GET: Bill
         [Route("/bill")]
         public ActionResult Index()
@@ -68,6 +68,16 @@ namespace FootballShop.Controllers
             {
                 status = "success",
                 bill
+            }, JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult UpdateStatusById(int id)
+        {
+            billDAO.updateStatus(id);
+            return Json(new
+            {
+                status = "success",
+
             }, JsonRequestBehavior.AllowGet);
         }
     }

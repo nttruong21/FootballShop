@@ -6,16 +6,13 @@
 
 }
 
-
-
-
 <div class="wrap-header-cart js-panel-cart">
     <div class="s-full js-hide-cart"></div>
 
     <div class="header-cart flex-col-l p-l-65 p-r-25">
         <div class="header-cart-title flex-w flex-sb-m p-b-8">
             <span class="mtext-103 cl2">
-                Your Cart
+                Giỏ hàng của tôi
             </span>
 
             <div class="fs-35 lh-10 cl2 p-lr-5 pointer hov-cl1 trans-04 js-hide-cart">
@@ -23,42 +20,31 @@
             </div>
         </div>
 
-        <div class="header-cart-content flex-w js-pscroll">
-            <ul id="detail-list-all-products-in-cart" class="header-cart-wrapitem w-full">
-                @*<li  class="header-cart-item flex-w flex-t m-b-12">
-                        <div class="header-cart-item-img">
-                            <img src="~/Assets/Client/images/item-cart-01.jpg" alt="IMG">
+        @{
+            var message = new HtmlString("<h6>Bạn chưa đăng nhập, vui lòng đăng nhập để xem giỏ hàng</h6>");
+            if (Session["id_user"] == null)
+            {
+                @message;
+            }
+            else
+            {
+                <div class="header-cart-content flex-w js-pscroll">
+                    <ul id="detail-list-all-products-in-cart" class="header-cart-wrapitem w-full">
+                    </ul>
+                    <div class="w-full">
+                        <div class="header-cart-total w-full p-tb-40">
+                            Tổng : <span id="detail-cart-total-price-sidebar" style="color: #D70018;">0</span>
                         </div>
 
-                        <div class="header-cart-item-txt p-t-8">
-                            <a href="#" class="header-cart-item-name m-b-18 hov-cl1 trans-04">
-                                White Shirt Pleat
+                        <div class="header-cart-buttons flex-w w-full">
+                            <a href="@Url.Action("Index", "ShopingCart")" class="flex-c-m stext-101 cl0 size-107 bg3 bor2 hov-btn3 p-lr-15 trans-04 m-r-8 m-b-10">
+                                Xem giỏ hàng
                             </a>
-
-                            <span class="header-cart-item-info">
-                                1 x 500.000đ
-                            </span>
                         </div>
-                    </li>*@
-            </ul>
-
-
-            <div class="w-full">
-                <div class="header-cart-total w-full p-tb-40">
-                    Tổng : <span id="detail-cart-total-price-sidebar">0</span> 
+                    </div>
                 </div>
-
-                <div class="header-cart-buttons flex-w w-full">
-                    <a href="/ShopingCart" class="flex-c-m stext-101 cl0 size-107 bg3 bor2 hov-btn3 p-lr-15 trans-04 m-r-8 m-b-10">
-                        Xem giỏ hàng
-                    </a>
-
-                    <a href="/ShopingCart" class="flex-c-m stext-101 cl0 size-107 bg3 bor2 hov-btn3 p-lr-15 trans-04 m-b-10">
-                        Thanh toán
-                    </a>
-                </div>
-            </div>
-        </div>
+            }
+        }
 
     </div>
 </div>
@@ -72,7 +58,7 @@
                         <table id="list-shopingcart-detail-items" class="table-shopping-cart">
 
                             @{
-                                var myHtmlString = new HtmlString("<h4>BẠN CHƯA ĐĂNG NHẬP , VUI LÒNG ĐĂNG NHẬP !!</h4>");
+                                var myHtmlString = new HtmlString("<h4>Bạn chưa đăng nhập, vui lòng đăng nhập để xem giỏ hàng</h4>");
                                 if (Session["id_user"] == null)
                                 {
                                     @myHtmlString;
@@ -226,11 +212,11 @@
                                     class="table_row" id="tr_cart-${item.id}">
                                         <td class="column-1">
                                             <div class="how-itemcart1">
-                                                <img src="/Assets/Admin/img/product/${item.Products.image}"
+                                                <img src="/Assets/Client/images/product/${item.Products.image}"
                                                      alt="IMG">
                                             </div>
                                         </td>
-                                        <td class=" pr-1">${item.Products.name}</td>
+                                        <td class="column-2">${item.Products.name}</td>
                                         <td class="column-3" id="render-price-${item.productId}"
                                             style="color: #D70018;">
                                                 ${price}
@@ -367,6 +353,11 @@
                 if (data.status == "success") {
                     $(`#tr_cart-${idCart}`).remove();
                     let quantity = ($(".js-show-cart").attr("data-notify")) * 1;
+                    if (quantity - 1 === 0) {
+                        $("#list-shopingcart-detail-items").remove();
+                        document.getElementById("cart_empty").innerHTML = "<h4>Giỏ hàng trống</h4>";
+                        document.getElementById("bill-information").style.display = "none";
+                    }
                     $(".js-show-cart").attr("data-notify", quantity - 1);
                     let a = document.getElementById("bill-total-price").innerHTML
                     let num = a.replace(/\D/g, '');
@@ -378,7 +369,7 @@
                         }
                     );
                     let don = document.getElementById("detail-shopingcart-total-price").innerHTML * 1;
-                    document.getElementById("detail-shopingcart-total-price").innerHTML = don - 1
+                    document.getElementById("detail-shopingcart-total-price").innerHTML = don - 1;
                 }
             })
 
@@ -426,19 +417,5 @@
                 }
             })
         }, 1000);
-
-
-
-
-
-
-
     }
- 
-    
-    
-   
-
-    
-    
 </script>

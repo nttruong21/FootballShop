@@ -9,22 +9,17 @@ using System.Web.Mvc;
 
 namespace FootballShop.Controllers
 {
-    public class AuthController : Controller
+    public class LoginController : Controller
     {
-        // GET: Auth
+        // [GET] /Login
         public ActionResult Index()
         {
             return View();
         }
-        // GET : /Auth/Login
-        public ActionResult login()
-        {
-            return View();
-        }
 
-        // [POST] /Auth/Login
+        // [POST] /Login
         [HttpPost]
-        public ActionResult login(Account account)
+        public ActionResult Index(Account account)
         {
             if (account.email == null || account.email == "")
             {
@@ -47,13 +42,19 @@ namespace FootballShop.Controllers
                     Session.Add(Constants.EMAIL_SESSION, accTmp.email);
                     Session.Add(Constants.NAME_SESSION, accTmp.name);
                     Session.Add(Constants.ID_SESSION, accTmp.id);
+                    Session.Add(Constants.ROLE_SESSION, accTmp.role);
                     Session["id_user"] = accTmp.id.ToString();
 
-                    return RedirectToAction("Index", "Home");
+                    if(accTmp.role == 0)
+                    {
+                        return RedirectToAction("Index", "Home", new { area = "Admin" });
+                    } else
+                    {
+                        return RedirectToAction("Index", "Home");
+                    }
                 }
                 else
                 {
-                    // setAlert("Tài khoản hoặc mật khẩu không hợp lệ", "danger");
                     ModelState.AddModelError("", "Email hoặc mật khẩu không hợp lệ");
                 }
             }

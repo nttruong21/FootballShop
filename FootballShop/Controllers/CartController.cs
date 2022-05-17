@@ -11,7 +11,7 @@ namespace FootballShop.Controllers
     public class CartController : Controller
     {
         private CartDAO cartDao = new CartDAO();
-        private FootballEntities db = new FootballEntities();
+        private FootballShopEntities db = new FootballShopEntities();
 
         // GET: Cart
         public ActionResult Index()

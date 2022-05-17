@@ -1,0 +1,162 @@
+﻿
+@{
+    ViewBag.Title = "BillDetail";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+    var bill = (FootballShopModel.Models.Bill)ViewBag.bill;
+    var billDetails = (List<FootballShopModel.Models.BillDetail>)ViewBag.billDetails;
+    var format = System.Globalization.CultureInfo.GetCultureInfo("vi-VN");
+}
+
+<div class="form p-4">
+    @{
+        if (bill.status == 0)
+        {
+            <div class="d-flex mb-4">
+                <button type="button" class="btn btn-success mr-4" data-toggle="modal" data-target="#confirm-modal" data-action="Duyệt" data-action-code="2">Duyệt đơn</button>
+                <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#confirm-modal" data-action="Hủy" data-action-code="1">Hủy đơn</button>
+            </div>
+        }
+    }
+    <div class="row d-flex align-items-center">
+        <div class="col-6">
+            <h3 class="text-dark font-weight-bold">THÔNG TIN ĐƠN HÀNG</h3>
+        </div>
+        <div class="col-6">
+            @{
+                if (bill.status == 0)
+                {
+                    <h3 class="text-dark font-weight-bold"><u>ĐANG CHỜ DUYỆT</u></h3>
+                }
+                else if (bill.status == 1)
+                {
+                    <h3 class="text-danger font-weight-bold"><u>ĐÃ BỊ HỦY</u></h3>
+                }
+                else if (bill.status == 2)
+                {
+                    <h3 class="text-primary font-weight-bold"><u>ĐANG VẬN CHUYỂN</u></h3>
+                }
+                else if (bill.status == 3)
+                {
+                    <h3 class="text-success font-weight-bold"><u>ĐÃ GIAO</u></h3>
+                }
+            }
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-6 text-dark">
+            Họ tên: @bill.recipientName
+        </div>
+        <div class="form-group col-6 text-dark">
+            Số điện thoại: @bill.recipientPhone
+        </div>
+    </div>
+    <div class="row">
+        <div class="form-group col-6 text-dark">
+            Địa chỉ: @bill.recipientAddress
+        </div>
+        <div class="form-group col-6 text-dark">
+            Tổng hóa đơn: <span style="color: #D70018;">@String.Format(format, "{0:c0}", Convert.ToInt64(@bill.totalPrice))</span>
+        </div>
+    </div>
+
+    <!-- DataTales Example -->
+    <div class="card shadow my-4">
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered table-hover table-striped" id="dataTable" width="100%" cellspacing="0">
+                    <tbody id="list-bill-products">
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+@* Modal *@
+<div id="confirm-modal" class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Xác nhận đơn hàng</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>Bạn chắc chắn muốn <strong id=""></strong> đơn hàng này?</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-dismiss="modal">Hủy bỏ</button>
+                <button id="confirm-action-btn" data-action-code="" onclick="doAction(event)" type="button" class="btn btn-danger">Đồng ý</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script type="text/javascript">
+    window.addEventListener('DOMContentLoaded', async (event) => {
+        const id = @bill.id;
+
+        // XỬ LÝ LOAD DANH SÁCH SẢN PHẨM TRONG ĐƠN HÀNG
+        if (id) {
+            const res = await fetch(`https://localhost:44323/BillDetail/getAllByIdBill?idBill=${id}`);
+            const data = await res.json();
+            if (data.status === "success") {
+                const html = data.data.map(item => {
+                    const price = (((100 - item.product.discount) / 100 * item.product.price) * 1).toLocaleString(
+                        "vi-VN",
+                        {
+                            style: "currency",
+                            currency: "VND",
+                        }
+                    );
+                    return `
+                         <tr>
+                            <td scope="row" class="w-25">
+                                <img src="/Assets/Client/images/product/${item.product.image}"
+                                     alt="IMG" width="50%">
+                            </td>
+                            <td class="w-50">${item.product.name}</td>
+                            <td style="color: #D70018;">${price}</td>
+                            <td>x${item.quantity}</td>
+                        </tr>
+                        `
+                });
+                document.getElementById("list-bill-products").innerHTML = html.join("");
+            }
+        }
+
+        // KHI MODAL HIỆN LÊN
+        $('#confirm-modal').on('show.bs.modal', function (event) {
+            var button = $(event.relatedTarget);
+            var action = button.data('action');
+            var actionCode = button.data('action-code');
+            var modal = $(this);
+            modal.find('.modal-body strong').text(action);
+            document.getElementById("confirm-action-btn").dataset.actionCode = actionCode;
+        })
+    });
+
+    // KHI NHẤN NÚT ĐỒNG Ý TRONG MODAL => THAY ĐỔI TRẠNG THÁI ĐƠN HÀNG 
+    async function doAction(event) {
+        const status = parseInt(event.target.dataset.actionCode);
+        const id = @bill.id;
+        const data = {
+            id, status
+        };
+        
+        const res = await fetch("https://localhost:44323/Admin/Bill/UpdateBillStatus", {
+            method: "POST",
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data),
+        });
+        const json = await res.json();
+        if (json.code === 1) {
+            location.reload();
+        }
+    }
+</script>

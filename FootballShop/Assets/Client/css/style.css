@@ -1,3 +1,17 @@
+.sold-and-discount-products-title {
+	color: red;
+	font-weight: bold;
+	font-style: italic;
+}
+
+.card-product-name {
+	display: -webkit-box;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	line-height: 1.4em;
+	height: 4.2em;
+}
+
 .size-border {
 	padding: 6px;
 	border: 2px solid #ccc;
@@ -14,7 +28,7 @@
 }
 
 .size-border-active {
-	border: 2px solid rgb(255, 0, 255);
+	border: 2px solid #d91717;
 }
 .header {
 	position: fixed;
@@ -925,7 +939,8 @@
 .flash__sale__product__desc__price {
 	display: flex;
 	align-items: center;
-	margin-bottom: 10px;
+	margin-top: 8px;
+	margin-bottom: 8px;
 }
 
 .flash__sale__product__desc__price__unit__old,

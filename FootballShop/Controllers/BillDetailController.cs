@@ -12,7 +12,7 @@ namespace FootballShop.Controllers
     {
         private BillDetailDAO billDetailDao = new BillDetailDAO();
         private ProductDAO productDAO = new ProductDAO();
-        private FootballEntities db = new FootballEntities();
+        private FootballShopEntities db = new FootballShopEntities();
         // GET: BillDetail
         public ActionResult Index()
         {

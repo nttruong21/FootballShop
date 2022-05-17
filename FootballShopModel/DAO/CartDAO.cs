@@ -9,10 +9,10 @@ namespace FootballShopModel.DAO
 {
     public class CartDAO
     {
-        private FootballEntities db;
+        private FootballShopEntities db;
         public CartDAO()
         {     
-            db = new FootballEntities();
+            db = new FootballShopEntities();
             db.Configuration.ProxyCreationEnabled = false;
 
             db.Configuration.LazyLoadingEnabled = true;

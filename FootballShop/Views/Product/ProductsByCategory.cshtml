@@ -6,6 +6,52 @@
     var category = (FootballShopModel.Models.Category)ViewBag.category;
 }
 
+<!-- Cart -->
+<div class="wrap-header-cart js-panel-cart">
+    <div class="s-full js-hide-cart"></div>
+
+    <div class="header-cart flex-col-l p-l-65 p-r-25">
+        <div class="header-cart-title flex-w flex-sb-m p-b-8">
+            <span class="mtext-103 cl8">
+                Giỏ hàng của tôi
+            </span>
+
+            <div class="fs-35 lh-10 cl8 p-lr-5 pointer hov-cl1 trans-04 js-hide-cart">
+                <i class="zmdi zmdi-close"></i>
+            </div>
+        </div>
+
+        @{
+            var myHtmlString = new HtmlString("<h6>Bạn chưa đăng nhập, vui lòng đăng nhập để xem giỏ hàng</h6>");
+            if (Session["id_user"] == null)
+            {
+                @myHtmlString;
+            }
+            else
+            {
+                <div class="header-cart-content flex-w js-pscroll">
+                    <ul id="detail-list-all-products-in-cart" class="header-cart-wrapitem w-full">
+                    </ul>
+                    <div class="w-full">
+                        <div class="header-cart-total w-full p-tb-40">
+                            Tổng : <span id="detail-cart-total-price-sidebar" style="color: #D70018;">0</span>
+                        </div>
+
+                        <div class="header-cart-buttons flex-w w-full">
+                            <a href="@Url.Action("Index", "ShopingCart")" class="flex-c-m stext-101 cl0 size-107 bg3 bor2 hov-btn3 p-lr-15 trans-04 m-r-8 m-b-10">
+                                Xem giỏ hàng
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            }
+        }
+
+
+
+    </div>
+</div>
+
 <div class="bg-category txt-center p-lr-15 p-tb-92" style="background-image: url('/Assets/Client/images/footballshop.png');">
     <h2 class="ltext-105 cl0 txt-center">
         @category.uppercaseName
@@ -18,7 +64,7 @@
             <div class="container">
                 <div class="flex-w flex-sb-m">
                     <div class="flex-w flex-l-m filter-tope-group m-tb-10">
-                    
+
                     </div>
                     <!-- Icon filter and Search -->
                     <div class="flex-w flex-c-m m-tb-10">
@@ -250,7 +296,7 @@
                                         </div>
                                     }
                                     <div class="block2-pic hov-img0">
-                                        <img src="~/Upload/@product.image" alt="IMG-PRODUCT">
+                                        <img src="~/Assets/Client/images/product/@product.image" alt="IMG-PRODUCT">
 
                                         <a href="#" class="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04 js-show-modal1">
                                             Xem nhanh
@@ -262,7 +308,7 @@
                                             @{
                                                 var url = "/chi-tiet/" + product.slug;
                                             }
-                                            <a href="@url" class="stext-104 cltext hov-cl1 font-weight-bold trans-04 js-name-b2 p-b-6">
+                                            <a href="@url" class="card-product-name stext-104 cltext hov-cl1 font-weight-bold trans-04 js-name-b2 p-b-6">
                                                 @product.name
                                             </a>
 

@@ -9,10 +9,10 @@ namespace FootballShopModel.DAO
 {
     public class AccountDAO
     {
-        private FootballEntities db;
+        private FootballShopEntities db;
         public AccountDAO()
         {
-            db = new FootballEntities();
+            db = new FootballShopEntities();
         }
 
         public bool login(string email, string password)
@@ -29,7 +29,7 @@ namespace FootballShopModel.DAO
         // Get all accounts
         public List<Account> getAllAccount()
         {
-            return db.Accounts.ToList();
+            return db.Accounts.Where(x => x.role == 1).ToList();
         }
 
         // Get one account by id
@@ -42,6 +42,12 @@ namespace FootballShopModel.DAO
         public Account getAccountByEmail(string email)
         {
             return db.Accounts.FirstOrDefault(acc => acc.email.Trim() == email.Trim());
+        }
+
+        // Get one account by phone
+        public Account getAccountByPhone(string phone)
+        {
+            return db.Accounts.FirstOrDefault(acc => acc.phone.Trim() == phone.Trim());
         }
 
 

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using FootballShopModel;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,14 +13,17 @@ namespace FootballShop.Areas.Admin.Controllers
     public class BaseController : Controller
     {
         // [GET] Admin/Base
-        //protected override void OnActionExecuted(ActionExecutedContext filterContext)
-        //{
-        //    if (Session[Constants.USER_SESSION] == null)
-        //    {
-        //        filterContext.Result = new RedirectToRouteResult(new RouteValueDictionary(new { controller = "Login", action = "Index", area = "Admin" }));
-        //    }
-        //    base.OnActionExecuted(filterContext);
-        //}
+        protected override void OnActionExecuted(ActionExecutedContext filterContext)
+        {
+            if (Session[Constants.ID_SESSION] == null)
+            {
+                filterContext.Result = new RedirectToRouteResult(new RouteValueDictionary(new { controller = "Login", action = "Index", area = "" }));
+            } else if ((int)Session[Constants.ROLE_SESSION] != 0)
+            {
+                filterContext.Result = new RedirectToRouteResult(new RouteValueDictionary(new { controller = "Error", action = "NotPermission", area = "" }));
+            }
+            base.OnActionExecuted(filterContext);
+        }
 
         protected void setAlert(string message, string type)
         {

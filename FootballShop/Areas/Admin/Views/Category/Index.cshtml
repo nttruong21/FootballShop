@@ -32,6 +32,16 @@
                                 <td>@item.id</td>
                                 <td>@item.name</td>
                                 <td>
+                                    @*<div class="" role="group">
+                                        <button style="background-color: inherit;" id="btnGroupDrop1" class="border-0" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            <i class="fa-solid fa-ellipsis-vertical"></i>
+                                        </button>
+                                        <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+                                            <a class="dropdown-item" href="@Url.Action("Detail", new { id = item.id })">Chi tiết</a>
+                                            <a class="dropdown-item" href="@Url.Action("Update", new { id = item.id })">Cập nhật</a>
+                                            <button class="dropdown-item" data-toggle="modal" data-target="#confirm-delete" data-category-id=@item.id data-category-name="@item.name"">Xóa</button>
+                                        </div>
+                                    </div>*@
                                     <button class="btn btn-info">
                                         <a href="@Url.Action("Detail", new { id = item.id })" class="text-white text-decoration-none">Chi tiết</a>
                                     </button> |

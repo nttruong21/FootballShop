@@ -28,6 +28,7 @@ namespace FootballShopModel.Models
         public Nullable<int> role { get; set; }
         public string phone { get; set; }
         public string address { get; set; }
+        public string confirmPassword { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Bill> Bills { get; set; }

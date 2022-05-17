@@ -212,7 +212,7 @@ namespace FootballShop.Areas.Admin.Controllers
             var listAllProduct = productDao.getAllProducts();
             int id = listAllProduct.Count > 0 ? listAllProduct.Last().id : 1;
             string imageName = "sp-" + id.ToString() + "." + Path.GetFileName(imageUpload.FileName).Split('.')[1];
-            string path = Path.Combine(Server.MapPath("~/Assets/Admin/img/product"), imageName);
+            string path = Path.Combine(Server.MapPath("~/Assets/Client/images/product"), imageName);
             imageUpload.SaveAs(path);
             obj.image = imageName;
         }

@@ -1,4 +1,5 @@
-﻿using FootballShopModel.DAO;
+﻿using FootballShopModel;
+using FootballShopModel.DAO;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,10 +23,17 @@ namespace FootballShop.Controllers
 
             }
             return View();
-            //else
-            //{
-               // return Redirect("Auth/login");
-            //}
+        }
+
+        // [GET] /Logout
+        public ActionResult Logout()
+        {
+            Session.Remove(Constants.EMAIL_SESSION);
+            Session.Remove(Constants.NAME_SESSION);
+            Session.Remove(Constants.ID_SESSION);
+            Session.Remove(Constants.ROLE_SESSION);
+            Session.Remove("id_user");
+            return RedirectToAction("Index", "Login");
         }
 
         [ChildActionOnly]

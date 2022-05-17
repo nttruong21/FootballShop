@@ -9,10 +9,10 @@ namespace FootballShopModel.DAO
 {
     public class BillDetailDAO
     {
-        private FootballEntities db;
+        private FootballShopEntities db;
         public BillDetailDAO()
         {
-            db = new FootballEntities();
+            db = new FootballShopEntities();
             db.Configuration.ProxyCreationEnabled = false;
 
             db.Configuration.LazyLoadingEnabled = true;
@@ -36,6 +36,12 @@ namespace FootballShopModel.DAO
         public List<BillDetail> getAllbyId(int id)
         {
             return db.BillDetails.Where(p => p.billId == id).ToList();
+        }
+
+        // GET ALL BY BILL ID
+        public List<BillDetail> getAllByBillId (int billId)
+        {
+            return db.BillDetails.Where(x => x.billId == billId).ToList();
         }
     }
 }

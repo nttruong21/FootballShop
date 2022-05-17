@@ -7,15 +7,19 @@ using System.Web.Mvc;
 
 namespace FootballShop.Areas.Admin.Controllers
 {
-    public class HomeController : Controller
+    public class HomeController : BaseController
     {
         // [GET] /Admin/Home/Index
         public ActionResult Index()
         {
             // KIỂM TRA SESION (ĐÃ ĐĂNG NHẬP HAY CHƯA)
-            //if (Session[Constants.USER_SESSION] == null)
+            //if (Session[Constants.ID_SESSION] == null)
             //{
-            //    return RedirectToAction("Index", "Login");
+            //    return Redirect("/Login");
+            //}
+            //if ((int)Session[Constants.ROLE_SESSION] != 0)
+            //{
+            //    return Redirect("/Error/NotPermission");
             //}
             return View();
         }
