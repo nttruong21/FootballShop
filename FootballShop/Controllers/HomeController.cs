@@ -33,7 +33,7 @@ namespace FootballShop.Controllers
             Session.Remove(Constants.ID_SESSION);
             Session.Remove(Constants.ROLE_SESSION);
             Session.Remove("id_user");
-            return RedirectToAction("Index", "Login");
+            return RedirectToAction("index", "Home");
         }
 
         [ChildActionOnly]
