@@ -193,7 +193,7 @@ namespace FootballShop.Areas.Admin.Controllers
         public void saveFile(CategoryDAO categoryDao, Category cat, HttpPostedFileBase imageUpload)
         {
             var listAllCategories = categoryDao.getAllCategories();
-            int id = listAllCategories.Count > 0 ? listAllCategories.Last().id : 1;
+            int id = listAllCategories.Count > 0 ? listAllCategories.Last().id + 1 : 1;
             string imageName = "dm-" + id.ToString() + "." + Path.GetFileName(imageUpload.FileName).Split('.')[1];
             string path = Path.Combine(Server.MapPath("~/Assets/Client/images/category"), imageName);
             imageUpload.SaveAs(path);

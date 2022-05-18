@@ -56,7 +56,7 @@ namespace FootballShopModel.DAO
         // CREATE BILL
         public Bill CreateBill(Bill bill)
         {
-           
+
             bill.createdAt = DateTime.Now;
             bill.status = 0;
             var t = db.Bills.Add(bill);
@@ -72,7 +72,8 @@ namespace FootballShopModel.DAO
                 bill.status = status;
                 db.SaveChanges();
                 return true;
-            } catch
+            }
+            catch
             {
                 return false;
             }
@@ -91,6 +92,51 @@ namespace FootballShopModel.DAO
             {
                 return false;
             }
+        }
+
+        // TỔNG DOANH THU
+        public double getTotalRevenue()
+        {
+            var total = db.Bills.Where(x => x.status == 3).Sum(x => x.totalPrice);
+            if(total == null)
+            {
+                return 0;
+            }
+            return (double) total;
+        }
+
+        // SỐ LƯỢNG SẢN PHẨM ĐÃ BÁN
+        //public int getSoldProducts()
+        //{
+        //    return (from bill in db.Bills
+        //            join billDetail in db.BillDetails on bill.id equals billDetail.billId
+        //            where bill.status == 3
+        //            group quantity by billDetail.quantity into g
+        //            select new { total = g.sum(x => x.quantity) }).FirstOrDefault();
+        //}
+
+        // SỐ LƯỢNG ĐƠN HÀNG ĐANG CHỜ DUYỆT
+        public int getNumberOfWaitingApproveBill()
+        {
+            return (int) db.Bills.Count(x => x.status == 0);
+        }
+
+        // SỐ LƯỢNG ĐƠN HÀNG ĐÃ HỦY
+        public int getNumberOfCanceledBill()
+        {
+            return db.Bills.Count(x => x.status == 1);
+        }
+
+        // SỐ LƯỢNG ĐƠN HÀNG ĐANG VẬN CHUYỂN
+        public int getNumberOfShippingBill()
+        {
+            return db.Bills.Count(x => x.status == 2);
+        }
+
+        // SỐ LƯỢNG ĐƠN HÀNG ĐÃ GIAO
+        public int getNumberOfDeliveredBill()
+        {
+            return db.Bills.Count(x => x.status == 3);
         }
     }
 }

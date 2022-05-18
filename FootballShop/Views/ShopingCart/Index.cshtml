@@ -94,19 +94,19 @@
                                 <div class="form-group">
                                     <label for="">Tên người nhận</label>
                                     <input id="bill-recipient-name" type="text"
-                                           class="form-control">
+                                           class="form-control" required>
                                 </div>
 
                                 <div class="form-group">
                                     <label for="">Số điện thoại</label>
                                     <input id="bill-recipient-phone" type="text"
-                                           class="form-control">
+                                           class="form-control" required>
                                 </div>
 
                                 <div class="form-group">
                                     <label for="">Địa chỉ</label>
                                     <input id="bill-recipient-address" type="text"
-                                           class="form-control">
+                                           class="form-control" required>
                                 </div>
 
                                 @*<div class="form-group">
@@ -414,6 +414,7 @@
                     $("#detail-list-all-products-in-cart").remove();
                     document.getElementById("detail-cart-total-price-sidebar").innerHTML = "0";
                     swal("Đơn hàng", "Đặt hàng thành công", "success");
+                    window.location.href = "/Bill";
                 }
             })
         }, 1000);

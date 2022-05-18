@@ -155,10 +155,9 @@ namespace FootballShop.Areas.Admin.Controllers
                     }
                     product.name = obj.name;
                     product.categoryId = obj.categoryId;
-                    product.brand = obj.brand;
+                    product.description = obj.description;
                     product.price = obj.price;
                     product.discount = obj.discount;
-                    product.video = obj.video;
                     product.size = obj.size;
                     product.quantity = obj.quantity;
                     product.infor = obj.infor;
@@ -210,7 +209,7 @@ namespace FootballShop.Areas.Admin.Controllers
         public void saveFile(ProductDAO productDao, Product obj, HttpPostedFileBase imageUpload)
         {
             var listAllProduct = productDao.getAllProducts();
-            int id = listAllProduct.Count > 0 ? listAllProduct.Last().id : 1;
+            int id = listAllProduct.Count > 0 ? listAllProduct.Last().id + 1 : 1;
             string imageName = "sp-" + id.ToString() + "." + Path.GetFileName(imageUpload.FileName).Split('.')[1];
             string path = Path.Combine(Server.MapPath("~/Assets/Client/images/product"), imageName);
             imageUpload.SaveAs(path);
@@ -229,11 +228,6 @@ namespace FootballShop.Areas.Admin.Controllers
             if (obj.categoryId == null || obj.categoryId < 1)
             {
                 errorMessage += "Vui lòng chọn danh mục sản phẩm.";
-            }
-
-            if (string.IsNullOrEmpty(obj.brand))
-            {
-                errorMessage += "Vui lòng nhập thương hiệu sản phẩm.";
             }
 
             if (obj.price == null || obj.price <= 0)

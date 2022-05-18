@@ -135,35 +135,37 @@
 
 
                     <p class="stext-102 cl3 p-t-23">
-                        @product.infor
+                        @product.description
                     </p>
 
                     <!--  -->
                     <div class="p-t-33">
                         <div class="flex-w  m-b-32">
                             <div class="size-203  respon6">
-                                Size
+                                Kích thước
                             </div>
 
-                            @{
-                                for (var i = 38; i < 44; i++)
-                                {
-                                    if (Int64.Parse(product.size) == i)
-                                    {
-                                        <div class="respon6-next mr-2"><span class="size-border size-border-active">@i</span></div>
-                                    }
-                                    else
-                                    {
-                                        <div class="respon6-next mr-2"><span class="size-border">@i</span></div>
+                            <div class="respon6-next mr-2"><span class="size-border size-border-active">@product.size</span></div>
 
+                            @*@{
+                                    for (var i = 38; i < 44; i++)
+                                    {
+                                        if (Int64.Parse(product.size) == i)
+                                        {
+                                            <div class="respon6-next mr-2"><span class="size-border size-border-active">@i</span></div>
+                                        }
+                                        else
+                                        {
+                                            <div class="respon6-next mr-2"><span class="size-border">@i</span></div>
+
+                                        }
                                     }
-                                }
-                            }
+                                }*@
                         </div>
 
                         <div class="flex-w m-b-32">
                             <div class="size-203 respon6">
-                                Color
+                                Màu sắc
                             </div>
 
                             <img src="~/Assets/Client/images/product/@product.image" alt="" width="50" height="50" />
@@ -216,95 +218,57 @@
                 <!-- Nav tabs -->
                 <ul class="nav nav-tabs" role="tablist">
                     <li class="nav-item p-b-10">
-                        <a class="nav-link active" data-toggle="tab" href="#description" role="tab">Description</a>
+                        <a class="nav-link active" data-toggle="tab" href="#information" role="tab">Thông tin sản phẩm</a>
                     </li>
 
                     <li class="nav-item p-b-10">
-                        <a class="nav-link" data-toggle="tab" href="#information" role="tab">Additional information</a>
-                    </li>
-
-                    <li class="nav-item p-b-10">
-                        <a class="nav-link" data-toggle="tab" href="#reviews" role="tab">Reviews (1)</a>
+                        <a class="nav-link" data-toggle="tab" href="#reviews" role="tab">Đánh giá</a>
                     </li>
                 </ul>
 
                 <!-- Tab panes -->
                 <div class="tab-content p-t-43">
-                    <!-- Description -->
-                    <div class="tab-pane fade show active" id="description" role="tabpanel">
-                        <div class="how-pos2 p-lr-15-md">
-                            <p class="stext-102 cl6">
-                                Aenean sit amet gravida nisi. Nam fermentum est felis, quis feugiat nunc fringilla sit amet. Ut in blandit ipsum. Quisque luctus dui at ante aliquet, in hendrerit lectus interdum. Morbi elementum sapien rhoncus pretium maximus. Nulla lectus enim, cursus et elementum sed, sodales vitae eros. Ut ex quam, porta consequat interdum in, faucibus eu velit. Quisque rhoncus ex ac libero varius molestie. Aenean tempor sit amet orci nec iaculis. Cras sit amet nulla libero. Curabitur dignissim, nunc nec laoreet consequat, purus nunc porta lacus, vel efficitur tellus augue in ipsum. Cras in arcu sed metus rutrum iaculis. Nulla non tempor erat. Duis in egestas nunc.
-                            </p>
-                        </div>
-                    </div>
-
-                    <!-- Additional information -->
-                    <div class="tab-pane fade" id="information" role="tabpanel">
+                    <!-- Thông tin sản phẩm -->
+                    <div class="tab-pane fade show active" id="information" role="tabpanel">
                         <div class="row">
                             <div class="col-sm-10 col-md-8 col-lg-6 m-lr-auto">
                                 <ul class="p-lr-28 p-lr-15-sm">
-                                    <li class="flex-w flex-t p-b-7">
-                                        <span class="stext-102 cl3 size-205">
-                                            Weight
-                                        </span>
-
-                                        <span class="stext-102 cl6 size-206">
-                                            0.79 kg
-                                        </span>
-                                    </li>
-
-                                    <li class="flex-w flex-t p-b-7">
-                                        <span class="stext-102 cl3 size-205">
-                                            Dimensions
-                                        </span>
-
-                                        <span class="stext-102 cl6 size-206">
-                                            110 x 33 x 100 cm
-                                        </span>
-                                    </li>
-
-                                    <li class="flex-w flex-t p-b-7">
-                                        <span class="stext-102 cl3 size-205">
-                                            Materials
-                                        </span>
-
-                                        <span class="stext-102 cl6 size-206">
-                                            60% cotton
-                                        </span>
-                                    </li>
-
-                                    <li class="flex-w flex-t p-b-7">
-                                        <span class="stext-102 cl3 size-205">
-                                            Color
-                                        </span>
-
-                                        <span class="stext-102 cl6 size-206">
-                                            Black, Blue, Grey, Green, Red, White
-                                        </span>
-                                    </li>
-
-                                    <li class="flex-w flex-t p-b-7">
-                                        <span class="stext-102 cl3 size-205">
-                                            Size
-                                        </span>
-
-                                        <span class="stext-102 cl6 size-206">
-                                            XL, L, M, S
-                                        </span>
-                                    </li>
+                                    
+                                    @{
+                                        var arr = product.infor.Split(new[] { ";" }, StringSplitOptions.RemoveEmptyEntries);
+                                        foreach(var item in arr)
+                                        {
+                                            if (item.Contains(":"))
+                                            {
+                                                <li class="flex-w flex-t p-b-7">
+                                                    <span class="stext-102 cl3 size-205">
+                                                        @item.Split(new [] {":"}, StringSplitOptions.RemoveEmptyEntries)[0]
+                                                    </span>
+                                                    <span class="stext-102 cl6 size-206">
+                                                        @item.Split(new [] {":"}, StringSplitOptions.RemoveEmptyEntries)[1]
+                                                    </span>
+                                                </li>
+                                            }
+                                            else
+                                            {
+                                                <li class="flex-w flex-t p-b-7">
+                                                    <span class="stext-102 cl6 size-206">@item</span>
+                                                </li>
+                                            }
+                                        }
+                                    }
                                 </ul>
                             </div>
                         </div>
                     </div>
 
-                    <!-- Reviews -->
+                    <!-- Đánh giá -->
                     <div class="tab-pane fade" id="reviews" role="tabpanel">
                         <div class="row">
                             <div class="col-sm-10 col-md-8 col-lg-6 m-lr-auto">
                                 <div class="p-b-30 m-lr-15-sm">
                                     <!-- Review -->
-                                    <div class="flex-w flex-t p-b-68">
+                                    @*<div class="flex-w flex-t p-b-68">
                                         <div class="wrap-pic-s size-109 bor0 of-hidden m-r-18 m-t-6">
                                             <img src="images/avatar-01.jpg" alt="AVATAR">
                                         </div>
@@ -328,21 +292,15 @@
                                                 Quod autem in homine praestantissimum atque optimum est, id deseruit. Apud ceteros autem philosophos
                                             </p>
                                         </div>
-                                    </div>
+                                    </div>*@
+                                    <p class="stext-102 cl6">Chưa có đánh giá nào</p>
+
 
                                     <!-- Add review -->
-                                    <form class="w-full">
-                                        <h5 class="mtext-108 cl2 p-b-7">
-                                            Add a review
-                                        </h5>
-
-                                        <p class="stext-102 cl6">
-                                            Your email address will not be published. Required fields are marked *
-                                        </p>
-
+                                    <form class="w-full" onsubmit="return false;">
                                         <div class="flex-w flex-m p-t-50 p-b-23">
                                             <span class="stext-102 cl3 m-r-16">
-                                                Your Rating
+                                                Đánh giá
                                             </span>
 
                                             <span class="wrap-rating fs-18 cl11 pointer">
@@ -357,23 +315,23 @@
 
                                         <div class="row p-b-25">
                                             <div class="col-12 p-b-5">
-                                                <label class="stext-102 cl3" for="review">Your review</label>
+                                                <label class="stext-102 cl3" for="review">Nhận xét</label>
                                                 <textarea class="size-110 bor8 stext-102 cl2 p-lr-20 p-tb-10" id="review" name="review"></textarea>
                                             </div>
 
                                             <div class="col-sm-6 p-b-5">
-                                                <label class="stext-102 cl3" for="name">Name</label>
-                                                <input class="size-111 bor8 stext-102 cl2 p-lr-20" id="name" type="text" name="name">
+                                                <label class="stext-102 cl3" for="name">Họ tên</label>
+                                                <input class="size-111 bor8 stext-102 cl2 p-lr-20" id="name" type="text" name="name" placeholder="Họ tên">
                                             </div>
 
                                             <div class="col-sm-6 p-b-5">
                                                 <label class="stext-102 cl3" for="email">Email</label>
-                                                <input class="size-111 bor8 stext-102 cl2 p-lr-20" id="email" type="text" name="email">
+                                                <input class="size-111 bor8 stext-102 cl2 p-lr-20" id="email" type="text" name="email" placeholder="Email">
                                             </div>
                                         </div>
 
                                         <button class="flex-c-m stext-101 cl0 size-112 bg7 bor11 hov-btn3 p-lr-15 trans-04 m-b-10">
-                                            Submit
+                                            Gửi
                                         </button>
                                     </form>
                                 </div>
@@ -412,48 +370,48 @@
                                             <p>Giảm @productItem.discount%</p>
                                         </div>
                                     }
-                                <div class="block2-pic hov-img0">
-                                    <img src="~/Assets/Client/images/product/@productItem.image" alt="IMG-PRODUCT">
+                                    <div class="block2-pic hov-img0">
+                                        <img src="~/Assets/Client/images/product/@productItem.image" alt="IMG-PRODUCT">
 
-                                    <a href="#" class="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04 js-show-modal1">
-                                        Xem nhanh
-                                    </a>
-                                </div>
-
-                                <div class="block2-txt flex-w flex-t p-t-14 p-b-14 px-3">
-                                    <div class="block2-txt-child1 flex-col-l ">
-                                        @{
-                                            var url = "/chi-tiet/" + productItem.slug;
-                                        }
-                                        <a href="@url" class="card-product-name stext-104 cltext hov-cl1 font-weight-bold trans-04 js-name-b2 p-b-6">
-                                            @productItem.name
+                                        <a href="#" class="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04 js-show-modal1">
+                                            Xem nhanh
                                         </a>
+                                    </div>
 
-                                        <div class="flash__sale__product__desc__price">
-                                            @if (productItem.discount > 0)
-                                            {
-                                                <div class="flash__sale__product__desc__price__new">
-                                                    <p>
-                                                        @String.Format(format, "{0:c0}", Convert.ToInt64(productItem.price * (100 - productItem.discount) / 100))
-                                                    </p>
-                                                </div>
-                                                <div class="flash__sale__product__desc__price__old">
-                                                    <p>
-                                                        @String.Format(format, "{0:c0}", productItem.price)
-                                                    </p>
-                                                </div>
+                                    <div class="block2-txt flex-w flex-t p-t-14 p-b-14 px-3">
+                                        <div class="block2-txt-child1 flex-col-l ">
+                                            @{
+                                                var url = "/chi-tiet/" + productItem.slug;
                                             }
-                                            else
-                                            {
-                                                <div class="flash__sale__product__desc__price__new">
-                                                    <p>
-                                                        @String.Format(format, "{0:c0}", productItem.price)
-                                                    </p>
-                                                </div>
-                                            }
+                                            <a href="@url" class="card-product-name stext-104 cltext hov-cl1 font-weight-bold trans-04 js-name-b2 p-b-6">
+                                                @productItem.name
+                                            </a>
+
+                                            <div class="flash__sale__product__desc__price">
+                                                @if (productItem.discount > 0)
+                                                {
+                                                    <div class="flash__sale__product__desc__price__new">
+                                                        <p>
+                                                            @String.Format(format, "{0:c0}", Convert.ToInt64(productItem.price * (100 - productItem.discount) / 100))
+                                                        </p>
+                                                    </div>
+                                                    <div class="flash__sale__product__desc__price__old">
+                                                        <p>
+                                                            @String.Format(format, "{0:c0}", productItem.price)
+                                                        </p>
+                                                    </div>
+                                                }
+                                                else
+                                                {
+                                                    <div class="flash__sale__product__desc__price__new">
+                                                        <p>
+                                                            @String.Format(format, "{0:c0}", productItem.price)
+                                                        </p>
+                                                    </div>
+                                                }
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
                                 </div>
                             </div>
                         </div>

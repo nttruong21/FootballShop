@@ -20,16 +20,7 @@
             @Html.TextBoxFor(model => model.email, new { @name = "email", @class = "form-control form-control-user", @type = "email", @placeholder = "Nhập email", @disabled = "disabled" })
         </div>
     </div>
-    <div class="row">
-        <div class="form-group col-6">
-            <label for="password">Mật khẩu</label>
-            @Html.TextBoxFor(model => model.password, new { @name = "password", @class = "form-control form-control-user", @type = "password", @placeholder = "Nhập mật khẩu", @disabled = "disabled" })
-        </div>
-        <div class="form-group col-6">
-            <label for="role">Phân quyền</label>
-            @Html.DropDownListFor(model => model.role, (IEnumerable<SelectListItem>)ViewBag.Roles, new { @name = "email", @class = "form-control form-control-user", @disabled = "disabled" })
-        </div>
-    </div>
+    
     <div class="row">
         <div class="form-group col-6">
             <label for="phone">Số điện thoại</label>

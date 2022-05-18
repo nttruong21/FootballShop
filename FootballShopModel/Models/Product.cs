@@ -24,17 +24,16 @@ namespace FootballShopModel.Models
         public int id { get; set; }
         public string name { get; set; }
         public Nullable<int> categoryId { get; set; }
-        public string brand { get; set; }
         public Nullable<long> price { get; set; }
         public Nullable<int> discount { get; set; }
         public string image { get; set; }
         public string size { get; set; }
         public Nullable<int> quantity { get; set; }
         public string infor { get; set; }
-        public string video { get; set; }
         public Nullable<double> rate { get; set; }
         public Nullable<int> soldQuantity { get; set; }
         public string slug { get; set; }
+        public string description { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<BillDetail> BillDetails { get; set; }

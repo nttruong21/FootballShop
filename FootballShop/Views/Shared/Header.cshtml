@@ -49,13 +49,13 @@
                         <li>
                             <a class="font-weight-bold" href="/bill">ĐƠN HÀNG</a>
                         </li>
-                        @{
+                        @*@{
                             var myHtmlString = new HtmlString($"<li><a class='font-weight-bold' href='/UserInfomation'>THÔNG TIN CÁ NHÂN</a></li>");
                             if (Session["id_user"] != null)
                             {
                                 @myHtmlString;
                             }
-                        }
+                        }*@
                     </ul>
                 </div>
 
@@ -90,7 +90,7 @@
                                     <i class="zmdi zmdi-account-o cltext"></i>
                                 </button>
                                 <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
-                                    <a class="dropdown-item" href="#">
+                                    <a class="dropdown-item" href="/UserInfomation">
                                         <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i> Tài khoản của tôi
                                     </a>
                                     <a class="dropdown-item" href="@Url.Action("Logout", "Home")">

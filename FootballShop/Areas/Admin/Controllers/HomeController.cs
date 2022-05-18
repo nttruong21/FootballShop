@@ -1,4 +1,5 @@
 ﻿using FootballShopModel;
+using FootballShopModel.DAO;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,15 +13,12 @@ namespace FootballShop.Areas.Admin.Controllers
         // [GET] /Admin/Home/Index
         public ActionResult Index()
         {
-            // KIỂM TRA SESION (ĐÃ ĐĂNG NHẬP HAY CHƯA)
-            //if (Session[Constants.ID_SESSION] == null)
-            //{
-            //    return Redirect("/Login");
-            //}
-            //if ((int)Session[Constants.ROLE_SESSION] != 0)
-            //{
-            //    return Redirect("/Error/NotPermission");
-            //}
+            BillDAO billDao = new BillDAO();
+            ViewBag.revenue = billDao.getTotalRevenue();
+            ViewBag.numberOfWaitingApproveBill = billDao.getNumberOfWaitingApproveBill();
+            ViewBag.numberOfCanceledBill = billDao.getNumberOfCanceledBill();
+            ViewBag.numberOfShippingBill = billDao.getNumberOfShippingBill();
+            ViewBag.numberOfDeliveredBill = billDao.getNumberOfDeliveredBill();
             return View();
         }
 
