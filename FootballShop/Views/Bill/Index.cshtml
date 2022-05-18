@@ -21,7 +21,6 @@
 
         <div class="header-cart-content flex-w js-pscroll">
             <ul id="detail-list-all-products-in-cart" class="header-cart-wrapitem w-full">
-              
             </ul>
 
 
@@ -56,7 +55,7 @@
                     <div class="wrap-table-shopping-cart">
                         <table id="list-cart-detail-items" class="table-shopping-cart">
 
-                            
+
 
                             @*<h4>Không có đơn hàng nào</h4>*@
 
@@ -89,16 +88,42 @@
                     <tbody id="orderDetail_bill">
 
                         @*<tr class="total">
-                            <th scope="row">
-                                <img src="/Assets/Admin/img/product/"
-                                     alt="IMG" width="100%">
-                            </th>
-                            <td>abc</td>
-                            <td>1100$</td>
-                            <td>3</td>
-                        </tr>*@
+                                <th scope="row">
+                                    <img src="/Assets/Admin/img/product/"
+                                         alt="IMG" width="100%">
+                                </th>
+                                <td>abc</td>
+                                <td>1100$</td>
+                                <td>3</td>
+                            </tr>*@
                     </tbody>
                 </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- Modal -->
+<div class="modal fade" id="confirm-modal-receive" tabindex="-1" role="dialog" aria-hidden="true"
+     style="z-index: 9999">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title cl8" id="exampleModalLabel">Nhận hàng</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body cl8">
+                Bạn đã nhận được hàng?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-dismiss="modal">Hủy bỏ</button>
+                <button id="confirm-receive-modal-agree-btn" data-idbill="" type="button"
+                        class="btn btn-danger">
+                    Đã nhận hàng
+                </button>
             </div>
         </div>
     </div>
@@ -147,7 +172,7 @@
                                             ${shiping}
                                         </span>
 
-                                        
+
 
                                     </div>
                                 </div>
@@ -158,7 +183,7 @@
                                     <p class="card-text">${item.recipientPhone}</p>
                                     <button data-toggle="modal" data-target=".bd-example-modal-lg"
                                             type="button"
-                                            
+
                                             data-idbill="${item.id}"
                                             class="btn btn-warning m-0 mr-4 float-r detail_bill">
                                         Chi tiết đơn hàng
@@ -172,7 +197,7 @@
 
                                     <button data-idbill="${item.id}"
                                             type="button"
-                                           
+                                             data-toggle="modal" data-target="#confirm-modal-receive"
                                             class="btn btn-primary m-0 mr-4 btn__receive">
                                         Bạn đã nhận
                                         hàng?
@@ -216,15 +241,21 @@
                     }
                 });
 
-                $(".btn__receive").on("click", async function () {
+                $(".btn__receive").on("click", function () {
                     const id_bill = $(this).attr("data-idbill");
-                    const res = await fetch(`https://localhost:44323/Bill/UpdateStatusById?id=${id_bill}`);
+                    $("#confirm-receive-modal-agree-btn").attr("data-idbill", id_bill);
+                    
+                });
+                $("#confirm-receive-modal-agree-btn").on("click", async function () {
+                    const id_bill = $(this).attr("data-idbill");
+                    $("#confirm-modal-receive").modal("hide");
+                    const res = await fetch(`https://localhost:44323/bill/updatestatusbyid?id=${id_bill}`);
                     const data = await res.json();
                     if (data.status == "success") {
                         const shiping = $(`#shiping-${id_bill}`);
                         shiping.removeClass("text-primary");
                         shiping.addClass("text-success");
-                        shiping.html("Đã Nhận hàng");
+                        shiping.html("Đã nhận hàng");
                     }
                 })
 
@@ -232,12 +263,12 @@
         }
         loadBill(id);
 
-       
+
 
 
     }
 
-    
+
 
 
 
