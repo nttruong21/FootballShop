@@ -225,6 +225,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ProductController.cs" />
     <Compile Include="Controllers\ShopingCartController.cs" />
+    <Compile Include="Controllers\UserInfomationController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -2768,6 +2769,7 @@
     <Content Include="Views\Auth\login.cshtml" />
     <Content Include="Views\ShopingCart\Index.cshtml" />
     <Content Include="Views\Bill\Index.cshtml" />
+    <Content Include="Views\UserInfomation\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -2778,6 +2780,7 @@
     <Folder Include="Models\" />
     <Folder Include="Views\BillDetail\" />
     <Folder Include="Views\Cart\" />
+    <Folder Include="Views\User\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
