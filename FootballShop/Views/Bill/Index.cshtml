@@ -94,12 +94,38 @@
             </div>
             <div class="modal-footer">
                 <p class="card-text mr-4" style="color: #D70018;">
-                    Tổng tiền: 
+                    Tổng tiền:
                 </p>
             </div>
         </div>
     </div>
 </div>
+
+<!-- Modal -->
+<div class="modal fade" id="confirm-modal-receive" tabindex="-1" role="dialog" aria-hidden="true"
+     style="z-index: 9999">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title cl8" id="exampleModalLabel">Nhận hàng</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body cl8">
+                Bạn đã nhận được hàng?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-dismiss="modal">Hủy bỏ</button>
+                <button id="confirm-receive-modal-agree-btn" data-bill-id="" type="button"
+                        class="btn btn-danger">
+                    Đã nhận hàng
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
 
 <script type="text/javascript">
     const listProductsInCartSidebar = document.getElementById(
@@ -125,7 +151,7 @@
                         }
                     );
                     let htmlConfirmDeliveredBtn = `
-                        <button data-bill-id="${item.id}" type="button" class="btn btn-success m-0 mr-4" disabled>
+                        <button data-bill-id="${item.id}" data-toggle="modal" data-target="#confirm-modal-receive" type="button" class="btn btn-success m-0 mr-4" disabled>
                             Bạn đã nhận hàng?
                         </button>
                     `;
@@ -141,7 +167,7 @@
                         shiping = "Đang giao hàng"
                         color = "text-primary"
                         htmlConfirmDeliveredBtn = `
-                        <button data-bill-id="${item.id}" type="button" class="btn btn-success m-0 mr-4 btn__receive">
+                        <button data-bill-id="${item.id}"  type="button" class="btn btn-success m-0 mr-4 btn__receive">
                             Bạn đã nhận hàng?
                         </button>
                     `;
@@ -225,6 +251,7 @@
 
                 $(".btn__receive").on("click", async function () {
                     const id_bill = $(this).attr("data-bill-id");
+                    $("#confirm-receive-modal-agree-btn").attr("data-bill-id", id_bill);
                     const res = await fetch(`https://localhost:44323/Bill/UpdateStatusById?id=${id_bill}`);
                     const data = await res.json();
                     if (data.status == "success") {
@@ -233,6 +260,20 @@
                         shiping.addClass("text-success");
                         shiping.html("Đã Nhận hàng");
                         $(this).attr("disabled", "disabled");
+                    }
+                })
+
+                $("#confirm-receive-modal-agree-btn").on("click", async function () {
+                    const id_bill = $(this).attr("data-bill-id");
+                    $("#confirm-modal-receive").modal("hide");
+                    const res = await fetch(`https://localhost:44323/bill/updatestatusbyid?id=${id_bill}`);
+                    const data = await res.json();
+                    if (data.status == "success") {
+                        const shiping = $(`#shiping-${id_bill}`);
+                        shiping.removeClass("text-primary");
+                        shiping.addClass("text-success");
+                        shiping.html("Đã nhận hàng");
+                        
                     }
                 })
 
