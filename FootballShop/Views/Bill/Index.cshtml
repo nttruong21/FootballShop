@@ -117,7 +117,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-primary" data-dismiss="modal">Hủy bỏ</button>
-                <button id="confirm-receive-modal-agree-btn" data-bill-id="" type="button"
+                <button id="confirm-receive-modal-agree-btn" data-billId="" type="button"
                         class="btn btn-danger">
                     Đã nhận hàng
                 </button>
@@ -151,7 +151,7 @@
                         }
                     );
                     let htmlConfirmDeliveredBtn = `
-                        <button data-bill-id="${item.id}" data-toggle="modal" data-target="#confirm-modal-receive" type="button" class="btn btn-success m-0 mr-4" disabled>
+                        <button data-billId="${item.id}"  type="button" class="btn btn-success m-0 mr-4 btn__receive" disabled>
                             Bạn đã nhận hàng?
                         </button>
                     `;
@@ -167,7 +167,7 @@
                         shiping = "Đang giao hàng"
                         color = "text-primary"
                         htmlConfirmDeliveredBtn = `
-                        <button data-bill-id="${item.id}"  type="button" class="btn btn-success m-0 mr-4 btn__receive">
+                        <button data-billId="${item.id}" data-toggle="modal" data-target="#confirm-modal-receive"  type="button" class="btn btn-success m-0 mr-4 btn__receive">
                             Bạn đã nhận hàng?
                         </button>
                     `;
@@ -250,29 +250,22 @@
                 });
 
                 $(".btn__receive").on("click", async function () {
-                    const id_bill = $(this).attr("data-bill-id");
-                    $("#confirm-receive-modal-agree-btn").attr("data-bill-id", id_bill);
-                    const res = await fetch(`https://localhost:44323/Bill/UpdateStatusById?id=${id_bill}`);
-                    const data = await res.json();
-                    if (data.status == "success") {
-                        const shiping = $(`#shiping-${id_bill}`);
-                        shiping.removeClass("text-primary");
-                        shiping.addClass("text-success");
-                        shiping.html("Đã Nhận hàng");
-                        $(this).attr("disabled", "disabled");
-                    }
+                    const id_bill = $(this).attr("data-billId");
+                    $("#confirm-receive-modal-agree-btn").attr("data-billId", id_bill);
+            
                 })
 
                 $("#confirm-receive-modal-agree-btn").on("click", async function () {
-                    const id_bill = $(this).attr("data-bill-id");
+                    const id_bill = $(this).attr("data-billId");
                     $("#confirm-modal-receive").modal("hide");
-                    const res = await fetch(`https://localhost:44323/bill/updatestatusbyid?id=${id_bill}`);
+                    const res = await fetch(`https://localhost:44323/bill/UpdateStatusById?id=${id_bill}`);
                     const data = await res.json();
                     if (data.status == "success") {
                         const shiping = $(`#shiping-${id_bill}`);
                         shiping.removeClass("text-primary");
                         shiping.addClass("text-success");
                         shiping.html("Đã nhận hàng");
+                        $(this).attr("disabled", "disabled");
                         
                     }
                 })
