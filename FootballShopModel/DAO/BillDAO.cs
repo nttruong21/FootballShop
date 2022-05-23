@@ -20,7 +20,7 @@ namespace FootballShopModel.DAO
         // GET ALL
         public List<Bill> getAllBills()
         {
-            return db.Bills.ToList();
+            return db.Bills.OrderByDescending(x => x.createdAt).ToList();
         }
 
         // GET ALL WAITING APPROVE BILL (HÓA ĐƠN ĐANG CHỜ DUYỆT)

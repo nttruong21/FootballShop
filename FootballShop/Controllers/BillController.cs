@@ -62,7 +62,7 @@ namespace FootballShop.Controllers
         public JsonResult GetAllBillbyUser(int idUser)
         {
             db.Configuration.ProxyCreationEnabled = false;
-            List<Bill> bill = db.Bills.Where(b => b.accountId == idUser).ToList();
+            List<Bill> bill = db.Bills.OrderByDescending(x => x.createdAt).Where(b => b.accountId == idUser).ToList();
 
             return Json(new
             {

@@ -118,7 +118,7 @@
             <div class="modal-footer">
                 <button type="button" class="btn btn-primary" data-dismiss="modal">Hủy bỏ</button>
                 <button id="confirm-receive-modal-agree-btn" data-billId="" type="button"
-                        class="btn btn-danger">
+                        class="btn btn-success">
                     Đã nhận hàng
                 </button>
             </div>
@@ -151,7 +151,7 @@
                         }
                     );
                     let htmlConfirmDeliveredBtn = `
-                        <button data-billId="${item.id}"  type="button" class="btn btn-success m-0 mr-4 btn__receive" disabled>
+                        <button id="is-delivered-btn-${item.id}" data-billId="${item.id}"  type="button" class="btn btn-success m-0 mr-4 btn__receive" data-is-shipping="0" disabled>
                             Bạn đã nhận hàng?
                         </button>
                     `;
@@ -167,7 +167,7 @@
                         shiping = "Đang giao hàng"
                         color = "text-primary"
                         htmlConfirmDeliveredBtn = `
-                        <button data-billId="${item.id}" data-toggle="modal" data-target="#confirm-modal-receive"  type="button" class="btn btn-success m-0 mr-4 btn__receive">
+                        <button id="is-delivered-btn-${item.id}" data-billId="${item.id}" data-toggle="modal" data-target="#confirm-modal-receive"  type="button" class="btn btn-success m-0 mr-4 btn__receive data-is-shipping="1"">
                             Bạn đã nhận hàng?
                         </button>
                     `;
@@ -252,7 +252,11 @@
                 $(".btn__receive").on("click", async function () {
                     const id_bill = $(this).attr("data-billId");
                     $("#confirm-receive-modal-agree-btn").attr("data-billId", id_bill);
-            
+                    //const isShipping = $(this).attr("data-is-shipping");
+                    //if (parseInt(isShipping) === 1) {
+                    //    $(this).attr("disabled", "disabled");
+                    //}
+                    //$(this).attr("disabled", "disabled");
                 })
 
                 $("#confirm-receive-modal-agree-btn").on("click", async function () {
@@ -265,8 +269,7 @@
                         shiping.removeClass("text-primary");
                         shiping.addClass("text-success");
                         shiping.html("Đã nhận hàng");
-                        $(this).attr("disabled", "disabled");
-                        
+                        document.getElementById(`is-delivered-btn-${id_bill}`).disabled = true;
                     }
                 })
 

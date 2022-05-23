@@ -277,7 +277,7 @@
             <div class="flex-w flex-l-m filter-tope-group m-tb-10">
                 @foreach (var cat in allCategories)
                 {
-                    if (cat.slug == "giay")
+                    if (cat.slug == allCategories[0].slug)
                     {
                         <button class="stext-106 hov-cl1 bor3 trans-04 m-r-32 m-tb-5 how-active1" data-filter=".cat-@cat.id">
                             @cat.name
